@@ -743,7 +743,7 @@ details[open] .plan-month-summary::after{transform:rotate(-180deg);}
 </div>
   </div><!-- fin cours-planning -->
 
-  <div class="plan-view" id="cours-contacts">
+  <div class="plan-view" id="cours-contacts" style="display:none;">
     <div class="resp-section-title">Les Initiateurs</div>
     <div class="resp-grid">
       <div class="resp-card"><div class="resp-name">J.-P. Dessier</div><div class="resp-tel">06 37 28 30 91</div></div>
@@ -1062,7 +1062,7 @@ details[open] .plan-month-summary::after{transform:rotate(-180deg);}
 </div>
   </div><!-- fin loisirs-planning -->
 
-  <div class="plan-view loisirs" id="loisirs-contacts">
+  <div class="plan-view loisirs" id="loisirs-contacts" style="display:none;">
     <div class="resp-section-title">Responsables de salle</div>
     <div class="resp-grid">
       <div class="resp-card"><div class="resp-name">Julien Barrandon</div><div class="resp-tel">06 81 52 13 74</div></div>
@@ -1310,23 +1310,17 @@ document.getElementById("nav").addEventListener("click",function(e){
   document.querySelectorAll(".sec-page").forEach(function(p){p.classList.remove("on");});
   btn.classList.add("on");
   document.getElementById("pg-"+tab).classList.add("on");
-});
-
-
-// PERIOD TABS
-document.addEventListener('click', function(e) {
-  var pt = e.target.closest('.period-tab');
-  if (!pt) return;
-  var planId = pt.dataset.plan;
-  var period = pt.dataset.period;
-  // Update tab active state
-  document.querySelectorAll('.period-tab[data-plan="'+planId+'"]').forEach(function(t){t.classList.remove('on');});
-  pt.classList.add('on');
-  // Update view
-  var prefix = planId + '-';
-  document.querySelectorAll('#'+planId+'-planning .period-view').forEach(function(v){v.classList.remove('on');});
-  var target = document.getElementById(prefix + period);
-  if (target) target.classList.add('on');
+  // Reset planning sub-tabs to "Planning" when switching pages
+  ["cours","loisirs"].forEach(function(plan){
+    document.querySelectorAll("#pg-"+plan+" .plan-view").forEach(function(v){
+      v.classList.remove("on"); v.style.display="none";
+    });
+    var pv=document.getElementById(plan+"-planning");
+    if(pv){pv.classList.add("on");pv.style.display="block";}
+    document.querySelectorAll(".plan-tab[data-plan='"+plan+"']").forEach(function(t){t.classList.remove("on");});
+    var pt=document.querySelector(".plan-tab[data-plan='"+plan+"'][data-view='planning']");
+    if(pt)pt.classList.add("on");
+  });
 });
 
 // ONGLETS PLANNING (Planning / Contacts)
@@ -1336,8 +1330,12 @@ document.querySelectorAll(".plan-tab").forEach(function(tab){
     var view=tab.dataset.view;
     document.querySelectorAll(".plan-tab[data-plan='"+plan+"']").forEach(function(t){t.classList.remove("on");});
     tab.classList.add("on");
-    document.querySelectorAll("#pg-"+plan+" .plan-view").forEach(function(v){v.classList.remove("on");});
-    document.getElementById(plan+"-"+view).classList.add("on");
+    document.querySelectorAll("#pg-"+plan+" .plan-view").forEach(function(v){
+      v.classList.remove("on");
+      v.style.display="none";
+    });
+    var target=document.getElementById(plan+"-"+view);
+    if(target){target.classList.add("on");target.style.display="block";}
   });
 });
 
