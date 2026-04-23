@@ -10,7 +10,26 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;color:#fff;padding-bottom:72px;}
 button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
-#hdr{display:flex;align-items:center;gap:12px;padding:14px 14px 10px;}
+#hdr{display:flex;align-items:center;gap:12px;padding:14px 14px 10px;justify-content:space-between;}
+#hdr-install{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:20px;color:#fff;font-size:0.72rem;font-family:Arial,sans-serif;padding:6px 12px;cursor:pointer;display:none;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;}
+#hdr-install svg{width:14px;height:14px;flex-shrink:0;}
+#hdr-install:active{opacity:0.7;}
+#hdr-install.visible{display:flex;}
+#install-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;align-items:flex-end;justify-content:center;}
+#install-modal.open{display:flex;}
+#install-modal-box{background:#1e2240;border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;max-width:480px;}
+#install-modal-box h3{font-size:1rem;font-weight:700;margin-bottom:16px;color:#fff;}
+.install-step{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+.install-step-num{background:#a78bfa;color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;}
+.install-step-text{font-size:0.82rem;color:rgba(255,255,255,0.8);line-height:1.5;padding-top:3px;}
+.install-step-text strong{color:#fff;}
+.install-os{display:none;}
+.install-os.active{display:block;}
+.install-os-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.install-os-tab{padding:6px 16px;border-radius:16px;border:none;font-size:0.78rem;font-weight:600;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);cursor:pointer;}
+.install-os-tab.on{background:#a78bfa;color:#fff;}
+#install-close{width:100%;padding:12px;border:none;border-radius:12px;background:rgba(255,255,255,0.1);color:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;margin-top:6px;}
+
 #hdr img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.3);}
 #hdr h1{font-size:1.3rem;font-weight:700;}
 #hdr p{font-size:0.75rem;opacity:0.6;margin-top:2px;}
@@ -31,6 +50,9 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .tag.lieu{background:rgba(52,211,153,0.2);color:#6ee7b7;}
 .tag.niveau{background:rgba(96,165,250,0.2);color:#93c5fd;}
 .tag.resp{background:rgba(251,191,36,0.2);color:#fde68a;}
+.tag.niveau-deb{background:rgba(52,211,153,0.2);color:#6ee7b7;}
+.tag.niveau-conf{background:rgba(239,68,68,0.2);color:#fca5a5;}
+.tag.niveau-tous{background:rgba(96,165,250,0.2);color:#93c5fd;}
 .tag.special{background:rgba(239,68,68,0.2);color:#fca5a5;}
 .sortie-note{font-size:0.78rem;opacity:0.6;margin-top:6px;font-style:italic;}
 
@@ -120,29 +142,296 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .bts{display:flex;gap:4px;}
 .vb{flex:1;padding:9px 2px;border:none;border-radius:6px;font-size:0.7rem;font-weight:700;color:#fff;background:rgba(255,255,255,0.15);}
 .vb.on{box-shadow:0 0 0 2px rgba(255,255,255,0.5);}
+
+/* COMPET */
+.compet-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.compet-tab{padding:7px 14px;border-radius:18px;border:none;font-size:0.8rem;font-weight:600;background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);cursor:pointer;}
+.compet-tab.on{background:#f97316;color:#fff;}
+.compet-view{display:none;}
+.compet-view.on{display:block;}
+
+/* Toolbar */
+.compet-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.compet-user-row{display:flex;align-items:center;gap:8px;}
+.compet-user-label{font-size:0.75rem;opacity:0.6;white-space:nowrap;}
+.compet-user-select{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:6px 10px;color:#fff;font-size:0.78rem;font-family:Arial,sans-serif;}
+.btn-add-compet{padding:8px 16px;border:none;border-radius:20px;background:#f97316;color:#fff;font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.btn-add-compet:active{opacity:0.8;}
+.btn-cancel{flex:1;padding:10px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:transparent;color:rgba(255,255,255,0.6);font-size:0.85rem;cursor:pointer;}
+
+/* Form */
+.compet-form{background:rgba(255,255,255,0.05);border-radius:12px;padding:14px;margin-bottom:14px;border:1px solid rgba(249,115,22,0.3);}
+.compet-form-title{font-size:0.85rem;font-weight:700;color:#f97316;margin-bottom:12px;}
+.compet-label{font-size:0.72rem;color:rgba(255,255,255,0.55);display:block;margin-bottom:3px;margin-top:8px;}
+.compet-input{width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:9px 12px;color:#fff;font-size:0.82rem;font-family:Arial,sans-serif;box-sizing:border-box;}
+.compet-input::placeholder{color:rgba(255,255,255,0.3);}
+.podium-row{display:flex;gap:8px;margin-top:6px;align-items:center;}
+.podium-row .compet-input{margin-bottom:0;}
+.podium-label{font-size:1.1rem;flex-shrink:0;}
+
+/* Category accordion */
+.compet-cat-details{margin-bottom:10px;border-radius:10px;overflow:hidden;}
+.compet-cat-summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.08);cursor:pointer;font-size:0.8rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:rgba(255,255,255,0.8);-webkit-tap-highlight-color:transparent;}
+.compet-cat-summary::-webkit-details-marker{display:none;}
+.compet-cat-summary::after{content:'▾';font-size:13px;transition:transform 0.2s;opacity:0.6;}
+details[open] .compet-cat-summary::after{transform:rotate(-180deg);}
+.compet-cat-count{background:rgba(249,115,22,0.3);color:#fed7aa;font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:700;margin-right:6px;}
+
+/* Entries */
+.compet-entry{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;margin:8px 8px 0;position:relative;}
+.compet-entry-exemple{background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.12);}
+.compet-entry-exemple .compet-entry-title{opacity:0.45;}
+.compet-entry-exemple .compet-entry-meta{opacity:0.4;}
+.compet-entry-exemple .podiums-row{opacity:0.4;}
+.exemple-badge{display:inline-block;font-size:0.6rem;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);border-radius:6px;padding:2px 7px;margin-bottom:5px;font-style:italic;}
+.compet-example-notice{background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);border-radius:10px;padding:10px 14px;font-size:0.75rem;color:#fed7aa;margin-bottom:12px;text-align:center;}
+.compet-entry-title{font-weight:700;font-size:0.88rem;margin-bottom:6px;}
+.compet-entry-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+.compet-entry-tag{padding:3px 9px;border-radius:10px;font-size:0.72rem;}
+.tag-lieu{background:rgba(52,211,153,0.2);color:#6ee7b7;}
+.tag-date{background:rgba(96,165,250,0.2);color:#93c5fd;}
+.tag-nb{background:rgba(251,191,36,0.2);color:#fde68a;}
+.podiums-row{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.pdm{padding:4px 10px;border-radius:8px;font-size:0.75rem;font-weight:700;}
+.pdm-or{background:rgba(255,215,0,0.2);color:#ffd700;}
+.pdm-ag{background:rgba(192,192,192,0.2);color:#d0d0d0;}
+.pdm-br{background:rgba(205,127,50,0.2);color:#cd7f32;}
+.btn-del{position:absolute;top:10px;right:10px;background:rgba(239,68,68,0.2);border:none;color:#fca5a5;border-radius:6px;padding:4px 8px;font-size:0.7rem;cursor:pointer;}
+.locked-msg{background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;text-align:center;font-size:0.8rem;color:rgba(255,255,255,0.4);font-style:italic;margin:8px 8px 0;}
+
+
+/* RÉSULTATS */
+.compet-tab-resultats{background:rgba(255,215,0,0.15)!important;color:#fde68a!important;}
+.compet-tab-resultats.on{background:#f59e0b!important;color:#fff!important;}
+.res-section-title{font-size:0.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#f59e0b;margin:14px 0 10px;padding-bottom:5px;border-bottom:1px solid rgba(245,158,11,0.3);}
+.res-ranking{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.res-rank-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.06);border-radius:10px;padding:10px 14px;}
+.res-rank-row.res-exemple{opacity:0.45;}
+.res-rank-badge{font-size:1.2rem;flex-shrink:0;width:30px;text-align:center;}
+.rank-other{font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.4);}
+.res-rank-nom{flex:1;font-weight:700;font-size:0.88rem;}
+.res-medals{display:flex;gap:5px;flex-wrap:wrap;}
+.res-medal-pill{padding:3px 9px;border-radius:8px;font-size:0.72rem;font-weight:700;}
+.res-type-ranking{background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;margin:8px 8px 4px;}
+.res-type-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.res-type-row:last-child{border-bottom:none;}
+.res-type-row.res-exemple{opacity:0.45;}
+
+
+/* MAT MAIN TABS */
+.mat-main-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.mat-main-tab{padding:7px 13px;border-radius:18px;border:none;font-size:0.78rem;font-weight:700;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;}
+.mat-main-tab.on{background:#a78bfa;color:#fff;}
+.mat-main-tab-demande{background:rgba(52,211,153,0.15)!important;color:#6ee7b7!important;}
+.mat-main-tab-demande.on{background:#34d399!important;color:#0f172a!important;}
+.mat-main-view{display:none;}
+.mat-main-view.on{display:block;}
+
+/* RÉCAPITULATIF */
+.recap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.recap-count{font-size:0.8rem;font-weight:700;color:#c4b5fd;}
+.recap-org-title{font-size:0.7rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#a78bfa;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid rgba(167,139,250,0.2);}
+.recap-row{display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,0.05);border-radius:10px;padding:10px 12px;margin-bottom:8px;border-left:3px solid #a78bfa;}
+.recap-row.recap-row-late{border-left-color:#fca5a5;}
+.recap-left{display:flex;align-items:flex-start;gap:8px;flex:1;min-width:0;}
+.recap-avatar{width:32px;height:32px;border-radius:50%;background:rgba(167,139,250,0.2);color:#c4b5fd;font-size:0.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.recap-person{min-width:0;}
+.recap-person-name{font-weight:700;font-size:0.82rem;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.recap-person-contacts{display:flex;flex-direction:column;gap:2px;}
+.recap-link-tel{font-size:0.68rem;color:#6ee7b7;text-decoration:none;display:block;}
+.recap-link-mail{font-size:0.65rem;color:#93c5fd;text-decoration:none;display:block;word-break:break-all;}
+.recap-right{flex-shrink:0;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.recap-mat-line{display:flex;align-items:center;gap:6px;justify-content:flex-end;}
+.recap-materiel{font-weight:700;font-size:0.8rem;}
+.recap-qte{background:rgba(167,139,250,0.2);color:#c4b5fd;font-size:0.68rem;font-weight:700;padding:1px 7px;border-radius:8px;}
+.recap-cat-badge{font-size:0.6rem;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);border-radius:5px;padding:1px 6px;}
+.recap-dates-line{display:flex;align-items:center;gap:3px;flex-wrap:wrap;justify-content:flex-end;}
+.recap-arrow{font-size:0.65rem;opacity:0.35;}
+.recap-dpill{font-size:0.65rem;color:rgba(255,255,255,0.5);}
+.recap-dpill-late{color:#fca5a5;}
+.recap-dpill-dur{color:#93c5fd;background:rgba(96,165,250,0.1);padding:1px 5px;border-radius:5px;}
+
+/* FAIRE UNE DEMANDE */
+.demande-intro{font-size:0.78rem;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.5;padding:10px 12px;background:rgba(52,211,153,0.07);border-radius:8px;border-left:3px solid #34d399;}
+.demande-org-title{font-size:0.7rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#34d399;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid rgba(52,211,153,0.2);}
+.contact-card{background:rgba(255,255,255,0.06);border-radius:12px;padding:13px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;}
+.contact-avatar{width:40px;height:40px;border-radius:50%;background:rgba(52,211,153,0.2);color:#6ee7b7;font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.contact-info{flex:1;min-width:0;}
+.contact-name{font-weight:700;font-size:0.88rem;margin-bottom:2px;}
+.contact-role{font-size:0.7rem;color:rgba(255,255,255,0.45);margin-bottom:8px;}
+.contact-actions{display:flex;flex-direction:column;gap:6px;}
+.contact-btn{display:block;font-size:0.75rem;text-decoration:none;padding:7px 10px;border-radius:8px;word-break:break-all;}
+.contact-btn-tel{background:rgba(52,211,153,0.15);color:#6ee7b7;}
+.contact-btn-mail{background:rgba(96,165,250,0.15);color:#93c5fd;}
+.contact-btn-disabled{display:block;font-size:0.75rem;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3);}
+.demande-note{font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:16px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:8px;line-height:1.5;}
+
+/* MATERIEL ORG TABS */
+.mat-org-tabs{display:flex;gap:8px;margin-bottom:14px;}
+.mat-org-tab{padding:8px 20px;border-radius:20px;border:none;font-size:0.85rem;font-weight:700;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);cursor:pointer;transition:all 0.2s;}
+.mat-org-tab.on{background:#a78bfa;color:#fff;}
+.mat-org-view{display:none;}
+.mat-org-view.on{display:block;}
+
+/* MATERIEL CATEGORY ACCORDION */
+.mat-cat-details{margin-bottom:12px;border-radius:10px;overflow:hidden;}
+.mat-cat-summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:rgba(255,255,255,0.08);cursor:pointer;font-size:0.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-left:3px solid #a78bfa;-webkit-tap-highlight-color:transparent;}
+.mat-cat-summary::-webkit-details-marker{display:none;}
+.mat-cat-summary::after{content:'▾';font-size:13px;transition:transform 0.2s;opacity:0.6;}
+details[open] .mat-cat-summary::after{transform:rotate(-180deg);}
+
+/* MATERIEL TABLE */
+.mat-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
+.mat-table th{background:rgba(255,255,255,0.06);padding:8px 10px;text-align:left;font-size:0.68rem;letter-spacing:0.5px;color:rgba(255,255,255,0.5);white-space:nowrap;}
+.mat-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.05);vertical-align:top;}
+.mat-table tr:last-child td{border-bottom:none;}
+.qte-ok{color:#6ee7b7;font-weight:700;}
+.qte-low{color:#fde68a;font-weight:700;}
+.qte-zero{color:#fca5a5;font-weight:700;}
+
+/* PRETS LIST */
+.mat-prets-list{margin-top:5px;display:flex;flex-direction:column;gap:4px;}
+.mat-pret-item-row{font-size:0.7rem;color:rgba(255,255,255,0.55);display:flex;flex-wrap:wrap;align-items:center;gap:5px;}
+.mat-pret-who{font-weight:700;color:rgba(255,255,255,0.75);}
+.mat-pret-dates{color:#93c5fd;font-size:0.68rem;}
+.pill{display:inline-block;padding:1px 6px;border-radius:6px;font-size:0.62rem;font-weight:700;}
+.pill-in{background:rgba(52,211,153,0.25);color:#6ee7b7;}
+.pill-out{background:rgba(239,68,68,0.25);color:#fca5a5;}
+.btn-rendu{background:rgba(52,211,153,0.15);border:none;color:#6ee7b7;border-radius:5px;padding:2px 7px;font-size:0.65rem;cursor:pointer;}
+.btn-edit-qte{background:rgba(255,255,255,0.08);border:none;color:#fff;border-radius:5px;padding:4px 8px;font-size:0.68rem;cursor:pointer;}
+
+/* MATERIEL FORM */
+.mat-pret-form{background:rgba(255,255,255,0.05);border-radius:12px;padding:14px;margin-bottom:14px;border:1px solid rgba(167,139,250,0.3);}
+.mat-form-title{font-size:0.85rem;font-weight:700;color:#a78bfa;margin-bottom:12px;}
+.mat-label{font-size:0.72rem;color:rgba(255,255,255,0.55);display:block;margin-bottom:3px;margin-top:8px;}
+.mat-input{width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:9px 12px;color:#fff;font-size:0.82rem;font-family:Arial,sans-serif;box-sizing:border-box;}
+.mat-input::placeholder{color:rgba(255,255,255,0.3);}
+.mat-input-sm{width:80px;}
+
+/* MINI CALENDAR */
+.mat-cal-wrap{margin-top:4px;}
+.mat-cal{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;user-select:none;}
+.mat-cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.mat-cal-title{font-size:0.82rem;font-weight:700;}
+.mat-cal-btn{background:rgba(255,255,255,0.1);border:none;color:#fff;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;}
+.mat-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.mat-cal-dow{text-align:center;font-size:0.6rem;color:rgba(255,255,255,0.4);padding:3px 0;font-weight:700;}
+.mat-cal-day{text-align:center;font-size:0.75rem;padding:6px 2px;border-radius:6px;cursor:pointer;transition:background 0.15s;}
+.mat-cal-day:hover{background:rgba(167,139,250,0.2);}
+.cal-past{opacity:0.3;cursor:default;}
+.cal-past:hover{background:transparent;}
+.cal-start,.cal-end{background:#a78bfa!important;color:#fff;font-weight:700;border-radius:6px;}
+.cal-range{background:rgba(167,139,250,0.2);border-radius:0;}
+.cal-single{border-radius:6px;}
+.mat-cal-duration{font-size:0.75rem;color:#c4b5fd;margin-top:8px;text-align:center;padding:5px;background:rgba(167,139,250,0.1);border-radius:6px;}
+.mat-dates-display{font-size:0.75rem;color:#c4b5fd;margin-top:6px;}
+
+.mat-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
+.mat-table th{background:rgba(255,255,255,0.12);padding:9px 8px;text-align:left;font-size:0.72rem;letter-spacing:0.5px;}
+.mat-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.07);vertical-align:top;}
+.mat-table tr:hover td{background:rgba(255,255,255,0.03);}
+.qte-ok{color:#6ee7b7;font-weight:700;}
+.qte-low{color:#fde68a;font-weight:700;}
+.qte-zero{color:#fca5a5;font-weight:700;}
+
+
+
+
+
+.pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:0.68rem;font-weight:700;}
+.pill-in{background:rgba(52,211,153,0.25);color:#6ee7b7;}
+.pill-out{background:rgba(239,68,68,0.25);color:#fca5a5;}
+
+
+/* PERIOD TABS */
+.period-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.period-tab{padding:7px 14px;border-radius:18px;border:none;font-size:0.8rem;font-weight:600;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;}
+.period-tab.on{background:#a78bfa;color:#fff;}
+.plan-view.loisirs .period-tab.on{background:#34d399;color:#0f172a;}
+.period-view{display:none;}
+.period-view.on{display:block;}
+
+/* HEADER GRID (like Excel header) */
+.plan-header-grid{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px;}
+.phg-col{background:rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;min-width:120px;flex:1;text-align:center;border-top:3px solid #a78bfa;}
+.loisirs-header .phg-col{border-top-color:#34d399;}
+.phg-jour{font-size:0.82rem;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;}
+.phg-horaire{font-size:0.72rem;color:#60a5fa;font-weight:600;margin-bottom:3px;}
+.phg-session{font-size:0.7rem;opacity:0.7;line-height:1.3;margin-bottom:3px;}
+.phg-enc{font-size:0.7rem;color:#fde68a;margin-top:4px;}
+
+/* MONTH BLOCK */
+.plan-month-details{margin-bottom:12px;border-radius:8px;overflow:hidden;}
+.plan-month-summary{font-size:0.72rem;font-weight:800;letter-spacing:2px;padding:9px 14px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none;-webkit-tap-highlight-color:transparent;}
+.plan-month-summary::-webkit-details-marker{display:none;}
+.plan-month-summary::after{content:'▾';font-size:14px;transition:transform 0.2s;opacity:0.7;}
+details[open] .plan-month-summary::after{transform:rotate(-180deg);}
+.plan-view:not(.loisirs) .plan-month-summary{background:linear-gradient(90deg,rgba(167,139,250,0.15),transparent);border-left:3px solid #a78bfa;color:#c4b5fd;}
+.plan-view.loisirs .plan-month-summary{background:linear-gradient(90deg,rgba(52,211,153,0.15),transparent);border-left:3px solid #34d399;color:#6ee7b7;}
+.plan-month-details .plan-table{margin-bottom:4px;}
+
+/* PLANNING TABLE */
+.plan-table{width:100%;border-collapse:collapse;font-size:0.75rem;}
+.plan-table th{padding:7px 8px;text-align:left;background:rgba(255,255,255,0.08);font-size:0.68rem;letter-spacing:0.5px;color:rgba(255,255,255,0.6);white-space:nowrap;}
+.plan-table td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,0.05);vertical-align:middle;}
+.plan-table tr:last-child td{border-bottom:none;}
+.plan-table tr.tr-ferie td{background:rgba(239,68,68,0.07);}
+.plan-table tr.tr-special td{background:rgba(52,211,153,0.07);}
+.plan-table tbody tr:hover td{background:rgba(255,255,255,0.04);}
+.th-sem{width:70px;}.th-dates{width:100px;}.th-jour{width:90px;}.th-enc{width:90px;}
+.td-sem{vertical-align:top;padding-top:9px;}
+.td-dates{color:rgba(255,255,255,0.45);font-size:0.68rem;vertical-align:top;padding-top:9px;}
+.td-jour{color:#a78bfa;font-weight:700;white-space:nowrap;}
+.plan-view.loisirs .td-jour{color:#34d399;}
+.td-type{line-height:1.4;}
+.td-horaire{font-size:0.68rem;color:rgba(255,255,255,0.45);margin-top:2px;}
+.td-enc{white-space:nowrap;}
+.sem-num{display:inline-block;font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:3px;}
+.enc-name{font-size:0.72rem;color:#fde68a;}
+.semaine-badge{display:block;margin-top:3px;font-size:0.6rem;padding:2px 5px;border-radius:5px;text-align:center;}
+
 </style>
 </head>
 <body>
 
 <div id="hdr">
- <img src="photos/logo.jpg" alt="CAF Liffré">
+  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/wAARCABAAEADASIAAhEBAxEB/8QAGwABAAMBAQEBAAAAAAAAAAAAAAQFBgMCAQf/xAAuEAABBAEDAwMDBAMAAAAAAAABAAIDBAUREiExBhNBUWEiMnGBFCORocHh8P/EABkBAQADAQEAAAAAAAAAAAAAAAADBAUCAf/EACIRAQACAQQCAwAAAAAAAAAAAAEAAgMRITESQVFhgf/aAAwDAQACEQMRAD8A/aUREBERAREQEREBERAREQEREBFhxcHH1NlfgMY/f3noBd3Yq2bkfVE0OI2B6c0n4Svtfb1bM76oLYnuZswdS7RdlVSqXuB7pBX1mHJc6PGWGCQN8mRpBaB8lbFnHLSWSMpueSzd5yGAtx+4uHAarMrHSJxlBER19V0igiIgIiICIiAiIgIiIOHfJc/1TSmttGfDMaI5G7MeORcPf5X7qFqVtfp2e7bZ0/Ked0jtvkla5ByulLUXUgFj3BzS8dj0IO49Qvo3hkm8uC0y9LkdGQR32eQfUKDiXBkMBa4OY8bOaRsQfkHsUFmqb9UbFpTGSyMlc5r27N3aHnZp+R+vooWrJeXTNFtdOCKBzg7ck7EkHt6bAqxERBif8AsK9lERAREQEREBERAXLtJqnDW7N2Ovl60vV5oGTtMUrfktPAI9l1FYs1KVivJBYjbJHI0tc1wyCD2II6hBU4zJfqFSGy9zHyPb55oGhsbn9y0dvJVRERB//Z" alt="CAF Liffré">
   <div><h1>CAF Liffré</h1><p>Club Alpin Français — Escalade 2026</p></div>
+  <button id="hdr-install" onclick="openInstallModal()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v13M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+    Ajouter écran d'accueil
+  </button>
 </div>
 
-<!-- SORTIES -->
-<div class="sec-page on" id="pg-sorties">
-  <div class="ptitle">🧗 Sorties & Évènements 2026</div>
-  <div class="sortie-card"><div class="sortie-date">Dimanche 26 Avril 2026</div><div class="sortie-title">Sortie Erquy</div><div class="sortie-meta"><span class="tag lieu">📍 Erquy, Côtes-d'Armor</span><span class="tag niveau">Tous niveaux</span></div></div>
-  <div class="sortie-card"><div class="sortie-date">8 — 10 Mai 2026</div><div class="sortie-title">Fosse Arthour / Mortain</div><div class="sortie-meta"><span class="tag lieu">📍 Fosse Arthour, Normandie</span><span class="tag special">3 jours</span></div></div>
-  <div class="sortie-card"><div class="sortie-date">14 — 17 Mai 2026</div><div class="sortie-title">La Jonte</div><div class="sortie-meta"><span class="tag lieu">📍 Gorges de la Jonte, Aveyron</span><span class="tag special">4 jours</span></div></div>
-  <div class="sortie-card"><div class="sortie-date">23 — 30 Mai 2026</div><div class="sortie-title">Sortie TA — Le Caroux</div><div class="sortie-meta"><span class="tag lieu">📍 Le Caroux, Hérault</span><span class="tag special">8 jours</span></div><div class="sortie-note">En parallèle : sortie Dinan Abbaye</div></div>
-  <div class="sortie-card"><div class="sortie-date">30 Mai — 6 Juin 2026</div><div class="sortie-title">Orpierre</div><div class="sortie-meta"><span class="tag lieu">📍 Orpierre, Hautes-Alpes</span><span class="tag special">8 jours</span><span class="tag resp">👥 11 participants</span></div></div>
-  <div class="sortie-card"><div class="sortie-date">13 — 14 Juin 2026</div><div class="sortie-title">Île aux Pies</div><div class="sortie-meta"><span class="tag lieu">📍 Île aux Pies</span><span class="tag special">Week-end</span></div></div>
-  <div class="sortie-card"><div class="sortie-date">20 — 21 Juin 2026</div><div class="sortie-title">Pen-Hir</div><div class="sortie-meta"><span class="tag lieu">📍 Pen-Hir, Presqu'île de Crozon</span><span class="tag special">Week-end</span></div></div>
-  <div class="sortie-card" style="border-left-color:#f97316;"><div class="sortie-date" style="color:#f97316;">Jeudi 25 Juin 2026</div><div class="sortie-title">🍽️ Repas Encadrants / Débutants</div><div class="sortie-meta"><span class="tag lieu">📍 L'Otentik</span></div></div>
-  <div class="sortie-card"><div class="sortie-date">12 — 13 Septembre 2026</div><div class="sortie-title">Fontainebleau</div><div class="sortie-meta"><span class="tag lieu">📍 Fontainebleau, Seine-et-Marne</span><span class="tag special">Week-end</span></div></div>
-  <div class="sortie-card"><div class="sortie-date">19 — 20 Septembre 2026</div><div class="sortie-title">Pen-Hir</div><div class="sortie-meta"><span class="tag lieu">📍 Pen-Hir, Presqu'île de Crozon</span><span class="tag special">Week-end</span></div></div>
+<!-- VOIES -->
+<div class="sec-page on" id="pg-voies">
+  <div id="stats">
+    <div class="st"><div class="n" id="tot">78</div><div class="l">Total</div></div>
+    <div class="st"><div class="n" id="val">0</div><div class="l">Validées</div></div>
+    <div class="st"><div class="n" id="prg">0</div><div class="l">En cours</div></div>
+  </div>
+  <div id="fil"></div>
+  <div id="app"></div>
 </div>
+
+
+
+<!-- SORTIES -->
+<div class="sec-page" id="pg-sorties">
+  <div class="ptitle">🧗 Sorties & Évènements 2026</div>
+  <div class="sortie-card"><div class="sortie-date">Dimanche 26 Avril 2026</div><div class="sortie-title">Sortie Erquy</div><div class="sortie-meta"><span class="tag lieu">📍 Erquy, Côtes-d'Armor</span><span class="tag niveau-tous">Tous niveaux</span></div></div>
+  <div class="sortie-card"><div class="sortie-date">8 — 10 Mai 2026</div><div class="sortie-title">Fosse Arthour / Mortain</div><div class="sortie-meta"><span class="tag lieu">📍 Fosse Arthour, Normandie</span><span class="tag special">3 jours</span><span class="tag niveau-tous">Tous niveaux</span></div></div>
+  <div class="sortie-card"><div class="sortie-date">14 — 17 Mai 2026</div><div class="sortie-title">La Jonte</div><div class="sortie-meta"><span class="tag lieu">📍 Gorges de la Jonte, Aveyron</span><span class="tag special">4 jours</span><span class="tag niveau-conf">Confirmés</span></div></div>
+  <div class="sortie-card"><div class="sortie-date">23 — 30 Mai 2026</div><div class="sortie-title">Sortie TA — Le Caroux</div><div class="sortie-meta"><span class="tag lieu">📍 Le Caroux, Hérault</span><span class="tag special">8 jours</span><span class="tag niveau-conf">Confirmés</span></div><div class="sortie-note">En parallèle : sortie Dinan Abbaye</div></div>
+  <div class="sortie-card"><div class="sortie-date">30 Mai — 6 Juin 2026</div><div class="sortie-title">Orpierre</div><div class="sortie-meta"><span class="tag lieu">📍 Orpierre, Hautes-Alpes</span><span class="tag special">8 jours</span><span class="tag resp">👥 11 participants</span><span class="tag niveau-conf">Confirmés</span></div></div>
+  <div class="sortie-card"><div class="sortie-date">13 — 14 Juin 2026</div><div class="sortie-title">Île aux Pies</div><div class="sortie-meta"><span class="tag lieu">📍 Île aux Pies</span><span class="tag special">Week-end</span></div></div>
+  <div class="sortie-card"><div class="sortie-date">20 — 21 Juin 2026</div><div class="sortie-title">Pen-Hir</div><div class="sortie-meta"><span class="tag lieu">📍 Pen-Hir, Presqu'île de Crozon</span><span class="tag special">Week-end</span><span class="tag niveau-conf">Confirmés</span></div></div>
+  <div class="sortie-card" style="border-left-color:#f97316;"><div class="sortie-date" style="color:#f97316;">Jeudi 25 Juin 2026</div><div class="sortie-title">🍽️ Repas Encadrants / Débutants</div><div class="sortie-meta"><span class="tag lieu">📍 L'Otentik</span></div></div>
+  <div class="sortie-card"><div class="sortie-date">12 — 13 Septembre 2026</div><div class="sortie-title">Fontainebleau</div><div class="sortie-meta"><span class="tag lieu">📍 Fontainebleau, Seine-et-Marne</span><span class="tag special">Week-end</span><span class="tag niveau-tous">Tous niveaux</span></div></div>
+  <div class="sortie-card"><div class="sortie-date">19 — 20 Septembre 2026</div><div class="sortie-title">Pen-Hir</div><div class="sortie-meta"><span class="tag lieu">📍 Pen-Hir, Presqu'île de Crozon</span><span class="tag special">Week-end</span><span class="tag niveau-conf">Confirmés</span></div></div>
+</div>
+
+
 
 <!-- PLANNING COURS -->
 <div class="sec-page" id="pg-cours">
@@ -153,167 +442,305 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
   </div>
 
   <div class="plan-view on" id="cours-planning">
-    <div class="plan-info-box">Cours Débutants et Perfectionnement — Lundi (Erwan), Mardi (Corentin), Jeudi (Encadrement Club), Samedi (Pierre)</div>
+  <div class="plan-header-grid cours-header">
+  <div class="phg-col">
+    <div class="phg-jour">Lundi</div>
+    <div class="phg-horaire">18h00 – 19h30</div>
+    <div class="phg-session">Cours 9/12 ans — Débutants</div>
+    <div class="phg-enc">👤 Erwan</div>
+  </div>
+  <div class="phg-col">
+    <div class="phg-jour">Mardi</div>
+    <div class="phg-horaire">18h00 – 22h00</div>
+    <div class="phg-session">9/12 Perf. + 13/17 Perf.</div>
+    <div class="phg-enc">👤 Corentin</div>
+  </div>
+  <div class="phg-col">
+    <div class="phg-jour">Jeudi</div>
+    <div class="phg-horaire">18h15 – 22h15</div>
+    <div class="phg-session">Compet. 9/17 + Adultes déb.</div>
+    <div class="phg-enc">👤 Encadrement Club</div>
+  </div>
+  <div class="phg-col">
+    <div class="phg-jour">Samedi</div>
+    <div class="phg-horaire">10h00 – 17h15</div>
+    <div class="phg-session">9/12 ans + 13/17 ans</div>
+    <div class="phg-enc">👤 Pierre</div>
+  </div>
+</div>
+  <div class="period-tabs">
+    <button class="period-tab" data-plan="cours" data-period="sep_dec">Sep → Déc</button>
+    <button class="period-tab" data-plan="cours" data-period="jan_avr">Jan → Avr</button>
+    <button class="period-tab on" data-plan="cours" data-period="mai_juil">Mai → Juil</button>
+  </div>
+  <div class="period-view" id="cours-jan_avr">
+    <details class="plan-month-details" open>
+<summary class="plan-month-summary">JANVIER</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="1"><span class="sem-num">S01</span><span class="semaine-badge badge-vacances">Vacances</span></td><td class="td-dates" rowspan="1">1 → 4 Jan</td><td class="td-jour">1 → 4 Jan</td><td class="td-type"><span>Vacances scolaires</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S02</span></td><td class="td-dates" rowspan="4">5 → 11 Jan</td><td class="td-jour">Lundi 5</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 6</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 8</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Franck + Gérard</span></td></tr>
+<tr><td class="td-jour">Samedi 10</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S03</span><span class="semaine-badge badge-special">Compet. Gym Sam/Dim</span></td><td class="td-dates" rowspan="4">12 → 18 Jan</td><td class="td-jour">Lundi 12</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 13</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 15</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Gérard + J.P.</span></td></tr>
+<tr class="tr-ferie"><td class="td-jour">Sam 17 / Dim 18</td><td class="td-type"><span style="color:#fca5a5">Compétition Gym</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S04</span></td><td class="td-dates" rowspan="4">19 → 25 Jan</td><td class="td-jour">Lundi 19</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 20</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 22</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 J.P. + Dominique</span></td></tr>
+<tr><td class="td-jour">Samedi 24</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S01 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S01 — Janvier</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">1 → 4 Jan</span><span class="semaine-badge badge-vacances">Vacances</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body"><div class="creneau-row"><div class="creneau-jour">Jeudi 1</div><div class="creneau-info"><div class="creneau-type">Vacances</div></div></div></div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">JAN / FÉV</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="3"><span class="sem-num">S05</span><span class="semaine-badge badge-special">InterCaf Dim</span></td><td class="td-dates" rowspan="3">26 Jan → 1 Fév</td><td class="td-jour">Lundi 26</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 27</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 29</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Franck + Gérard</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S02 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S02 — Janvier</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">5 → 11 Jan</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 5</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 6</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 8</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Franck + Gérard</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 10</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">FÉVRIER</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S06</span></td><td class="td-dates" rowspan="4">2 → 8 Fév</td><td class="td-jour">Lundi 2</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 3</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 5</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Gérard + J.P.</span></td></tr>
+<tr><td class="td-jour">Samedi 7</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S07</span></td><td class="td-dates" rowspan="4">9 → 15 Fév</td><td class="td-jour">Lundi 9</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 10</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 12</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 J.P. + Mikaël</span></td></tr>
+<tr><td class="td-jour">Samedi 14</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S03 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S03 — Janvier</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">12 → 18 Jan</span><span class="semaine-badge badge-special">Compet. Gym Sam/Dim</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 12</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 13</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 15</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Gérard + J.P.</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Sam 17 / Dim 18</div><div class="creneau-info"><div class="creneau-type" style="color:#fca5a5">Compétition Gym</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">VACANCES</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="1"><span class="sem-num">S08-S09</span><span class="semaine-badge badge-vacances">Vacances</span></td><td class="td-dates" rowspan="1">16 Fév → 1 Mars</td><td class="td-jour">16 Fév → 1 Mars</td><td class="td-type"><span>Vacances scolaires</span></td><td class="td-enc"></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S04 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S04 — Janvier</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">19 → 25 Jan</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 19</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 20</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 22</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 J.P. + Dominique</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 24</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">MARS</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S10</span></td><td class="td-dates" rowspan="4">2 → 8 Mars</td><td class="td-jour">Lundi 2</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 3</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 5</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël + Franck</span></td></tr>
+<tr><td class="td-jour">Samedi 7</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S11</span></td><td class="td-dates" rowspan="4">9 → 15 Mars</td><td class="td-jour">Lundi 9</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 10</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 12</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Franck + Gérard</span></td></tr>
+<tr><td class="td-jour">Samedi 14</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S12</span></td><td class="td-dates" rowspan="4">16 → 22 Mars</td><td class="td-jour">Lundi 16</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 17</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 19</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Gérard + J.P.</span></td></tr>
+<tr><td class="td-jour">Samedi 21</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S13</span></td><td class="td-dates" rowspan="4">23 → 29 Mars</td><td class="td-jour">Lundi 23</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 24</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 26</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 J.P. + Mikaël</span></td></tr>
+<tr><td class="td-jour">Samedi 28</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S05 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S05 — Jan / Fév</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">26 Jan → 1 Fév</span><span class="semaine-badge badge-special">InterCaf Dim</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 26</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 27</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 29</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Dominique + Mikaël</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 1</div><div class="creneau-info"><div class="creneau-type" style="color:#6ee7b7">InterCaf</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">MARS / AVRIL</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S14</span></td><td class="td-dates" rowspan="4">30 Mars → 5 Avr</td><td class="td-jour">Lundi 30</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 31</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 2</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël + Franck</span></td></tr>
+<tr><td class="td-jour">Samedi 4</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S06 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S06 — Février</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">2 → 8 Fév</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 2</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 3</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 5</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Mikaël + Franck</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 7</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">AVRIL</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S15</span></td><td class="td-dates" rowspan="4">6 → 12 Avr</td><td class="td-jour">Lundi 6</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 7</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 9</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Gérard + J.P.</span></td></tr>
+<tr><td class="td-jour">Samedi 11</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S07 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S07 — Février</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">9 → 15 Fév</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 9</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 10</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 12</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Franck + Gérard</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 14</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">VACANCES</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="1"><span class="sem-num">S16-S17</span><span class="semaine-badge badge-vacances">Vacances</span></td><td class="td-dates" rowspan="1">13 → 26 Avr</td><td class="td-jour">13 → 26 Avr</td><td class="td-type"><span>Vacances scolaires</span></td><td class="td-enc"></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S08-S09 Vacances -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S08-S09 — Vacances</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">16 Fév → 1 Mars</span><span class="semaine-badge badge-vacances">Vacances</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body"><div class="creneau-row"><div class="creneau-jour">16 Fév → 1 Mars</div><div class="creneau-info"><div class="creneau-type">Vacances scolaires</div></div></div></div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">AVRIL</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="3"><span class="sem-num">S18</span></td><td class="td-dates" rowspan="3">27 → 30 Avr</td><td class="td-jour">Lundi 27</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 28</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 30</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 J.P. + Mikaël</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S10 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S10 — Mars</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">2 → 8 Mars</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 2</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 3</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 5</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Gérard + Dominique</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 7</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
 
-    <!-- S11 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S11 — Mars</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">9 → 15 Mars</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 9</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 10</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 12</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Dominique + J.P.</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 14</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
+  </div>
+  <div class="period-view on" id="cours-mai_juil">
+    <details class="plan-month-details" open>
+<summary class="plan-month-summary">MAI</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S19</span></td><td class="td-dates" rowspan="4">4 → 10 Mai</td><td class="td-jour">Lundi 4</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 5</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 7</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Franck + Gérard</span></td></tr>
+<tr class="tr-ferie"><td class="td-jour">Vendredi 8</td><td class="td-type"><span style="color:#fca5a5">Férié — Victoire 1945</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S20</span></td><td class="td-dates" rowspan="4">11 → 17 Mai</td><td class="td-jour">Lundi 11</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 12</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr class="tr-ferie"><td class="td-jour">Jeudi 14</td><td class="td-type"><span style="color:#fca5a5">Férié — Ascension</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-jour">Samedi 16</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S21</span></td><td class="td-dates" rowspan="4">18 → 24 Mai</td><td class="td-jour">Lundi 18</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 19</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 21</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Gérard + J.P.</span></td></tr>
+<tr><td class="td-jour">Samedi 23</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr class="tr-ferie"><td class="td-sem" rowspan="3"><span class="sem-num">S22</span><span class="semaine-badge badge-ferie">Lundi Férié</span></td><td class="td-dates" rowspan="3">25 → 31 Mai</td><td class="td-jour">Lundi 25</td><td class="td-type"><span style="color:#fca5a5">Férié — Pentecôte</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-jour">Jeudi 28</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 J.P. + Mikaël</span></td></tr>
+<tr><td class="td-jour">Samedi 30</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S12 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S12 — Mars</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">16 → 22 Mars</span><span class="semaine-badge badge-special">Compet. Gym Sam/Dim</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 16</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 17</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 19</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 J.P. + Mikaël</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Sam 21 / Dim 22</div><div class="creneau-info"><div class="creneau-type" style="color:#fca5a5">Compétition Gym</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">JUIN</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S23</span></td><td class="td-dates" rowspan="4">1 → 7 Juin</td><td class="td-jour">Lundi 1</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 2</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 4</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël + Franck</span></td></tr>
+<tr><td class="td-jour">Samedi 6</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S24</span></td><td class="td-dates" rowspan="4">8 → 14 Juin</td><td class="td-jour">Lundi 8</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 9</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 11</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Franck + Gérard</span></td></tr>
+<tr><td class="td-jour">Samedi 13</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S25</span></td><td class="td-dates" rowspan="4">15 → 21 Juin</td><td class="td-jour">Lundi 15</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 16</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 18</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Gérard + J.P.</span></td></tr>
+<tr><td class="td-jour">Samedi 20</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S26</span></td><td class="td-dates" rowspan="4">22 → 28 Juin</td><td class="td-jour">Lundi 22</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 23</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 25</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 J.P. + Mikaël</span></td></tr>
+<tr><td class="td-jour">Samedi 27</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S13 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S13 — Mars</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">23 → 29 Mars</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 23</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 24</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 26</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Mikaël + Franck</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 28</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">JUIN/JUIL</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S27</span></td><td class="td-dates" rowspan="4">29 Juin → 5 Juil</td><td class="td-jour">Lundi 29</td><td class="td-type"><span>Cours 9/12 ans — Débutants</span><div class="td-horaire">18h00 – 19h30</div></td><td class="td-enc"><span class="enc-name">👤 Erwan</span></td></tr>
+<tr><td class="td-jour">Mardi 30</td><td class="td-type"><span>Cours 9/12 ans Perf. + 13/17 ans Perf.</span><div class="td-horaire">18h00 – 22h00</div></td><td class="td-enc"><span class="enc-name">👤 Corentin</span></td></tr>
+<tr><td class="td-jour">Jeudi 2</td><td class="td-type"><span>Cours Compet. 9/17 ans + Adultes déb.</span><div class="td-horaire">18h15 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël + Franck</span></td></tr>
+<tr><td class="td-jour">Samedi 4</td><td class="td-type"><span>Cours 9/12 ans + 13/17 ans</span><div class="td-horaire">10h00 – 17h15</div></td><td class="td-enc"><span class="enc-name">👤 Pierre</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S14 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S14 — Mars / Avril</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">30 Mars → 5 Avr</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 30</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 31</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 2 Avr</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Franck + Gérard</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 4</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">JUILLET</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="1"><span class="sem-num">S28</span><span class="semaine-badge badge-vacances">Vacances</span></td><td class="td-dates" rowspan="1">6 → 12 Juil</td><td class="td-jour">6 → 12 Juil</td><td class="td-type"><span>Vacances d'été</span></td><td class="td-enc"></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S15 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S15 — Avril</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">6 → 12 Avr</span><span class="semaine-badge badge-ferie">Lundi Férié</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 6</div><div class="creneau-info"><div class="creneau-type" style="color:#fca5a5">Jour Férié</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 7</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 9</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 Gérard + J.P.</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Samedi 11</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans + 13/17 ans</div><div class="creneau-horaire">10h00 – 17h15</div><div class="creneau-encadrant">👤 Pierre</div></div></div>
-      </div>
-    </div>
 
-    <!-- S16-S17 Vacances -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S16-S17 — Vacances</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">13 → 26 Avr</span><span class="semaine-badge badge-vacances">Vacances</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body"><div class="creneau-row"><div class="creneau-jour">13 → 26 Avr</div><div class="creneau-info"><div class="creneau-type">Vacances scolaires</div></div></div></div>
-    </div>
-
-    <!-- S18 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S18 — Avril</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">27 → 30 Avr</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 27</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans — Débutants</div><div class="creneau-horaire">18h00 – 19h30</div><div class="creneau-encadrant">👤 Erwan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mardi 28</div><div class="creneau-info"><div class="creneau-type">Cours 9/12 ans Perf. + 13/17 ans Perf.</div><div class="creneau-horaire">18h00 – 22h00</div><div class="creneau-encadrant">👤 Corentin</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Jeudi 30</div><div class="creneau-info"><div class="creneau-type">Cours Compet. 9/17 ans + Adultes déb.</div><div class="creneau-horaire">18h15 – 22h15</div><div class="creneau-encadrant">👤 J.P. + Mikaël</div></div></div>
-      </div>
-    </div>
+  </div>
+  <div class="period-view" id="cours-sep_dec">
+    <div class="locked-msg" style="margin-top:20px;">📅 Planning Septembre–Décembre à venir</div>
+  </div>
+</div>
   </div><!-- fin cours-planning -->
 
   <div class="plan-view" id="cours-contacts">
@@ -335,6 +762,8 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
   </div>
 </div>
 
+
+
 <!-- PLANNING LOISIRS -->
 <div class="sec-page" id="pg-loisirs">
   <div class="ptitle">🌄 Planning Loisirs</div>
@@ -344,190 +773,293 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
   </div>
 
   <div class="plan-view loisirs on" id="loisirs-planning">
-    <div class="plan-info-box">Le bureau se réserve le droit de fermer un créneau à tout moment. Pour les sorties extérieures, prévenir le responsable 48h avant (le jeudi pour le samedi).</div>
+  <div class="plan-header-grid loisirs-header">
+  <div class="phg-col">
+    <div class="phg-jour">Lundi</div>
+    <div class="phg-horaire">20h00 – 22h15</div>
+    <div class="phg-session">Loisirs adultes</div>
+  </div>
+  <div class="phg-col">
+    <div class="phg-jour">Mercredi</div>
+    <div class="phg-horaire">18h30 – 22h30</div>
+    <div class="phg-session">Loisirs adultes (×2)</div>
+  </div>
+  <div class="phg-col">
+    <div class="phg-jour">Vendredi</div>
+    <div class="phg-horaire">18h30 – 21h00</div>
+    <div class="phg-session">Loisirs adultes</div>
+  </div>
+  <div class="phg-col">
+    <div class="phg-jour">Samedi</div>
+    <div class="phg-horaire">17h15 – 19h15</div>
+    <div class="phg-session">Sur demande</div>
+  </div>
+  <div class="phg-col">
+    <div class="phg-jour">Dimanche</div>
+    <div class="phg-horaire">10h30 – 12h30</div>
+    <div class="phg-session">Loisirs adultes</div>
+  </div>
+</div>
+<div class="plan-info-box">Le bureau se réserve le droit de fermer un créneau à tout moment. Pour les sorties extérieures, prévenir le responsable 48h avant (le jeudi pour le samedi).</div>
+  <div class="period-tabs">
+    <button class="period-tab" data-plan="loisirs" data-period="sep_dec">Sep → Déc</button>
+    <button class="period-tab" data-plan="loisirs" data-period="jan_avr">Jan → Avr</button>
+    <button class="period-tab on" data-plan="loisirs" data-period="mai_juil">Mai → Juil</button>
+  </div>
+  <div class="period-view" id="loisirs-jan_avr">
+    <details class="plan-month-details" open>
+<summary class="plan-month-summary">JANVIER</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr class="tr-special"><td class="td-sem" rowspan="1"><span class="sem-num">S01</span><span class="semaine-badge badge-special">Démontage</span></td><td class="td-dates" rowspan="1">1 → 4 Jan</td><td class="td-jour">1 → 4 Jan</td><td class="td-type"><span style="color:#6ee7b7">Démontage</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S02</span></td><td class="td-dates" rowspan="4">5 → 11 Jan</td><td class="td-jour">Lundi 5</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël</span></td></tr>
+<tr><td class="td-jour">Mercredi 7</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine / Alex</span></td></tr>
+<tr><td class="td-jour">Vendredi 9</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Xavier</span></td></tr>
+<tr><td class="td-jour">Dimanche 11</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Sébastien</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S03</span><span class="semaine-badge badge-special">Compet. Gym Sam/Dim</span></td><td class="td-dates" rowspan="4">12 → 18 Jan</td><td class="td-jour">Lundi 12</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 David</span></td></tr>
+<tr><td class="td-jour">Mercredi 14</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Gérard / Hervé</span></td></tr>
+<tr><td class="td-jour">Vendredi 16</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Gérard</span></td></tr>
+<tr class="tr-ferie"><td class="td-jour">Sam 17 / Dim 18</td><td class="td-type"><span style="color:#fca5a5">Compétition Gym</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S04</span></td><td class="td-dates" rowspan="4">19 → 25 Jan</td><td class="td-jour">Lundi 19</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Marion</span></td></tr>
+<tr><td class="td-jour">Mercredi 21</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël / Nicolas</span></td></tr>
+<tr><td class="td-jour">Vendredi 23</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-jour">Dimanche 25</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S01 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S01 — Janvier</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">1 → 4 Jan</span><span class="semaine-badge badge-special">Démontage</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body"><div class="creneau-row"><div class="creneau-jour">1 → 4 Jan</div><div class="creneau-info"><div class="creneau-type" style="color:#6ee7b7">Démontage</div></div></div></div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">JAN / FÉV</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S05</span><span class="semaine-badge badge-special">InterCaf Dim</span></td><td class="td-dates" rowspan="4">26 Jan → 1 Fév</td><td class="td-jour">Lundi 26</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 François</span></td></tr>
+<tr><td class="td-jour">Mercredi 28</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 David / Julien</span></td></tr>
+<tr><td class="td-jour">Vendredi 30</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr class="tr-special"><td class="td-jour">Dimanche 1</td><td class="td-type"><span style="color:#6ee7b7">InterCaf</span></td><td class="td-enc"></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S02 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S02 — Janvier</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">5 → 11 Jan</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 5</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Mikaël</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 7</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Claudine / Alex</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 9</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Xavier</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 11</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Sébastien</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">FÉVRIER</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S06</span></td><td class="td-dates" rowspan="4">2 → 8 Fév</td><td class="td-jour">Lundi 2</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël</span></td></tr>
+<tr><td class="td-jour">Mercredi 4</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Gérard / Hervé</span></td></tr>
+<tr><td class="td-jour">Vendredi 6</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Xavier</span></td></tr>
+<tr><td class="td-jour">Dimanche 8</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Hugo</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S07</span></td><td class="td-dates" rowspan="4">9 → 15 Fév</td><td class="td-jour">Lundi 9</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 François</span></td></tr>
+<tr><td class="td-jour">Mercredi 11</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël / Nicolas</span></td></tr>
+<tr><td class="td-jour">Vendredi 13</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-jour">Dimanche 15</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S03 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S03 — Janvier</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">12 → 18 Jan</span><span class="semaine-badge badge-special">Compet. Gym Sam/Dim</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 12</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 David</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 14</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Gérard / Hervé</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 16</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Gérard</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Sam 17 / Dim 18</div><div class="creneau-info"><div class="creneau-type" style="color:#fca5a5">Compétition Gym</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">VACANCES</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S08-S09</span><span class="semaine-badge badge-vacances">Vacances</span></td><td class="td-dates" rowspan="4">16 Fév → 1 Mars</td><td class="td-jour">Lundi 16</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Marion</span></td></tr>
+<tr><td class="td-jour">Mercredi 18</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 David / Julien</span></td></tr>
+<tr><td class="td-jour">Vendredi 20</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-jour">Dimanche 22</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S04 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S04 — Janvier</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">19 → 25 Jan</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 19</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Marion</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 21</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Mikaël / Nicolas</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 23</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Claudine</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 25</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Claudine</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">MARS</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S10</span></td><td class="td-dates" rowspan="4">2 → 8 Mars</td><td class="td-jour">Lundi 2</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Yan</span></td></tr>
+<tr><td class="td-jour">Mercredi 4</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine / Alex</span></td></tr>
+<tr><td class="td-jour">Vendredi 6</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Gérard</span></td></tr>
+<tr><td class="td-jour">Dimanche 8</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Hugo</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S11</span></td><td class="td-dates" rowspan="4">9 → 15 Mars</td><td class="td-jour">Lundi 9</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 David</span></td></tr>
+<tr><td class="td-jour">Mercredi 11</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Gérard / Hervé</span></td></tr>
+<tr><td class="td-jour">Vendredi 13</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-jour">Dimanche 15</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S12</span></td><td class="td-dates" rowspan="4">16 → 22 Mars</td><td class="td-jour">Lundi 16</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Marion</span></td></tr>
+<tr><td class="td-jour">Mercredi 18</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël / Nicolas</span></td></tr>
+<tr><td class="td-jour">Vendredi 20</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-jour">Dimanche 22</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Sébastien</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S13</span></td><td class="td-dates" rowspan="4">23 → 29 Mars</td><td class="td-jour">Lundi 23</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 François</span></td></tr>
+<tr><td class="td-jour">Mercredi 25</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 David / Julien</span></td></tr>
+<tr><td class="td-jour">Vendredi 27</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-jour">Dimanche 29</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Hugo</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S05 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S05 — Jan / Fév</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">26 Jan → 1 Fév</span><span class="semaine-badge badge-special">InterCaf Dim</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 26</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 François</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 28</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 David / Julien</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 30</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Julie</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 1</div><div class="creneau-info"><div class="creneau-type" style="color:#6ee7b7">InterCaf</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">MARS / AVRIL</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S14</span></td><td class="td-dates" rowspan="4">30 Mars → 5 Avr</td><td class="td-jour">Lundi 30</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël</span></td></tr>
+<tr><td class="td-jour">Mercredi 1</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Gérard / Hervé</span></td></tr>
+<tr><td class="td-jour">Vendredi 3</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Xavier</span></td></tr>
+<tr><td class="td-jour">Dimanche 5</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S06 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S06 — Février</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">2 → 8 Fév</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 2</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Yan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 4</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Claudine / Alex</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 6</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Xavier</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 8</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Sébastien</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">AVRIL</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S15</span></td><td class="td-dates" rowspan="4">6 → 12 Avr</td><td class="td-jour">Lundi 6</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 David</span></td></tr>
+<tr><td class="td-jour">Mercredi 8</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël / Nicolas</span></td></tr>
+<tr><td class="td-jour">Vendredi 10</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-jour">Dimanche 12</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Sébastien</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S16</span><span class="semaine-badge badge-vacances">Vacances</span></td><td class="td-dates" rowspan="4">13 → 19 Avr</td><td class="td-jour">Lundi 13</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 François</span></td></tr>
+<tr><td class="td-jour">Mercredi 15</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine / Alex</span></td></tr>
+<tr><td class="td-jour">Vendredi 17</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Gérard</span></td></tr>
+<tr><td class="td-jour">Dimanche 19</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S17</span><span class="semaine-badge badge-vacances">Vacances</span></td><td class="td-dates" rowspan="4">20 → 26 Avr</td><td class="td-jour">Lundi 20</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Marion</span></td></tr>
+<tr><td class="td-jour">Mercredi 22</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 David / Julien</span></td></tr>
+<tr><td class="td-jour">Vendredi 24</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-jour">Dim 26</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-sem" rowspan="2"><span class="sem-num">S18</span></td><td class="td-dates" rowspan="2">27 → 30 Avr</td><td class="td-jour">Lundi 27</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 François</span></td></tr>
+<tr><td class="td-jour">Mercredi 29</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine / Alex</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S07 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S07 — Février</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">9 → 15 Fév</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 9</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Franck</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 11</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Gérard / Hervé</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 13</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Gérard</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 15</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Hugo</div></div></div>
-      </div>
-    </div>
 
-    <!-- S08-S09 Vacances -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S08-S09 — Vacances</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">16 Fév → 1 Mars</span><span class="semaine-badge badge-vacances">Vacances</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 16</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Mikaël</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 18</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Mikaël / Nicolas</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 20</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Claudine</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dim 22 / Lun 23</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">diverses</div><div class="creneau-encadrant">👤 Claudine / David</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 25</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 David / Julien</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 27</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Julie</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dim 28 / Dim 1</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Julie</div></div></div>
-      </div>
-    </div>
+  </div>
+  <div class="period-view on" id="loisirs-mai_juil">
+    <details class="plan-month-details" open>
+<summary class="plan-month-summary">MAI</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S19</span></td><td class="td-dates" rowspan="4">4 → 10 Mai</td><td class="td-jour">Lundi 4</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Yan</span></td></tr>
+<tr><td class="td-jour">Mercredi 6</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Gérard / Hervé</span></td></tr>
+<tr class="tr-ferie"><td class="td-jour">Vendredi 8</td><td class="td-type"><span style="color:#fca5a5">Férié — Victoire 1945</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-jour">Dimanche 10</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Hugo</span></td></tr>
+<tr><td class="td-sem" rowspan="5"><span class="sem-num">S20</span><span class="semaine-badge badge-ferie">Ascension Jeu</span></td><td class="td-dates" rowspan="5">11 → 17 Mai</td><td class="td-jour">Lundi 11</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël</span></td></tr>
+<tr><td class="td-jour">Mercredi 13</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël / Nicolas</span></td></tr>
+<tr class="tr-ferie"><td class="td-jour">Jeudi 14</td><td class="td-type"><span style="color:#fca5a5">Férié — Ascension</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-jour">Samedi 16</td><td class="td-type"><span>Loisirs — Sur demande</span><div class="td-horaire">17h15 – 19h15</div></td><td class="td-enc"></td></tr>
+<tr><td class="td-jour">Dimanche 17</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S21</span></td><td class="td-dates" rowspan="4">18 → 24 Mai</td><td class="td-jour">Lundi 18</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Franck</span></td></tr>
+<tr><td class="td-jour">Mercredi 20</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 David / Julien</span></td></tr>
+<tr><td class="td-jour">Vendredi 22</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Gérard</span></td></tr>
+<tr><td class="td-jour">Dimanche 24</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr class="tr-ferie"><td class="td-sem" rowspan="4"><span class="sem-num">S22</span><span class="semaine-badge badge-ferie">Pentecôte Lun</span></td><td class="td-dates" rowspan="4">25 → 31 Mai</td><td class="td-jour">Lundi 25</td><td class="td-type"><span style="color:#fca5a5">Férié — Pentecôte</span></td><td class="td-enc"></td></tr>
+<tr><td class="td-jour">Mercredi 27</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine / Alex</span></td></tr>
+<tr><td class="td-jour">Vendredi 29</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-jour">Dimanche 31</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Sébastien</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S10 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S10 — Mars</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">2 → 8 Mars</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 2</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Marion</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 4</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Claudine / Alex</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 6</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Xavier</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 8</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Sébastien</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">JUIN</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S23</span></td><td class="td-dates" rowspan="4">1 → 7 Juin</td><td class="td-jour">Lundi 1</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 David</span></td></tr>
+<tr><td class="td-jour">Mercredi 3</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Gérard / Hervé</span></td></tr>
+<tr><td class="td-jour">Vendredi 5</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-jour">Dimanche 7</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Hugo</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S24</span></td><td class="td-dates" rowspan="4">8 → 14 Juin</td><td class="td-jour">Lundi 8</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Marion</span></td></tr>
+<tr><td class="td-jour">Mercredi 10</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël / Nicolas</span></td></tr>
+<tr><td class="td-jour">Vendredi 12</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Xavier</span></td></tr>
+<tr><td class="td-jour">Dimanche 14</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S25</span></td><td class="td-dates" rowspan="4">15 → 21 Juin</td><td class="td-jour">Lundi 15</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 François</span></td></tr>
+<tr><td class="td-jour">Mercredi 17</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 David / Julien</span></td></tr>
+<tr><td class="td-jour">Vendredi 19</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Claudine</span></td></tr>
+<tr><td class="td-jour">Dimanche 21</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-sem" rowspan="4"><span class="sem-num">S26</span></td><td class="td-dates" rowspan="4">22 → 28 Juin</td><td class="td-jour">Lundi 22</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Yan</span></td></tr>
+<tr><td class="td-jour">Mercredi 24</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Claudine / Alex</span></td></tr>
+<tr><td class="td-jour">Vendredi 26</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Gérard</span></td></tr>
+<tr><td class="td-jour">Dimanche 28</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Sébastien</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S11 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S11 — Mars</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">9 → 15 Mars</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 9</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 François</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 11</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Gérard / Hervé</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 13</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Gérard</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 15</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Hugo</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">JUIN/JUIL</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="4"><span class="sem-num">S27</span></td><td class="td-dates" rowspan="4">29 Juin → 5 Juil</td><td class="td-jour">Lundi 29</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">20h00 – 22h15</div></td><td class="td-enc"><span class="enc-name">👤 Mikaël</span></td></tr>
+<tr><td class="td-jour">Mercredi 1</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 22h30</div></td><td class="td-enc"><span class="enc-name">👤 Gérard / Hervé</span></td></tr>
+<tr><td class="td-jour">Vendredi 3</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">18h30 – 21h00</div></td><td class="td-enc"><span class="enc-name">👤 Julie</span></td></tr>
+<tr><td class="td-jour">Dimanche 5</td><td class="td-type"><span>Loisirs Adultes</span><div class="td-horaire">10h30 – 12h30</div></td><td class="td-enc"><span class="enc-name">👤 Hugo</span></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S12 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S12 — Mars</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">16 → 22 Mars</span><span class="semaine-badge badge-special">Compet. Gym Sam/Dim</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 16</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Yan</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 18</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Mikaël / Nicolas</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 20</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Claudine</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Sam 21 / Dim 22</div><div class="creneau-info"><div class="creneau-type" style="color:#fca5a5">Compétition Gym</div></div></div>
-      </div>
-    </div>
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">JUILLET</summary>
+<table class="plan-table">
+<thead><tr>
+  <th class="th-sem">Sem.</th>
+  <th class="th-dates">Dates</th>
+  <th class="th-jour">Jour</th>
+  <th class="th-type">Créneau / Cours</th>
+  <th class="th-enc">Encadrant</th>
+</tr></thead>
+<tbody><tr><td class="td-sem" rowspan="1"><span class="sem-num">S28</span><span class="semaine-badge badge-vacances">Vacances</span></td><td class="td-dates" rowspan="1">6 → 12 Juil</td><td class="td-jour">6 → 12 Juil</td><td class="td-type"><span>Vacances d'été</span></td><td class="td-enc"></td></tr>
+</tbody></table>
+</details>
 
-    <!-- S13 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S13 — Mars</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">23 → 29 Mars</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 23</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Franck</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 25</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 David / Julien</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 27</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Julie</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 29</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Julie</div></div></div>
-      </div>
-    </div>
 
-    <!-- S14 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S14 — Mars / Avril</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">30 Mars → 5 Avr</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 30</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Mikaël</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 1 Avr</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Claudine / Alex</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 3</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Xavier</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 5</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Sébastien</div></div></div>
-      </div>
-    </div>
-
-    <!-- S15 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S15 — Avril</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">6 → 12 Avr</span><span class="semaine-badge badge-ferie">Lundi Férié</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 6</div><div class="creneau-info"><div class="creneau-type" style="color:#fca5a5">Jour Férié</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 8</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Gérard / Hervé</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 10</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Gérard</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 12</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Hugo</div></div></div>
-      </div>
-    </div>
-
-    <!-- S16 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S16 — Avril</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">13 → 19 Avr</span><span class="semaine-badge badge-vacances">Vacances</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 13</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 David</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 15</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Mikaël / Nicolas</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 17</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Claudine</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dimanche 19</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Claudine</div></div></div>
-      </div>
-    </div>
-
-    <!-- S17 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S17 — Avril</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">20 → 26 Avr</span><span class="semaine-badge badge-vacances">Vacances</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 20</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 Marion</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 22</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 David / Julien</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Vendredi 24</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 21h00</div><div class="creneau-encadrant">👤 Julie</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Dim 26</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">10h30 – 12h30</div><div class="creneau-encadrant">👤 Julie</div></div></div>
-      </div>
-    </div>
-
-    <!-- S18 -->
-    <div class="semaine-block semaine-collapsed">
-      <div class="semaine-header"><h3>S18 — Avril</h3><div style="display:flex;gap:8px;align-items:center"><span class="sdates">27 → 30 Avr</span><span class="chevron">▾</span></div></div>
-      <div class="semaine-body">
-        <div class="creneau-row"><div class="creneau-jour">Lundi 27</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">20h00 – 22h15</div><div class="creneau-encadrant">👤 François</div></div></div>
-        <div class="creneau-row"><div class="creneau-jour">Mercredi 29</div><div class="creneau-info"><div class="creneau-type">Loisirs Adultes</div><div class="creneau-horaire">18h30 – 22h30</div><div class="creneau-encadrant">👤 Claudine / Alex</div></div></div>
-      </div>
-    </div>
+  </div>
+  <div class="period-view" id="loisirs-sep_dec">
+    <div class="locked-msg" style="margin-top:20px;">📅 Planning Septembre–Décembre à venir</div>
+  </div>
+</div>
   </div><!-- fin loisirs-planning -->
 
   <div class="plan-view loisirs" id="loisirs-contacts">
@@ -552,6 +1084,58 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
     </div>
   </div>
 </div>
+
+
+
+
+<!-- MATERIEL -->
+<div class="sec-page" id="pg-materiel">
+  <div class="ptitle">🎒 Matériel</div>
+  <div class="mat-main-tabs">
+    <button class="mat-main-tab on" data-matview="pret">Prêt Matériel</button>
+    <button class="mat-main-tab" data-matview="recap">Récapitulatif</button>
+    <button class="mat-main-tab mat-main-tab-demande" data-matview="demande">Faire une demande</button>
+  </div>
+
+  <!-- PRÊT MATÉRIEL VIEW -->
+  <div id="mat-view-pret" class="mat-main-view on">
+    <div class="mat-org-tabs">
+      <button class="mat-org-tab on" data-org="caf">CAF Liffré</button>
+      <button class="mat-org-tab" data-org="cd35">CD35</button>
+    </div>
+    <div id="mat-caf" class="mat-org-view on"></div>
+    <div id="mat-cd35" class="mat-org-view"></div>
+  </div>
+
+  <!-- RÉCAPITULATIF VIEW -->
+  <div id="mat-view-recap" class="mat-main-view">
+    <div id="mat-recap-content"></div>
+  </div>
+
+  <!-- FAIRE UNE DEMANDE VIEW -->
+  <div id="mat-view-demande" class="mat-main-view">
+    <div id="mat-demande-content"></div>
+  </div>
+</div>
+
+
+
+<!-- COMPET -->
+<div class="sec-page" id="pg-compet">
+  <div class="ptitle">🏆 Compétition</div>
+  <div class="compet-tabs">
+    <button class="compet-tab on" data-compet="blocs">Bloc</button>
+    <button class="compet-tab" data-compet="vitesse">Vitesse</button>
+    <button class="compet-tab" data-compet="open">Open</button>
+    <button class="compet-tab compet-tab-resultats" data-compet="resultats">🏅 Résultats</button>
+  </div>
+  <div id="compet-blocs" class="compet-view on"></div>
+  <div id="compet-vitesse" class="compet-view"></div>
+  <div id="compet-open" class="compet-view"></div>
+  <div id="compet-resultats" class="compet-view"></div>
+</div>
+
+
 
 <!-- VIDEOS -->
 <div class="sec-page" id="pg-videos">
@@ -583,62 +1167,23 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
   </div>
 </div>
 
+
+
 <!-- PHOTOS -->
 <div class="sec-page" id="pg-photos">
   <div class="ptitle">📸 Photos</div>
   <div id="photo-grid" class="photo-grid">
-
-    <div class="photo-item" data-src="photos/1.jpg" data-caption="Photo 1">
-      <img src="photos/1.jpg" alt="Photo 1">
-      <div class="photo-caption">Photo 1</div>
+    <!-- POUR AJOUTER UNE PHOTO, copie ce bloc et modifie les 3 valeurs :
+    <div class="photo-item" data-src="photos/NOM-FICHIER.jpg" data-caption="Titre photo">
+      <img src="photos/NOM-FICHIER.jpg" alt="Titre photo">
+      <div class="photo-caption">Titre photo</div>
     </div>
-    <div class="photo-item" data-src="photos/2.jpg" data-caption="Photo 2">
-      <img src="photos/2.jpg" alt="Photo 2">
-      <div class="photo-caption">Photo 2</div>
-    </div>
-    <div class="photo-item" data-src="photos/3.jpg" data-caption="Photo 3">
-      <img src="photos/3.jpg" alt="Photo 3">
-      <div class="photo-caption">Photo 3</div>
-    </div>
-    <div class="photo-item" data-src="photos/5.jpg" data-caption="Photo 5">
-      <img src="photos/5.jpg" alt="Photo 5">
-      <div class="photo-caption">Photo 5</div>
-    </div>
-    <div class="photo-item" data-src="photos/6.jpg" data-caption="Photo 6">
-      <img src="photos/6.jpg" alt="Photo 6">
-      <div class="photo-caption">Photo 6</div>
-    </div>
-    <div class="photo-item" data-src="photos/7.jpg" data-caption="Photo 7">
-      <img src="photos/7.jpg" alt="Photo 7">
-      <div class="photo-caption">Photo 7</div>
-    </div>
-    <div class="photo-item" data-src="photos/8.jpg" data-caption="Photo 8">
-      <img src="photos/8.jpg" alt="Photo 8">
-      <div class="photo-caption">Photo 8</div>
-    </div>
-    <div class="photo-item" data-src="photos/9.jpg" data-caption="Photo 9">
-      <img src="photos/9.jpg" alt="Photo 9">
-      <div class="photo-caption">Photo 9</div>
-    </div>
-    <div class="photo-item" data-src="photos/10.jpg" data-caption="Photo 10">
-      <img src="photos/10.jpg" alt="Photo 10">
-      <div class="photo-caption">Photo 10</div>
-    </div>
-
+    -->
   </div>
   <div id="photo-empty" class="photo-empty"><div>📷</div>Les photos arrivent bientôt !<br><span style="font-size:0.75rem;opacity:0.6;">Ajoute tes photos dans le dossier <code>photos/</code> du repo.</span></div>
 </div>
 
-<!-- VOIES -->
-<div class="sec-page" id="pg-voies">
-  <div id="stats">
-    <div class="st"><div class="n" id="tot">78</div><div class="l">Total</div></div>
-    <div class="st"><div class="n" id="val">0</div><div class="l">Validées</div></div>
-    <div class="st"><div class="n" id="prg">0</div><div class="l">En cours</div></div>
-  </div>
-  <div id="fil"></div>
-  <div id="app"></div>
-</div>
+
 
 <!-- LIGHTBOX -->
 <div id="lightbox">
@@ -650,13 +1195,68 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
 </div>
 
 <!-- NAV -->
+
+
+<!-- INSTALL MODAL -->
+<div id="install-modal" onclick="if(event.target===this)closeInstallModal()">
+  <div id="install-modal-box">
+    <h3>📲 Ajouter sur l'écran d'accueil</h3>
+    <div class="install-os-tabs">
+      <button class="install-os-tab on" onclick="switchOS('ios')">iPhone / iPad</button>
+      <button class="install-os-tab" onclick="switchOS('android')">Android</button>
+    </div>
+
+    <div class="install-os active" id="install-ios">
+      <div class="install-step">
+        <div class="install-step-num">1</div>
+        <div class="install-step-text">Ouvre ce lien dans <strong>Safari</strong> (pas Chrome ni Firefox)</div>
+      </div>
+      <div class="install-step">
+        <div class="install-step-num">2</div>
+        <div class="install-step-text">Appuie sur l'icône <strong>Partager</strong> en bas de l'écran (le carré avec une flèche vers le haut ↑)</div>
+      </div>
+      <div class="install-step">
+        <div class="install-step-num">3</div>
+        <div class="install-step-text">Fais défiler et appuie sur <strong>« Sur l'écran d'accueil »</strong></div>
+      </div>
+      <div class="install-step">
+        <div class="install-step-num">4</div>
+        <div class="install-step-text">Appuie sur <strong>« Ajouter »</strong> en haut à droite — l'appli apparaît sur ton écran !</div>
+      </div>
+    </div>
+
+    <div class="install-os" id="install-android">
+      <div class="install-step">
+        <div class="install-step-num">1</div>
+        <div class="install-step-text">Ouvre ce lien dans <strong>Chrome</strong></div>
+      </div>
+      <div class="install-step">
+        <div class="install-step-num">2</div>
+        <div class="install-step-text">Appuie sur les <strong>3 points</strong> ⋮ en haut à droite</div>
+      </div>
+      <div class="install-step">
+        <div class="install-step-num">3</div>
+        <div class="install-step-text">Appuie sur <strong>« Ajouter à l'écran d'accueil »</strong></div>
+      </div>
+      <div class="install-step">
+        <div class="install-step-num">4</div>
+        <div class="install-step-text">Confirme en appuyant sur <strong>« Ajouter »</strong> — l'icône apparaît sur ton écran !</div>
+      </div>
+    </div>
+
+    <button id="install-close" onclick="closeInstallModal()">Fermer</button>
+  </div>
+</div>
+
 <nav id="nav">
-  <button class="nb on" data-tab="sorties"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Sorties</button>
+  <button class="nb on" data-tab="voies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Voies</button>
+  <button class="nb" data-tab="sorties"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Sorties</button>
   <button class="nb" data-tab="cours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Cours</button>
   <button class="nb" data-tab="loisirs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l4-8 4 4 4-6 4 6"/><circle cx="12" cy="5" r="2"/></svg>Loisirs</button>
+  <button class="nb" data-tab="materiel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Matériel</button>
+  <button class="nb" data-tab="compet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>Compét.</button>
   <button class="nb" data-tab="videos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>Vidéos</button>
   <button class="nb" data-tab="photos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos</button>
-  <button class="nb" data-tab="voies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Voies</button>
 </nav>
 
 <script>
@@ -668,6 +1268,23 @@ document.getElementById("nav").addEventListener("click",function(e){
   document.querySelectorAll(".sec-page").forEach(function(p){p.classList.remove("on");});
   btn.classList.add("on");
   document.getElementById("pg-"+tab).classList.add("on");
+});
+
+
+// PERIOD TABS
+document.addEventListener('click', function(e) {
+  var pt = e.target.closest('.period-tab');
+  if (!pt) return;
+  var planId = pt.dataset.plan;
+  var period = pt.dataset.period;
+  // Update tab active state
+  document.querySelectorAll('.period-tab[data-plan="'+planId+'"]').forEach(function(t){t.classList.remove('on');});
+  pt.classList.add('on');
+  // Update view
+  var prefix = planId + '-';
+  document.querySelectorAll('#'+planId+'-planning .period-view').forEach(function(v){v.classList.remove('on');});
+  var target = document.getElementById(prefix + period);
+  if (target) target.classList.add('on');
 });
 
 // ONGLETS PLANNING (Planning / Contacts)
@@ -772,6 +1389,904 @@ document.addEventListener("click",function(e){
 });
 upd();mkFil();render();
 initPhotos();
+
+// ONGLETS COMPET
+document.querySelectorAll(".compet-tab").forEach(function(tab){
+  tab.addEventListener("click",function(){
+    document.querySelectorAll(".compet-tab").forEach(function(t){t.classList.remove("on");});
+    tab.classList.add("on");
+    document.querySelectorAll(".compet-view").forEach(function(v){v.classList.remove("on");});
+    document.getElementById("compet-"+tab.dataset.compet).classList.add("on");
+  });
+});
+
+// COMPET DATA
+var COMPET_EDITORS = ["Fabien","Pierre","Erwan","Corentin"];
+var currentUser = localStorage.getItem("caf_user")||"";
+
+function competKey(type){return "caf_compet_"+type;}
+function getCompets(type){try{return JSON.parse(localStorage.getItem(competKey(type))||"null");}catch(e){return null;}}
+function saveCompets(type,arr){try{localStorage.setItem(competKey(type),JSON.stringify(arr));}catch(e){}}
+
+var COMPET_CATEGORIES = {
+  blocs: ["Championnats de France","Coupes de France","1/2 Finales Champ. France","Championnats Régionaux","Championnats Départementaux","Opens"],
+  vitesse: ["Championnats de France","Coupes de France","1/2 Finales Champ. France","Championnats Régionaux","Championnats Départementaux","Opens"],
+  open: ["Championnats de France","Coupes de France","Opens Régionaux","Opens Locaux"]
+};
+
+// Example data shown in grey when no real data exists
+var COMPET_EXAMPLES = {
+  blocs: [
+    {cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08", nb:"6", or:"Alice M.", ag:"Thomas B.", br:"Léa D.", exemple:true},
+    {cat:"Championnats Départementaux", lieu:"Salle CAF Liffré", date:"2026-03-14", nb:"4", or:"Hugo C.", ag:"", br:"", exemple:true},
+    {cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05", nb:"8", or:"Alice M.", ag:"Hugo C.", br:"Camille R.", exemple:true},
+    {cat:"Coupes de France", lieu:"Salle Arkose, Paris", date:"2026-05-17", nb:"3", or:"", ag:"Thomas B.", br:"", exemple:true},
+    {cat:"Opens", lieu:"Open de Laval", date:"2026-06-07", nb:"5", or:"Hugo C.", ag:"Alice M.", br:"Léa D.", exemple:true},
+  ],
+  vitesse: [
+    {cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08", nb:"3", or:"Romain V.", ag:"", br:"", exemple:true},
+    {cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05", nb:"2", or:"Romain V.", ag:"Emma L.", br:"", exemple:true},
+  ],
+  open: [
+    {cat:"Opens Locaux", lieu:"Open Fougères", date:"2026-03-21", nb:"7", or:"Alice M.", ag:"Hugo C.", br:"Thomas B.", exemple:true},
+    {cat:"Opens Régionaux", lieu:"Open Bretagne, Brest", date:"2026-05-30", nb:"4", or:"", ag:"Alice M.", br:"", exemple:true},
+  ]
+};
+
+function isEditor(){return COMPET_EDITORS.includes(currentUser);}
+
+function renderCompet(type){
+  var container = document.getElementById("compet-"+type);
+  var realCompets = getCompets(type);
+  var hasRealData = realCompets !== null && realCompets.length > 0;
+  var compets = hasRealData ? realCompets : [];
+  var cats = COMPET_CATEGORIES[type];
+  var html = "";
+
+  // User selector row + add button
+  html += '<div class="compet-toolbar">';
+  html += '<div class="compet-user-row">';
+  html += '<label class="compet-user-label">Connecté :</label>';
+  html += '<select id="user-select-'+type+'" class="compet-user-select">';
+  html += '<option value="">— Lecteur —</option>';
+  ["Fabien","Pierre","Erwan","Corentin"].forEach(function(u){
+    html += '<option value="'+u+'"'+(currentUser===u?" selected":"")+'>'+u+'</option>';
+  });
+  html += '</select>';
+  html += '</div>';
+  if(isEditor()){
+    html += '<button class="btn-add-compet" onclick="toggleCompetForm(\''+type+'\')">➕ Ajouter</button>';
+  }
+  html += '</div>';
+
+  // Collapsible add form (hidden by default)
+  if(isEditor()){
+    html += '<div class="compet-form" id="compet-form-'+type+'" style="display:none;">';
+    html += '<div class="compet-form-title">Nouvelle compétition</div>';
+    html += '<label class="compet-label">Catégorie</label>';
+    html += '<select id="new-cat-'+type+'" class="compet-input">';
+    cats.forEach(function(c){html += '<option>'+c+'</option>';});
+    html += '</select>';
+    html += '<label class="compet-label">Lieu</label>';
+    html += '<input type="text" id="new-lieu-'+type+'" class="compet-input" placeholder="ex: Gymnase de Vitré">';
+    html += '<label class="compet-label">Date</label>';
+    html += '<input type="date" id="new-date-'+type+'" class="compet-input">';
+    html += '<label class="compet-label">Nombre de participants</label>';
+    html += '<input type="number" id="new-nb-'+type+'" class="compet-input" placeholder="0" min="0">';
+    html += '<label class="compet-label">Podiums</label>';
+    html += '<div class="podium-row"><span class="podium-label">🥇</span><input type="text" id="new-or-'+type+'" class="compet-input" placeholder="Nom(s)"></div>';
+    html += '<div class="podium-row"><span class="podium-label">🥈</span><input type="text" id="new-ag-'+type+'" class="compet-input" placeholder="Nom(s)"></div>';
+    html += '<div class="podium-row"><span class="podium-label">🥉</span><input type="text" id="new-br-'+type+'" class="compet-input" placeholder="Nom(s)"></div>';
+    html += '<div style="display:flex;gap:8px;margin-top:4px;">';
+    html += "<button class=\"btn-save\" onclick=\"addCompet('"+type+"')\">Enregistrer</button>";
+    html += "<button class=\"btn-cancel\" onclick=\"toggleCompetForm('"+type+"')\">Annuler</button>";
+    html += '</div>';
+    html += '</div>';
+  }
+
+  // If no real data: show examples greyed out with notice
+  if(!hasRealData && COMPET_EXAMPLES[type]){
+    html += '<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
+  }
+
+  // Display by category
+  cats.forEach(function(cat){
+    // Real entries for this cat
+    var entries = compets.filter(function(c){return c.cat===cat;});
+    // Example entries for this cat
+    var exEntries = (!hasRealData && COMPET_EXAMPLES[type]) ? COMPET_EXAMPLES[type].filter(function(c){return c.cat===cat;}) : [];
+    var allEntries = entries.concat(exEntries);
+    if(allEntries.length === 0 && !isEditor()) return;
+    html += '<details class="compet-cat-details" open>';
+    html += '<summary class="compet-cat-summary">'+cat+'<span class="compet-cat-count">'+allEntries.length+'</span></summary>';
+    if(allEntries.length === 0){
+      html += '<div class="locked-msg">Aucune compétition enregistrée</div>';
+    }
+    allEntries.forEach(function(e){
+      var isEx = e.exemple === true;
+      var idx2 = compets.indexOf(e);
+      html += '<div class="compet-entry'+(isEx?' compet-entry-exemple':'') +'">';
+      if(isEditor() && !isEx) html += "<button class=\"btn-del\" onclick=\"delCompet('"+type+"',"+idx2+")\">✕</button>";
+      if(isEx) html += '<span class="exemple-badge">Exemple</span>';
+      html += '<div class="compet-entry-title">📍 '+e.lieu+'</div>';
+      html += '<div class="compet-entry-meta">';
+      if(e.date) html += '<span class="compet-entry-tag tag-date">📅 '+formatDate(e.date)+'</span>';
+      if(e.nb) html += '<span class="compet-entry-tag tag-nb">👥 '+e.nb+' participants</span>';
+      html += '</div>';
+      if(e.or||e.ag||e.br){
+        html += '<div class="podiums-row">';
+        if(e.or) html += '<span class="pdm pdm-or">🥇 '+e.or+'</span>';
+        if(e.ag) html += '<span class="pdm pdm-ag">🥈 '+e.ag+'</span>';
+        if(e.br) html += '<span class="pdm pdm-br">🥉 '+e.br+'</span>';
+        html += '</div>';
+      }
+      html += '</div>';
+    });
+    html += '</details>';
+  });
+
+  container.innerHTML = html;
+
+  document.getElementById("user-select-"+type).addEventListener("change",function(){
+    currentUser = this.value;
+    localStorage.setItem("caf_user",currentUser);
+    renderAllCompets();
+    renderMat();
+  });
+}
+
+function toggleCompetForm(type){
+  var form = document.getElementById("compet-form-"+type);
+  if(!form) return;
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function formatDate(d){if(!d)return"";var p=d.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
+
+function addCompet(type){
+  var cat=document.getElementById("new-cat-"+type).value;
+  var lieu=document.getElementById("new-lieu-"+type).value.trim();
+  var date=document.getElementById("new-date-"+type).value;
+  var nb=document.getElementById("new-nb-"+type).value;
+  var or=document.getElementById("new-or-"+type).value.trim();
+  var ag=document.getElementById("new-ag-"+type).value.trim();
+  var br=document.getElementById("new-br-"+type).value.trim();
+  if(!lieu){alert("Merci d'indiquer un lieu");return;}
+  var compets=getCompets(type)||[];
+  compets.push({cat:cat,lieu:lieu,date:date,nb:nb,or:or,ag:ag,br:br});
+  compets.sort(function(a,b){return(a.date||"").localeCompare(b.date||"");});
+  saveCompets(type,compets);
+  toggleCompetForm(type);
+  renderCompet(type);
+}
+
+function delCompet(type,idx){
+  if(!confirm("Supprimer cette compétition ?")) return;
+  var compets=getCompets(type)||[];
+  compets.splice(idx,1);
+  saveCompets(type,compets);
+  renderCompet(type);
+}
+
+function renderAllCompets(){
+  ["blocs","vitesse","open"].forEach(renderCompet);
+  renderResultats();
+}
+
+
+// RÉSULTATS
+var RESULTATS_EXAMPLES = [
+  // Blocs
+  {type:"Bloc", cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08",
+   podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Thomas B."},{medal:"bronze",nom:"Léa D."}]},
+  {type:"Bloc", cat:"Championnats Départementaux", lieu:"Salle CAF Liffré", date:"2026-03-14",
+   podiums:[{medal:"or",nom:"Hugo C."}]},
+  {type:"Bloc", cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05",
+   podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Hugo C."},{medal:"bronze",nom:"Camille R."}]},
+  {type:"Bloc", cat:"Coupes de France", lieu:"Salle Arkose, Paris", date:"2026-05-17",
+   podiums:[{medal:"argent",nom:"Thomas B."}]},
+  {type:"Bloc", cat:"Opens", lieu:"Open de Laval", date:"2026-06-07",
+   podiums:[{medal:"or",nom:"Hugo C."},{medal:"argent",nom:"Alice M."},{medal:"bronze",nom:"Léa D."}]},
+  // Vitesse
+  {type:"Vitesse", cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08",
+   podiums:[{medal:"or",nom:"Romain V."}]},
+  {type:"Vitesse", cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05",
+   podiums:[{medal:"or",nom:"Romain V."},{medal:"argent",nom:"Emma L."}]},
+  // Open
+  {type:"Open", cat:"Opens Locaux", lieu:"Open Fougères", date:"2026-03-21",
+   podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Hugo C."},{medal:"bronze",nom:"Thomas B."}]},
+  {type:"Open", cat:"Opens Régionaux", lieu:"Open Bretagne, Brest", date:"2026-05-30",
+   podiums:[{medal:"argent",nom:"Alice M."}]},
+];
+
+function computeRankings(data){
+  var scores = {};
+  data.forEach(function(comp){
+    comp.podiums.forEach(function(p){
+      if(!scores[p.nom]) scores[p.nom] = {or:0, argent:0, bronze:0};
+      scores[p.nom][p.medal]++;
+    });
+  });
+  // Sort: or desc, then argent, then bronze
+  var arr = Object.keys(scores).map(function(nom){
+    return {nom:nom, or:scores[nom].or, argent:scores[nom].argent, bronze:scores[nom].bronze,
+      total: scores[nom].or*3 + scores[nom].argent*2 + scores[nom].bronze};
+  });
+  arr.sort(function(a,b){
+    if(b.or!==a.or) return b.or-a.or;
+    if(b.argent!==a.argent) return b.argent-a.argent;
+    return b.bronze-a.bronze;
+  });
+  return arr;
+}
+
+function renderResultats(){
+  var container = document.getElementById("compet-resultats");
+  if(!container) return;
+
+  // Collect real data from all types
+  var allReal = [];
+  var hasReal = false;
+  ["blocs","vitesse","open"].forEach(function(type){
+    var real = getCompets(type);
+    if(real && real.length>0){
+      hasReal = true;
+      real.forEach(function(c){
+        if(c.or||c.ag||c.br){
+          var typeName = type==="blocs"?"Bloc":type==="vitesse"?"Vitesse":"Open";
+          var pods = [];
+          if(c.or) pods.push({medal:"or",nom:c.or});
+          if(c.ag) pods.push({medal:"argent",nom:c.ag});
+          if(c.br) pods.push({medal:"bronze",nom:c.br});
+          allReal.push({type:typeName, cat:c.cat, lieu:c.lieu, date:c.date, podiums:pods});
+        }
+      });
+    }
+  });
+
+  var dataToUse = hasReal ? allReal : RESULTATS_EXAMPLES;
+  var rankings = computeRankings(dataToUse);
+
+  var html = "";
+
+  // User selector (shared)
+  html += '<div class="compet-toolbar">';
+  html += '<div class="compet-user-row">';
+  html += '<label class="compet-user-label">Connecté :</label>';
+  html += '<select id="user-select-resultats" class="compet-user-select">';
+  html += '<option value="">— Lecteur —</option>';
+  ["Fabien","Pierre","Erwan","Corentin"].forEach(function(u){
+    html += '<option value="'+u+'"'+(currentUser===u?" selected":"")+'>'+u+'</option>';
+  });
+  html += '</select>';
+  html += '</div></div>';
+
+  if(!hasReal){
+    html += '<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
+  }
+
+  // ── PODIUM RANKING TABLE
+  html += '<div class="res-section-title">🏆 Classement général</div>';
+  html += '<div class="res-ranking">';
+  rankings.forEach(function(r, i){
+    var rank = i+1;
+    var rankCls = rank===1?"rank-1":rank===2?"rank-2":rank===3?"rank-3":"rank-other";
+    var rankIcon = rank===1?"🥇":rank===2?"🥈":rank===3?"🥉":"#"+rank;
+    html += '<div class="res-rank-row'+(dataToUse===RESULTATS_EXAMPLES?" res-exemple":"")+'">';
+    html += '<span class="res-rank-badge '+rankCls+'">'+rankIcon+'</span>';
+    html += '<span class="res-rank-nom">'+r.nom+'</span>';
+    html += '<span class="res-medals">';
+    if(r.or)     html += '<span class="res-medal-pill pdm-or">🥇×'+r.or+'</span>';
+    if(r.argent) html += '<span class="res-medal-pill pdm-ag">🥈×'+r.argent+'</span>';
+    if(r.bronze) html += '<span class="res-medal-pill pdm-br">🥉×'+r.bronze+'</span>';
+    html += '</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  // ── DETAIL BY TYPE
+  ["Bloc","Vitesse","Open"].forEach(function(typeName){
+    var typeData = dataToUse.filter(function(d){return d.type===typeName;});
+    if(typeData.length===0) return;
+    var typeRankings = computeRankings(typeData);
+    html += '<details class="compet-cat-details" open>';
+    html += '<summary class="compet-cat-summary">'+typeName+'<span class="compet-cat-count">'+typeData.length+' compét.</span></summary>';
+
+    // Mini ranking for this type
+    html += '<div class="res-type-ranking">';
+    typeRankings.forEach(function(r,i){
+      var icon = i===0?"🥇":i===1?"🥈":i===2?"🥉":"·";
+      html += '<div class="res-type-row'+(dataToUse===RESULTATS_EXAMPLES?" res-exemple":"")+'">';
+      html += '<span style="width:20px;text-align:center;flex-shrink:0;">'+icon+'</span>';
+      html += '<span class="res-rank-nom">'+r.nom+'</span>';
+      html += '<span class="res-medals">';
+      if(r.or)     html += '<span class="res-medal-pill pdm-or">🥇×'+r.or+'</span>';
+      if(r.argent) html += '<span class="res-medal-pill pdm-ag">🥈×'+r.argent+'</span>';
+      if(r.bronze) html += '<span class="res-medal-pill pdm-br">🥉×'+r.bronze+'</span>';
+      html += '</span></div>';
+    });
+    html += '</div>';
+
+    // Competition detail cards
+    typeData.forEach(function(comp){
+      html += '<div class="compet-entry'+(dataToUse===RESULTATS_EXAMPLES?" compet-entry-exemple":"")+'">';
+      if(dataToUse===RESULTATS_EXAMPLES) html += '<span class="exemple-badge">Exemple</span>';
+      html += '<div class="compet-entry-title">📍 '+comp.lieu+'</div>';
+      html += '<div class="compet-entry-meta">';
+      if(comp.date) html += '<span class="compet-entry-tag tag-date">📅 '+formatDate(comp.date)+'</span>';
+      html += '<span class="compet-entry-tag" style="background:rgba(249,115,22,0.2);color:#fed7aa;">'+comp.cat+'</span>';
+      html += '</div>';
+      if(comp.podiums.length>0){
+        html += '<div class="podiums-row">';
+        comp.podiums.forEach(function(p){
+          var cls = p.medal==="or"?"pdm-or":p.medal==="argent"?"pdm-ag":"pdm-br";
+          var icon = p.medal==="or"?"🥇":p.medal==="argent"?"🥈":"🥉";
+          html += '<span class="pdm '+cls+'">'+icon+' '+p.nom+'</span>';
+        });
+        html += '</div>';
+      }
+      html += '</div>';
+    });
+    html += '</details>';
+  });
+
+  container.innerHTML = html;
+
+  document.getElementById("user-select-resultats").addEventListener("change",function(){
+    currentUser = this.value;
+    localStorage.setItem("caf_user",currentUser);
+    renderAllCompets();
+    renderMat();
+  });
+}
+
+
+// MATERIEL DATA
+var MAT_EDITORS = ["Fabien","Erwan"];
+
+var MAT_DEFAULT_CAF = [
+  {cat:"Escalade", nom:"Corde 60m",       qte:4,  prets:[]},
+  {cat:"Escalade", nom:"Corde 70m",       qte:2,  prets:[]},
+  {cat:"Escalade", nom:"Baudrier adulte", qte:10, prets:[]},
+  {cat:"Escalade", nom:"Baudrier enfant", qte:8,  prets:[]},
+  {cat:"Escalade", nom:"Casque",          qte:6,  prets:[]},
+  {cat:"Escalade", nom:"Dégaines",        qte:5,  prets:[]},
+  {cat:"Escalade", nom:"Mousqueton",      qte:8,  prets:[]},
+  {cat:"Escalade", nom:"Grigri",          qte:4,  prets:[]},
+  {cat:"Escalade", nom:"Descendeur",      qte:6,  prets:[]},
+  {cat:"Escalade", nom:"Coinceurs, Friends", qte:3, prets:[]},
+  {cat:"Escalade", nom:"Sangles",         qte:10, prets:[]},
+  {cat:"Escalade", nom:"Longe double",    qte:5,  prets:[]},
+  {cat:"Alpinisme", nom:"Piolet",         qte:6,  prets:[]},
+  {cat:"Alpinisme", nom:"Crampons",       qte:5,  prets:[]},
+  {cat:"Alpinisme", nom:"Broches à glace",qte:10, prets:[]},
+  {cat:"Alpinisme", nom:"Bâtons",         qte:4,  prets:[]},
+  {cat:"Via Ferrata", nom:"Longe de via ferrata", qte:6, prets:[]},
+];
+
+var MAT_DEFAULT_CD35 = [
+  {cat:"Escalade", nom:"Corde 60m",       qte:3,  prets:[]},
+  {cat:"Escalade", nom:"Corde 70m",       qte:2,  prets:[]},
+  {cat:"Escalade", nom:"Baudrier adulte", qte:8,  prets:[]},
+  {cat:"Escalade", nom:"Baudrier enfant", qte:6,  prets:[]},
+  {cat:"Escalade", nom:"Casque",          qte:4,  prets:[]},
+  {cat:"Escalade", nom:"Dégaines",        qte:4,  prets:[]},
+  {cat:"Escalade", nom:"Mousqueton",      qte:6,  prets:[]},
+  {cat:"Escalade", nom:"Grigri",          qte:3,  prets:[]},
+  {cat:"Escalade", nom:"Descendeur",      qte:4,  prets:[]},
+  {cat:"Escalade", nom:"Coinceurs, Friends", qte:2, prets:[]},
+  {cat:"Escalade", nom:"Sangles",         qte:8,  prets:[]},
+  {cat:"Escalade", nom:"Longe double",    qte:4,  prets:[]},
+  {cat:"Alpinisme", nom:"Piolet",         qte:4,  prets:[]},
+  {cat:"Alpinisme", nom:"Crampons",       qte:4,  prets:[]},
+  {cat:"Alpinisme", nom:"Broches à glace",qte:8,  prets:[]},
+  {cat:"Alpinisme", nom:"Bâtons",         qte:4,  prets:[]},
+  {cat:"Via Ferrata", nom:"Longe de via ferrata", qte:4, prets:[]},
+];
+
+function getMatKey(org){ return "caf_materiel_"+org; }
+function getMat(org){try{return JSON.parse(localStorage.getItem(getMatKey(org))||"null");}catch(e){return null;}}
+function saveMat(org,data){try{localStorage.setItem(getMatKey(org),JSON.stringify(data));}catch(e){}}
+function getMatDefault(org){ return org==="cd35" ? MAT_DEFAULT_CD35 : MAT_DEFAULT_CAF; }
+
+function isMatEditor(){return MAT_EDITORS.includes(currentUser);}
+
+// Current active org
+var matCurrentOrg = "caf";
+
+function renderMatOrg(org){
+  var matData = getMat(org) || JSON.parse(JSON.stringify(getMatDefault(org)));
+  var container = document.getElementById("mat-"+org);
+  if(!container) return;
+  var html = "";
+
+  // User selector (only in CAF tab to avoid duplication)
+  if(org === "caf"){
+    html += '<div class="compet-toolbar" style="margin-bottom:14px;">';
+    html += '<div class="compet-user-row">';
+    html += '<label class="compet-user-label">Connecté :</label>';
+    html += '<select id="mat-user-select" class="compet-user-select">';
+    html += '<option value="">— Lecteur —</option>';
+    ["Fabien","Pierre","Erwan","Corentin"].forEach(function(u){
+      html += '<option value="'+u+'"'+(currentUser===u?" selected":"")+'>'+u+'</option>';
+    });
+    html += '</select></div></div>';
+  }
+
+    // Add pret form — button always visible, form gated by editor check
+  if(isMatEditor()){
+    html += '<div class="mat-pret-form" id="mat-form-'+org+'" style="display:none;">';
+    html += '<div class="mat-form-title">📋 Enregistrer un emprunt</div>';
+    html += '<label class="mat-label">Matériel</label>';
+    html += '<select id="mat-pret-item-'+org+'" class="mat-input">';
+    var catsForm = [...new Set(matData.map(function(m){return m.cat;}))];
+    catsForm.forEach(function(cat){
+      html += '<optgroup label="'+cat+'">';
+      matData.forEach(function(m,i){
+        if(m.cat===cat) html += '<option value="'+i+'">'+m.nom+'</option>';
+      });
+      html += '</optgroup>';
+    });
+    html += '</select>';
+    html += '<label class="mat-label">Nom de l\'emprunteur</label>';
+    html += '<input type="text" id="mat-pret-emp-'+org+'" class="mat-input" placeholder="Prénom Nom">';
+    html += '<label class="mat-label">Téléphone</label>';
+    html += '<input type="tel" id="mat-pret-tel-'+org+'" class="mat-input" placeholder="06 XX XX XX XX">';
+    html += '<label class="mat-label">Email</label>';
+    html += '<input type="email" id="mat-pret-mail-'+org+'" class="mat-input" placeholder="adresse@mail.fr">';
+    html += '<label class="mat-label">Période d\'emprunt</label>';
+    html += '<div class="mat-cal-wrap" id="mat-cal-'+org+'">';
+    html += renderMiniCal(org);
+    html += '</div>';
+    html += '<label class="mat-label">Quantité</label>';
+    html += '<input type="number" id="mat-pret-qte-'+org+'" class="mat-input mat-input-sm" value="1" min="1">';
+    html += '<div style="display:flex;gap:8px;margin-top:10px;">';
+    html += "<button class=\"btn-save\" style=\"background:#a78bfa;\" onclick=\"addPret('"+org+"')\">Enregistrer</button>";
+    html += "<button class=\"btn-cancel\" onclick=\"toggleMatForm('"+org+"')\">Annuler</button>";
+    html += '</div></div>';
+    html += "<button class=\"btn-add-compet\" style=\"background:#a78bfa;margin-bottom:14px;\" onclick=\"toggleMatForm('"+org+"')\">➕ Enregistrer un emprunt</button>";
+  } else {
+    html += '<div class="locked-msg" style="margin-bottom:14px;">🔒 Connecte-toi en tant qu\'éditeur pour enregistrer un emprunt</div>';
+  }
+
+  // Inventory by category
+  cats = [...new Set(matData.map(function(m){return m.cat;}))];
+  var catColors = {"Escalade":"#60a5fa","Alpinisme":"#a78bfa","Via Ferrata":"#34d399","Collectif":"#f97316"};
+
+  cats.forEach(function(cat){
+    var catColor = catColors[cat] || "#fff";
+    html += '<details class="mat-cat-details" open>';
+    html += '<summary class="mat-cat-summary" style="border-left-color:'+catColor+'">'+cat+'</summary>';
+    html += '<table class="mat-table"><thead><tr>';
+    html += '<th>Matériel</th><th>Stock</th><th>Prêté</th><th>Dispo</th>';
+    if(isMatEditor()) html += '<th></th>';
+    html += '</tr></thead><tbody>';
+
+    matData.forEach(function(m, idx){
+      if(m.cat!==cat) return;
+      var pretActif = m.prets.filter(function(p){return !p.rendu;});
+      var totalPrete = pretActif.reduce(function(s,p){return s+(+p.qte||1);},0);
+      var dispo = m.qte - totalPrete;
+      var cls = dispo<=0?"qte-zero":dispo<=2?"qte-low":"qte-ok";
+
+      html += '<tr><td><strong>'+m.nom+'</strong>';
+      if(pretActif.length>0){
+        html += '<div class="mat-prets-list">';
+        pretActif.forEach(function(p){
+          var pi = m.prets.indexOf(p);
+          html += '<div class="mat-pret-item-row">';
+          html += '<span class="pill pill-out">PRÊTÉ</span> ';
+          html += '<span class="mat-pret-who">'+p.emprunteur+'</span>';
+          if(p.out||p.in){
+            html += '<span class="mat-pret-dates">';
+            if(p.out) html += '📅 '+formatDate(p.out);
+            if(p.out&&p.in) html += ' → ';
+            if(p.in) html += formatDate(p.in);
+            html += '</span>';
+          }
+          if(isMatEditor()){
+            html += ' <button onclick="rendreMateriel(\''+org+'\','+idx+','+pi+')" class="btn-rendu">✓ Rendu</button>';
+          }
+          html += '</div>';
+        });
+        html += '</div>';
+      }
+      html += '</td>';
+      html += '<td>'+m.qte+'</td>';
+      html += '<td>'+(totalPrete||'—')+'</td>';
+      html += '<td class="'+cls+'">'+dispo+'</td>';
+      if(isMatEditor()){
+        html += '<td><button onclick="editQte(\''+org+'\','+idx+')" class="btn-edit-qte">✏️</button></td>';
+      }
+      html += '</tr>';
+    });
+    html += '</tbody></table></details>';
+  });
+
+  container.innerHTML = html;
+
+  // Bind user selector
+  var sel = document.getElementById("mat-user-select");
+  if(sel) sel.addEventListener("change",function(){
+    currentUser = this.value;
+    localStorage.setItem("caf_user",currentUser);
+    renderAllMat();
+    renderAllCompets();
+  });
+
+  // Init calendar state
+  if(!window.matCalState) window.matCalState = {};
+  if(!window.matCalState[org]) window.matCalState[org] = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth(),
+    start: null, end: null
+  };
+}
+
+// ── MINI CALENDAR ──
+function renderMiniCal(org){
+  var st = window.matCalState && window.matCalState[org] ? window.matCalState[org] : {
+    year: new Date().getFullYear(), month: new Date().getMonth(), start:null, end:null
+  };
+  var year = st.year, month = st.month;
+  var MOIS = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+  var JOURS = ["Lu","Ma","Me","Je","Ve","Sa","Di"];
+  var firstDay = new Date(year, month, 1).getDay();
+  firstDay = (firstDay+6)%7; // Monday first
+  var daysInMonth = new Date(year, month+1, 0).getDate();
+  var today = new Date(); today.setHours(0,0,0,0);
+
+  var html = '<div class="mat-cal">';
+  html += '<div class="mat-cal-nav">';
+  html += '<button class="mat-cal-btn" onclick="matCalNav(\''+org+'\',-1)">‹</button>';
+  html += '<span class="mat-cal-title">'+MOIS[month]+' '+year+'</span>';
+  html += '<button class="mat-cal-btn" onclick="matCalNav(\''+org+'\',1)">›</button>';
+  html += '</div>';
+  html += '<div class="mat-cal-grid">';
+  JOURS.forEach(function(j){ html += '<div class="mat-cal-dow">'+j+'</div>'; });
+  for(var i=0;i<firstDay;i++) html += '<div></div>';
+  for(var d=1;d<=daysInMonth;d++){
+    var dt = new Date(year,month,d); dt.setHours(0,0,0,0);
+    var iso = year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var cls = "mat-cal-day";
+    var isPast = dt < today;
+    if(isPast) cls += " cal-past";
+    if(st.start && iso===st.start) cls += " cal-start";
+    if(st.end && iso===st.end) cls += " cal-end";
+    if(st.start && st.end && iso>st.start && iso<st.end) cls += " cal-range";
+    if(st.start && !st.end && iso===st.start) cls += " cal-single";
+    html += '<div class="'+cls+'" onclick="matCalClick(\''+org+'\',\''+iso+'\')" data-date="'+iso+'">'+d+'</div>';
+  }
+  html += '</div>';
+  // Duration display
+  if(st.start && st.end){
+    var d1=new Date(st.start), d2=new Date(st.end);
+    var days = Math.round((d2-d1)/(1000*60*60*24))+1;
+    html += '<div class="mat-cal-duration">📅 '+days+' jour'+(days>1?'s':'')+' — du '+formatDate(st.start)+' au '+formatDate(st.end)+'</div>';
+  } else if(st.start){
+    html += '<div class="mat-cal-duration">Sélectionne la date de retour</div>';
+  } else {
+    html += '<div class="mat-cal-duration">Sélectionne la date de départ</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function matCalNav(org, dir){
+  if(!window.matCalState) window.matCalState = {};
+  if(!window.matCalState[org]) window.matCalState[org] = {year:new Date().getFullYear(),month:new Date().getMonth(),start:null,end:null};
+  var st = window.matCalState[org];
+  st.month += dir;
+  if(st.month>11){st.month=0;st.year++;}
+  if(st.month<0){st.month=11;st.year--;}
+  var wrap = document.getElementById("mat-cal-"+org);
+  if(wrap) wrap.innerHTML = renderMiniCal(org);
+}
+
+function matCalClick(org, iso){
+  if(!window.matCalState) window.matCalState = {};
+  if(!window.matCalState[org]) window.matCalState[org] = {year:new Date().getFullYear(),month:new Date().getMonth(),start:null,end:null};
+  var st = window.matCalState[org];
+  if(!st.start || (st.start && st.end) || iso < st.start){
+    st.start = iso; st.end = null;
+  } else if(iso === st.start){
+    st.start = null; st.end = null;
+  } else {
+    // Limit to 7 days max
+    var d1=new Date(st.start), d2=new Date(iso);
+    var days = Math.round((d2-d1)/(1000*60*60*24))+1;
+    if(days > 7){ alert("Maximum 7 jours d'emprunt"); return; }
+    st.end = iso;
+  }
+  var wrap = document.getElementById("mat-cal-"+org);
+  if(wrap) wrap.innerHTML = renderMiniCal(org);
+}
+
+function toggleMatForm(org){
+  if(!window.matCalState) window.matCalState = {};
+  window.matCalState[org] = {year:new Date().getFullYear(),month:new Date().getMonth(),start:null,end:null};
+  var form = document.getElementById("mat-form-"+org);
+  if(!form) return;
+  form.style.display = form.style.display==="none" ? "block" : "none";
+  if(form.style.display==="block"){
+    var wrap = document.getElementById("mat-cal-"+org);
+    if(wrap) wrap.innerHTML = renderMiniCal(org);
+  }
+}
+
+function addPret(org){
+  var matData = getMat(org) || JSON.parse(JSON.stringify(getMatDefault(org)));
+  var idx = +document.getElementById("mat-pret-item-"+org).value;
+  var emp = document.getElementById("mat-pret-emp-"+org).value.trim();
+  var tel = document.getElementById("mat-pret-tel-"+org) ? document.getElementById("mat-pret-tel-"+org).value.trim() : '';
+  var mail = document.getElementById("mat-pret-mail-"+org) ? document.getElementById("mat-pret-mail-"+org).value.trim() : '';
+  var qte = +(document.getElementById("mat-pret-qte-"+org).value||1);
+  var st = window.matCalState && window.matCalState[org] ? window.matCalState[org] : {};
+  var out = st.start||"", inp = st.end||st.start||"";
+  if(!emp){alert("Merci d'indiquer le nom de l'emprunteur");return;}
+  if(!out){alert("Merci de sélectionner les dates d'emprunt");return;}
+  var pretActif = matData[idx].prets.filter(function(p){return !p.rendu;});
+  var totalPrete = pretActif.reduce(function(s,p){return s+(+p.qte||1);},0);
+  if(totalPrete+qte > matData[idx].qte){alert("Stock insuffisant");return;}
+  matData[idx].prets.push({emprunteur:emp,tel:tel,mail:mail,out:out,in:inp,qte:String(qte),rendu:false});
+  saveMat(org, matData);
+  window.matCalState[org] = {year:new Date().getFullYear(),month:new Date().getMonth(),start:null,end:null};
+  toggleMatForm(org);
+  renderMatOrg(org);
+}
+
+function rendreMateriel(org, itemIdx, pretIdx){
+  var matData = getMat(org) || JSON.parse(JSON.stringify(getMatDefault(org)));
+  matData[itemIdx].prets[pretIdx].rendu = true;
+  saveMat(org, matData);
+  renderMatOrg(org);
+}
+
+function editQte(org, idx){
+  var matData = getMat(org) || JSON.parse(JSON.stringify(getMatDefault(org)));
+  var newQte = prompt("Nouvelle quantité pour "+matData[idx].nom, matData[idx].qte);
+  if(newQte===null) return;
+  matData[idx].qte = parseInt(newQte)||matData[idx].qte;
+  saveMat(org, matData);
+  renderMatOrg(org);
+}
+
+function renderMat(){
+  renderMatOrg("caf");
+}
+
+function renderAllMat(){
+  renderMatOrg("caf");
+  renderMatOrg("cd35");
+}
+
+
+// MAT MAIN TAB SWITCHING
+document.addEventListener('click', function(e){
+  var mt = e.target.closest('.mat-main-tab');
+  if(!mt) return;
+  var view = mt.dataset.matview;
+  document.querySelectorAll('.mat-main-tab').forEach(function(t){t.classList.remove('on');});
+  mt.classList.add('on');
+  document.querySelectorAll('.mat-main-view').forEach(function(v){v.classList.remove('on');});
+  var target = document.getElementById('mat-view-'+view);
+  if(target) target.classList.add('on');
+  if(view==='recap') renderMatRecap();
+  if(view==='demande') renderMatDemande();
+});
+
+// RÉCAPITULATIF
+var RECAP_EXAMPLES = [
+  {org:'CAF Liffré', materiel:'Corde 60m',           cat:'Escalade',    emprunteur:'Thomas Bernard',  tel:'06 12 34 56 78', mail:'thomas.bernard@mail.fr',  qte:'1', out:'2026-05-20', in:'2026-05-24'},
+  {org:'CAF Liffré', materiel:'Baudrier adulte',      cat:'Escalade',    emprunteur:'Alice Martin',    tel:'06 23 45 67 89', mail:'alice.martin@mail.fr',     qte:'2', out:'2026-05-22', in:'2026-05-25'},
+  {org:'CAF Liffré', materiel:'Longe via ferrata',    cat:'Via Ferrata', emprunteur:'Romain Dupont',   tel:'07 34 56 78 90', mail:'romain.dupont@mail.fr',    qte:'3', out:'2026-05-23', in:'2026-05-26'},
+  {org:'CAF Liffré', materiel:'Casque',               cat:'Escalade',    emprunteur:'Emma Leroy',      tel:'06 45 67 89 01', mail:'emma.leroy@mail.fr',       qte:'2', out:'2026-05-18', in:'2026-05-20'},
+  {org:'CD35',       materiel:'Crampons',             cat:'Alpinisme',   emprunteur:'Lucas Girard',    tel:'06 56 78 90 12', mail:'lucas.girard@mail.fr',     qte:'1', out:'2026-05-21', in:'2026-05-28'},
+  {org:'CD35',       materiel:'Piolet',               cat:'Alpinisme',   emprunteur:'Sophie Morel',    tel:'07 67 89 01 23', mail:'sophie.morel@mail.fr',     qte:'2', out:'2026-05-19', in:'2026-05-22'},
+  {org:'CD35',       materiel:'Dégaines',             cat:'Escalade',    emprunteur:'Nathan Petit',    tel:'06 78 90 12 34', mail:'nathan.petit@mail.fr',     qte:'2', out:'2026-05-24', in:'2026-05-27'},
+];
+
+function renderMatRecap(){
+  var container = document.getElementById('mat-recap-content');
+  if(!container) return;
+  var html = '';
+
+  var allPrets = [];
+  ['caf','cd35'].forEach(function(org){
+    var matData = getMat(org) || JSON.parse(JSON.stringify(getMatDefault(org)));
+    matData.forEach(function(m){
+      m.prets.forEach(function(p){
+        if(!p.rendu){
+          allPrets.push({org:org==='caf'?'CAF Liffré':'CD35', materiel:m.nom, cat:m.cat,
+            emprunteur:p.emprunteur, tel:p.tel||'', mail:p.mail||'',
+            qte:p.qte, out:p.out, in:p.in});
+        }
+      });
+    });
+  });
+
+  var isExample = allPrets.length === 0;
+  var displayPrets = isExample ? RECAP_EXAMPLES : allPrets;
+  displayPrets.sort(function(a,b){ return (a.out||'').localeCompare(b.out||''); });
+
+  if(isExample) html += '<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
+
+  html += '<div class="recap-header"><span class="recap-count">'+displayPrets.length+' emprunt'+(displayPrets.length!==1?'s':'')+' en cours</span></div>';
+
+  ['CAF Liffré','CD35'].forEach(function(orgName){
+    var orgPrets = displayPrets.filter(function(p){return p.org===orgName;});
+    if(orgPrets.length===0) return;
+    html += '<div class="recap-org-title">'+orgName+'</div>';
+
+    orgPrets.forEach(function(p){
+      var isLate = p.in && new Date(p.in) < new Date();
+      var initials = p.emprunteur.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+      html += '<div class="recap-row'+(isLate?' recap-row-late':'')+(isExample?' compet-entry-exemple':'')+'">';
+
+      // LEFT: avatar + nom + contacts
+      html += '<div class="recap-left">';
+      html += '<div class="recap-avatar">'+initials+'</div>';
+      html += '<div class="recap-person">';
+      html += '<div class="recap-person-name">'+p.emprunteur+'</div>';
+      html += '<div class="recap-person-contacts">';
+      if(p.tel) html += '<a href="tel:'+p.tel.replace(/\s/g,'')+'" class="recap-link-tel">📞 '+p.tel+'</a>';
+      if(p.mail) html += '<a href="mailto:'+p.mail+'" class="recap-link-mail">✉️ '+p.mail+'</a>';
+      html += '</div></div></div>';
+
+      // RIGHT: matériel + dates
+      html += '<div class="recap-right">';
+      html += '<div class="recap-mat-line">';
+      html += '<span class="recap-materiel">'+p.materiel+'</span>';
+      html += '<span class="recap-qte">×'+p.qte+'</span>';
+      html += '</div>';
+      html += '<span class="recap-cat-badge">'+p.cat+'</span>';
+      if(p.out||p.in){
+        html += '<div class="recap-dates-line">';
+        if(p.out) html += '<span class="recap-dpill">📤 '+formatDate(p.out)+'</span>';
+        if(p.out&&p.in) html += '<span class="recap-arrow">→</span>';
+        if(p.in) html += '<span class="recap-dpill'+(isLate?' recap-dpill-late':'')+'">📥 '+formatDate(p.in)+(isLate?' ⚠️':'')+'</span>';
+        if(p.out&&p.in){
+          var days=Math.round((new Date(p.in)-new Date(p.out))/(1000*60*60*24))+1;
+          html += '<span class="recap-dpill recap-dpill-dur">'+days+'j</span>';
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+
+      html += '</div>';
+    });
+  });
+
+  container.innerHTML = html;
+}
+
+// FAIRE UNE DEMANDE
+var MAT_CONTACTS = [
+  {nom:'Fabien Baudrier',    role:'Gestionnaire CAF Liffré', tel:'06 49 72 58 30', mail:'fabien.baudrier@caf-liffre.fr'},
+  {nom:'Erwan (à compléter)', role:'Gestionnaire CAF Liffré', tel:'06 XX XX XX XX', mail:''},
+  {nom:'Contact CD35',       role:'Gestionnaire CD35',        tel:'À renseigner',   mail:'contact@cd35-escalade.fr'},
+];
+
+function renderMatDemande(){
+  var container = document.getElementById('mat-demande-content');
+  if(!container) return;
+  var html = '';
+
+  html += '<div class="demande-intro">Pour emprunter du matériel, contacte directement le gestionnaire de l\'organisation concernée :</div>';
+
+  // CAF Liffré contacts
+  html += '<div class="demande-org-title">CAF Liffré</div>';
+  MAT_CONTACTS.filter(function(c){return c.role.includes('CAF');}).forEach(function(c){
+    html += renderContactCard(c);
+  });
+
+  // CD35 contacts
+  html += '<div class="demande-org-title">CD35</div>';
+  MAT_CONTACTS.filter(function(c){return c.role.includes('CD35');}).forEach(function(c){
+    html += renderContactCard(c);
+  });
+
+  // Availability quick-check
+  html += '<div class="demande-note">💡 Consulte l\'onglet <strong>Prêt Matériel</strong> pour vérifier la disponibilité avant de contacter.</div>';
+
+  container.innerHTML = html;
+}
+
+function renderContactCard(c){
+  var html = '<div class="contact-card">';
+  html += '<div class="contact-avatar">'+c.nom.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase()+'</div>';
+  html += '<div class="contact-info">';
+  html += '<div class="contact-name">'+c.nom+'</div>';
+  html += '<div class="contact-role">'+c.role+'</div>';
+  html += '<div class="contact-actions">';
+  if(c.tel && c.tel!=='À renseigner' && !c.tel.includes('XX')){
+    html += '<a href="tel:'+c.tel.replace(/\s/g,'')+'" class="contact-btn contact-btn-tel">📞 '+c.tel+'</a>';
+  } else if(c.tel){
+    html += '<span class="contact-btn-disabled">📞 '+c.tel+'</span>';
+  }
+  if(c.mail){
+    html += '<a href="mailto:'+c.mail+'" class="contact-btn contact-btn-mail">✉️ '+c.mail+'</a>';
+  }
+  html += '</div></div></div>';
+  return html;
+}
+
+// Init
+// Org tab switching for Matériel
+document.addEventListener('click', function(e){
+  var ot = e.target.closest('.mat-org-tab');
+  if(!ot) return;
+  var org = ot.dataset.org;
+  document.querySelectorAll('.mat-org-tab').forEach(function(t){t.classList.remove('on');});
+  ot.classList.add('on');
+  document.querySelectorAll('.mat-org-view').forEach(function(v){v.classList.remove('on');});
+  var view = document.getElementById('mat-'+org);
+  if(view) view.classList.add('on');
+  renderMatOrg(org);
+});
+
+renderAllCompets();
+renderAllMat();
+
+
+// INSTALL / ADD TO HOME SCREEN
+var deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  deferredPrompt = e;
+  var btn = document.getElementById('hdr-install');
+  if(btn) btn.classList.add('visible');
+});
+
+window.addEventListener('appinstalled', function(){
+  deferredPrompt = null;
+  var btn = document.getElementById('hdr-install');
+  if(btn) btn.classList.remove('visible');
+});
+
+function openInstallModal(){
+  // If native prompt available (Android Chrome), use it
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(choice){
+      deferredPrompt = null;
+      var btn = document.getElementById('hdr-install');
+      if(btn) btn.classList.remove('visible');
+    });
+    return;
+  }
+  // Otherwise show manual instructions
+  var modal = document.getElementById('install-modal');
+  if(modal) modal.classList.add('open');
+  // Auto-detect OS
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  switchOS(isIOS ? 'ios' : 'android');
+  // Always show button (manual instructions always useful)
+  var btn = document.getElementById('hdr-install');
+  if(btn) btn.classList.add('visible');
+}
+
+function closeInstallModal(){
+  var modal = document.getElementById('install-modal');
+  if(modal) modal.classList.remove('open');
+}
+
+function switchOS(os){
+  document.querySelectorAll('.install-os').forEach(function(el){el.classList.remove('active');});
+  document.querySelectorAll('.install-os-tab').forEach(function(el){el.classList.remove('on');});
+  var panel = document.getElementById('install-'+os);
+  if(panel) panel.classList.add('active');
+  var tabs = document.querySelectorAll('.install-os-tab');
+  tabs.forEach(function(t){ if((os==='ios'&&t.textContent.includes('iPhone'))||(os==='android'&&t.textContent.includes('Android'))) t.classList.add('on'); });
+}
+
+// Always show install button (instructions always useful even if already installed)
+document.addEventListener('DOMContentLoaded', function(){
+  var btn = document.getElementById('hdr-install');
+  if(btn) btn.classList.add('visible');
+});
+
 </script>
 </body>
 </html>
