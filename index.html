@@ -391,6 +391,11 @@ details[open] .plan-month-summary::after{transform:rotate(-180deg);}
 .semaine-badge{display:block;margin-top:2px;font-size:0.55rem;padding:1px 3px;border-radius:4px;text-align:center;word-break:break-word;}
 
 </style>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -1239,6 +1244,26 @@ details[open] .plan-month-summary::after{transform:rotate(-180deg);}
 <!-- NAV -->
 
 
+<!-- LOGIN MODAL -->
+<div id="login-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:500;align-items:center;justify-content:center;" onclick="if(event.target===this)closeLoginModal()">
+  <div style="background:#1e2240;border-radius:16px;padding:24px 20px;width:90%;max-width:360px;">
+    <h3 style="color:#fff;font-size:1rem;margin-bottom:16px;">🔑 Connexion éditeur</h3>
+    <div style="margin-bottom:10px;">
+      <label style="font-size:0.72rem;color:rgba(255,255,255,0.5);display:block;margin-bottom:4px;">Email</label>
+      <input id="login-email" type="email" style="width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:9px 12px;color:#fff;font-size:0.82rem;font-family:Arial,sans-serif;box-sizing:border-box;" placeholder="ton@email.fr">
+    </div>
+    <div style="margin-bottom:14px;">
+      <label style="font-size:0.72rem;color:rgba(255,255,255,0.5);display:block;margin-bottom:4px;">Mot de passe</label>
+      <input id="login-pass" type="password" style="width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:9px 12px;color:#fff;font-size:0.82rem;font-family:Arial,sans-serif;box-sizing:border-box;" placeholder="••••••••">
+    </div>
+    <div id="login-error" style="color:#fca5a5;font-size:0.75rem;margin-bottom:10px;min-height:18px;"></div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="doLogin()" style="flex:2;padding:10px;border:none;border-radius:8px;background:#a78bfa;color:#fff;font-size:0.85rem;font-weight:700;cursor:pointer;">Se connecter</button>
+      <button onclick="closeLoginModal()" style="flex:1;padding:10px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:transparent;color:rgba(255,255,255,0.6);font-size:0.82rem;cursor:pointer;">Annuler</button>
+    </div>
+  </div>
+</div>
+
 <!-- INSTALL MODAL -->
 <div id="install-modal" onclick="if(event.target===this)closeInstallModal()">
   <div id="install-modal-box">
@@ -1442,66 +1467,131 @@ document.querySelectorAll(".compet-tab").forEach(function(tab){
   });
 });
 
-// COMPET DATA
-var COMPET_EDITORS = ["Fabien","Pierre","Erwan","Corentin"];
-var currentUser = localStorage.getItem("caf_user")||"";
+// ── FIREBASE INIT ──
+const firebaseConfig = {
+  apiKey: "AIzaSyDiquWsYBVyAAljwBMA_sEqipNgNpENc74",
+  authDomain: "caf-liffre.firebaseapp.com",
+  projectId: "caf-liffre",
+  storageBucket: "caf-liffre.firebasestorage.app",
+  messagingSenderId: "973208916528",
+  appId: "1:973208916528:web:9004f33091f582c49713f5"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+var auth = firebase.auth();
 
-function competKey(type){return "caf_compet_"+type;}
-function getCompets(type){try{return JSON.parse(localStorage.getItem(competKey(type))||"null");}catch(e){return null;}}
-function saveCompets(type,arr){try{localStorage.setItem(competKey(type),JSON.stringify(arr));}catch(e){}}
+// ── AUTH STATE ──
+var currentUser = null;
+var currentUserEmail = null;
 
+// Editors allowed to write
+var EDITOR_EMAILS = []; // Will be populated from Firestore or hardcoded after setup
+
+auth.onAuthStateChanged(function(user){
+  currentUser = user;
+  currentUserEmail = user ? user.email : null;
+  updateAuthUI();
+  renderAllCompets();
+  renderAllMat();
+});
+
+function updateAuthUI(){
+  var loginBtn = document.getElementById('auth-login-btn');
+  var logoutBtn = document.getElementById('auth-logout-btn');
+  var userLabel = document.getElementById('auth-user-label');
+  if(currentUser){
+    if(loginBtn) loginBtn.style.display='none';
+    if(logoutBtn) logoutBtn.style.display='inline-block';
+    if(userLabel) userLabel.textContent = currentUser.email;
+  } else {
+    if(loginBtn) loginBtn.style.display='inline-block';
+    if(logoutBtn) logoutBtn.style.display='none';
+    if(userLabel) userLabel.textContent = '';
+  }
+}
+
+function openLoginModal(){
+  var lm=document.getElementById('login-modal');if(lm){lm.style.display='flex';};
+}
+function closeLoginModal(){
+  var lm=document.getElementById('login-modal');if(lm){lm.style.display='none';};
+  document.getElementById('login-error').textContent='';
+}
+function doLogin(){
+  var email = document.getElementById('login-email').value.trim();
+  var pass = document.getElementById('login-pass').value;
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(function(){ closeLoginModal(); })
+    .catch(function(err){
+      document.getElementById('login-error').textContent = 'Email ou mot de passe incorrect';
+    });
+}
+function doLogout(){
+  auth.signOut();
+}
+
+function isEditor(){
+  return currentUser !== null;
+}
+
+// ── COMPET DATA ──
 var COMPET_CATEGORIES = {
   blocs: ["Championnats de France","Coupes de France","1/2 Finales Champ. France","Championnats Régionaux","Championnats Départementaux","Opens"],
   vitesse: ["Championnats de France","Coupes de France","1/2 Finales Champ. France","Championnats Régionaux","Championnats Départementaux","Opens"],
   open: ["Championnats de France","Coupes de France","Opens Régionaux","Opens Locaux"]
 };
 
-// Example data shown in grey when no real data exists
 var COMPET_EXAMPLES = {
   blocs: [
     {cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08", nb:"6", or:"Alice M.", ag:"Thomas B.", br:"Léa D.", exemple:true},
-    {cat:"Championnats Départementaux", lieu:"Salle CAF Liffré", date:"2026-03-14", nb:"4", or:"Hugo C.", ag:"", br:"", exemple:true},
     {cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05", nb:"8", or:"Alice M.", ag:"Hugo C.", br:"Camille R.", exemple:true},
-    {cat:"Coupes de France", lieu:"Salle Arkose, Paris", date:"2026-05-17", nb:"3", or:"", ag:"Thomas B.", br:"", exemple:true},
     {cat:"Opens", lieu:"Open de Laval", date:"2026-06-07", nb:"5", or:"Hugo C.", ag:"Alice M.", br:"Léa D.", exemple:true},
   ],
   vitesse: [
     {cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08", nb:"3", or:"Romain V.", ag:"", br:"", exemple:true},
-    {cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05", nb:"2", or:"Romain V.", ag:"Emma L.", br:"", exemple:true},
   ],
   open: [
     {cat:"Opens Locaux", lieu:"Open Fougères", date:"2026-03-21", nb:"7", or:"Alice M.", ag:"Hugo C.", br:"Thomas B.", exemple:true},
-    {cat:"Opens Régionaux", lieu:"Open Bretagne, Brest", date:"2026-05-30", nb:"4", or:"", ag:"Alice M.", br:"", exemple:true},
   ]
 };
 
-function isEditor(){return COMPET_EDITORS.includes(currentUser);}
+// Firestore listeners for compet
+var competListeners = {};
+
+function listenCompets(type){
+  if(competListeners[type]) competListeners[type](); // unsubscribe previous
+  competListeners[type] = db.collection('compets').doc(type).collection('entries')
+    .orderBy('date','asc')
+    .onSnapshot(function(snap){
+      var entries = [];
+      snap.forEach(function(doc){ entries.push(Object.assign({id:doc.id}, doc.data())); });
+      window['competData_'+type] = entries;
+      renderCompet(type);
+    }, function(err){ console.log('Compet listen error:', err); });
+}
+
+function getCompetData(type){ return window['competData_'+type] || null; }
 
 function renderCompet(type){
   var container = document.getElementById("compet-"+type);
-  var realCompets = getCompets(type);
-  var hasRealData = realCompets !== null && realCompets.length > 0;
-  var compets = hasRealData ? realCompets : [];
+  if(!container) return;
+  var realData = getCompetData(type);
+  var hasReal = realData !== null && realData.length > 0;
+  var compets = hasReal ? realData : [];
   var cats = COMPET_CATEGORIES[type];
   var html = "";
 
-  // User selector row + add button
+  // Auth toolbar
   html += '<div class="compet-toolbar">';
   html += '<div class="compet-user-row">';
-  html += '<label class="compet-user-label">Connecté :</label>';
-  html += '<select id="user-select-'+type+'" class="compet-user-select">';
-  html += '<option value="">— Lecteur —</option>';
-  ["Fabien","Pierre","Erwan","Corentin"].forEach(function(u){
-    html += '<option value="'+u+'"'+(currentUser===u?" selected":"")+'>'+u+'</option>';
-  });
-  html += '</select>';
-  html += '</div>';
-  if(isEditor()){
-    html += '<button class="btn-add-compet" onclick="toggleCompetForm(\''+type+'\')">➕ Ajouter</button>';
+  html += '<span class="compet-user-label" id="auth-user-label-'+type+'">'+(currentUser?currentUser.email:'Lecteur')+'</span>';
+  if(!currentUser){
+    html += '<button class="btn-add-compet" style="background:rgba(255,255,255,0.15);font-size:0.72rem;" onclick="openLoginModal()">🔑 Se connecter</button>';
+  } else {
+    html += '<button class="btn-add-compet" style="background:rgba(239,68,68,0.3);font-size:0.72rem;" onclick="doLogout()">Déconnexion</button>';
   }
-  html += '</div>';
+  html += '</div></div>';
 
-  // Collapsible add form (hidden by default)
   if(isEditor()){
     html += '<div class="compet-form" id="compet-form-'+type+'" style="display:none;">';
     html += '<div class="compet-form-title">Nouvelle compétition</div>';
@@ -1522,33 +1612,28 @@ function renderCompet(type){
     html += '<div style="display:flex;gap:8px;margin-top:4px;">';
     html += "<button class=\"btn-save\" onclick=\"addCompet('"+type+"')\">Enregistrer</button>";
     html += "<button class=\"btn-cancel\" onclick=\"toggleCompetForm('"+type+"')\">Annuler</button>";
-    html += '</div>';
-    html += '</div>';
+    html += '</div></div>';
+    html += "<button class=\"btn-add-compet\" onclick=\"toggleCompetForm('"+type+"')\">➕ Ajouter</button>";
+  } else {
+    html += '<div class="locked-msg">🔒 Connecte-toi pour ajouter des compétitions</div>';
   }
 
-  // If no real data: show examples greyed out with notice
-  if(!hasRealData && COMPET_EXAMPLES[type]){
-    html += '<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
-  }
+  if(!hasReal) html += '<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
 
-  // Display by category
   cats.forEach(function(cat){
-    // Real entries for this cat
     var entries = compets.filter(function(c){return c.cat===cat;});
-    // Example entries for this cat
-    var exEntries = (!hasRealData && COMPET_EXAMPLES[type]) ? COMPET_EXAMPLES[type].filter(function(c){return c.cat===cat;}) : [];
+    var exEntries = (!hasReal && COMPET_EXAMPLES[type]) ? COMPET_EXAMPLES[type].filter(function(c){return c.cat===cat;}) : [];
     var allEntries = entries.concat(exEntries);
-    if(allEntries.length === 0 && !isEditor()) return;
+    if(allEntries.length===0 && !isEditor()) return;
     html += '<details class="compet-cat-details" open>';
     html += '<summary class="compet-cat-summary">'+cat+'<span class="compet-cat-count">'+allEntries.length+'</span></summary>';
-    if(allEntries.length === 0){
+    if(allEntries.length===0){
       html += '<div class="locked-msg">Aucune compétition enregistrée</div>';
     }
     allEntries.forEach(function(e){
-      var isEx = e.exemple === true;
-      var idx2 = compets.indexOf(e);
-      html += '<div class="compet-entry'+(isEx?' compet-entry-exemple':'') +'">';
-      if(isEditor() && !isEx) html += "<button class=\"btn-del\" onclick=\"delCompet('"+type+"',"+idx2+")\">✕</button>";
+      var isEx = e.exemple===true;
+      html += '<div class="compet-entry'+(isEx?' compet-entry-exemple':'')+'">';
+      if(isEditor()&&!isEx) html += "<button class=\"btn-del\" onclick=\"delCompet('"+type+"','"+e.id+"')\">✕</button>";
       if(isEx) html += '<span class="exemple-badge">Exemple</span>';
       html += '<div class="compet-entry-title">📍 '+e.lieu+'</div>';
       html += '<div class="compet-entry-meta">';
@@ -1568,24 +1653,18 @@ function renderCompet(type){
   });
 
   container.innerHTML = html;
-
-  document.getElementById("user-select-"+type).addEventListener("change",function(){
-    currentUser = this.value;
-    localStorage.setItem("caf_user",currentUser);
-    renderAllCompets();
-    renderMat();
-  });
 }
 
 function toggleCompetForm(type){
   var form = document.getElementById("compet-form-"+type);
   if(!form) return;
-  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  form.style.display = form.style.display==='none' ? 'block' : 'none';
 }
 
 function formatDate(d){if(!d)return"";var p=d.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
 
 function addCompet(type){
+  if(!isEditor()){alert("Connecte-toi pour ajouter");return;}
   var cat=document.getElementById("new-cat-"+type).value;
   var lieu=document.getElementById("new-lieu-"+type).value.trim();
   var date=document.getElementById("new-date-"+type).value;
@@ -1594,197 +1673,136 @@ function addCompet(type){
   var ag=document.getElementById("new-ag-"+type).value.trim();
   var br=document.getElementById("new-br-"+type).value.trim();
   if(!lieu){alert("Merci d'indiquer un lieu");return;}
-  var compets=getCompets(type)||[];
-  compets.push({cat:cat,lieu:lieu,date:date,nb:nb,or:or,ag:ag,br:br});
-  compets.sort(function(a,b){return(a.date||"").localeCompare(b.date||"");});
-  saveCompets(type,compets);
-  toggleCompetForm(type);
-  renderCompet(type);
+  db.collection('compets').doc(type).collection('entries').add({
+    cat:cat, lieu:lieu, date:date, nb:nb, or:or, ag:ag, br:br,
+    createdBy: currentUserEmail, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function(){ toggleCompetForm(type); })
+    .catch(function(err){ alert("Erreur: "+err.message); });
 }
 
-function delCompet(type,idx){
+function delCompet(type, docId){
+  if(!isEditor()) return;
   if(!confirm("Supprimer cette compétition ?")) return;
-  var compets=getCompets(type)||[];
-  compets.splice(idx,1);
-  saveCompets(type,compets);
-  renderCompet(type);
+  db.collection('compets').doc(type).collection('entries').doc(docId).delete();
 }
 
 function renderAllCompets(){
-  ["blocs","vitesse","open"].forEach(renderCompet);
+  ["blocs","vitesse","open"].forEach(function(type){ listenCompets(type); });
   renderResultats();
 }
 
-
-// RÉSULTATS
+// ── RÉSULTATS ──
 var RESULTATS_EXAMPLES = [
-  // Blocs
-  {type:"Bloc", cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08",
-   podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Thomas B."},{medal:"bronze",nom:"Léa D."}]},
-  {type:"Bloc", cat:"Championnats Départementaux", lieu:"Salle CAF Liffré", date:"2026-03-14",
-   podiums:[{medal:"or",nom:"Hugo C."}]},
-  {type:"Bloc", cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05",
-   podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Hugo C."},{medal:"bronze",nom:"Camille R."}]},
-  {type:"Bloc", cat:"Coupes de France", lieu:"Salle Arkose, Paris", date:"2026-05-17",
-   podiums:[{medal:"argent",nom:"Thomas B."}]},
-  {type:"Bloc", cat:"Opens", lieu:"Open de Laval", date:"2026-06-07",
-   podiums:[{medal:"or",nom:"Hugo C."},{medal:"argent",nom:"Alice M."},{medal:"bronze",nom:"Léa D."}]},
-  // Vitesse
-  {type:"Vitesse", cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08",
-   podiums:[{medal:"or",nom:"Romain V."}]},
-  {type:"Vitesse", cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05",
-   podiums:[{medal:"or",nom:"Romain V."},{medal:"argent",nom:"Emma L."}]},
-  // Open
-  {type:"Open", cat:"Opens Locaux", lieu:"Open Fougères", date:"2026-03-21",
-   podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Hugo C."},{medal:"bronze",nom:"Thomas B."}]},
-  {type:"Open", cat:"Opens Régionaux", lieu:"Open Bretagne, Brest", date:"2026-05-30",
-   podiums:[{medal:"argent",nom:"Alice M."}]},
+  {type:"Bloc", cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08", podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Thomas B."},{medal:"bronze",nom:"Léa D."}]},
+  {type:"Bloc", cat:"Championnats Régionaux", lieu:"Salle Kaleido, Rennes", date:"2026-04-05", podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Hugo C."},{medal:"bronze",nom:"Camille R."}]},
+  {type:"Vitesse", cat:"Championnats Départementaux", lieu:"Gymnase de Vitré", date:"2026-02-08", podiums:[{medal:"or",nom:"Romain V."}]},
+  {type:"Open", cat:"Opens Locaux", lieu:"Open Fougères", date:"2026-03-21", podiums:[{medal:"or",nom:"Alice M."},{medal:"argent",nom:"Hugo C."},{medal:"bronze",nom:"Thomas B."}]},
 ];
 
 function computeRankings(data){
-  var scores = {};
+  var scores={};
   data.forEach(function(comp){
     comp.podiums.forEach(function(p){
-      if(!scores[p.nom]) scores[p.nom] = {or:0, argent:0, bronze:0};
+      if(!scores[p.nom]) scores[p.nom]={or:0,argent:0,bronze:0};
       scores[p.nom][p.medal]++;
     });
   });
-  // Sort: or desc, then argent, then bronze
-  var arr = Object.keys(scores).map(function(nom){
-    return {nom:nom, or:scores[nom].or, argent:scores[nom].argent, bronze:scores[nom].bronze,
-      total: scores[nom].or*3 + scores[nom].argent*2 + scores[nom].bronze};
-  });
-  arr.sort(function(a,b){
+  return Object.keys(scores).map(function(nom){
+    return {nom:nom,or:scores[nom].or,argent:scores[nom].argent,bronze:scores[nom].bronze,
+      total:scores[nom].or*3+scores[nom].argent*2+scores[nom].bronze};
+  }).sort(function(a,b){
     if(b.or!==a.or) return b.or-a.or;
     if(b.argent!==a.argent) return b.argent-a.argent;
     return b.bronze-a.bronze;
   });
-  return arr;
 }
 
 function renderResultats(){
-  var container = document.getElementById("compet-resultats");
+  var container=document.getElementById("compet-resultats");
   if(!container) return;
-
-  // Collect real data from all types
-  var allReal = [];
-  var hasReal = false;
+  var allReal=[];
+  var hasReal=false;
   ["blocs","vitesse","open"].forEach(function(type){
-    var real = getCompets(type);
-    if(real && real.length>0){
-      hasReal = true;
+    var real=getCompetData(type);
+    if(real&&real.length>0){
+      hasReal=true;
       real.forEach(function(c){
         if(c.or||c.ag||c.br){
-          var typeName = type==="blocs"?"Bloc":type==="vitesse"?"Vitesse":"Open";
-          var pods = [];
+          var typeName=type==="blocs"?"Bloc":type==="vitesse"?"Vitesse":"Open";
+          var pods=[];
           if(c.or) pods.push({medal:"or",nom:c.or});
           if(c.ag) pods.push({medal:"argent",nom:c.ag});
           if(c.br) pods.push({medal:"bronze",nom:c.br});
-          allReal.push({type:typeName, cat:c.cat, lieu:c.lieu, date:c.date, podiums:pods});
+          allReal.push({type:typeName,cat:c.cat,lieu:c.lieu,date:c.date,podiums:pods});
         }
       });
     }
   });
-
-  var dataToUse = hasReal ? allReal : RESULTATS_EXAMPLES;
-  var rankings = computeRankings(dataToUse);
-
-  var html = "";
-
-  // User selector (shared)
-  html += '<div class="compet-toolbar">';
-  html += '<div class="compet-user-row">';
-  html += '<label class="compet-user-label">Connecté :</label>';
-  html += '<select id="user-select-resultats" class="compet-user-select">';
-  html += '<option value="">— Lecteur —</option>';
-  ["Fabien","Pierre","Erwan","Corentin"].forEach(function(u){
-    html += '<option value="'+u+'"'+(currentUser===u?" selected":"")+'>'+u+'</option>';
+  var dataToUse=hasReal?allReal:RESULTATS_EXAMPLES;
+  var rankings=computeRankings(dataToUse);
+  var html="";
+  if(!hasReal) html+='<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
+  html+='<div class="res-section-title">🏆 Classement général</div>';
+  html+='<div class="res-ranking">';
+  rankings.forEach(function(r,i){
+    var rank=i+1;
+    var rankIcon=rank===1?"🥇":rank===2?"🥈":rank===3?"🥉":"#"+rank;
+    html+='<div class="res-rank-row'+(dataToUse===RESULTATS_EXAMPLES?" res-exemple":"")+'">';
+    html+='<span class="res-rank-badge">'+rankIcon+'</span>';
+    html+='<span class="res-rank-nom">'+r.nom+'</span>';
+    html+='<span class="res-medals">';
+    if(r.or) html+='<span class="res-medal-pill pdm-or">🥇×'+r.or+'</span>';
+    if(r.argent) html+='<span class="res-medal-pill pdm-ag">🥈×'+r.argent+'</span>';
+    if(r.bronze) html+='<span class="res-medal-pill pdm-br">🥉×'+r.bronze+'</span>';
+    html+='</span></div>';
   });
-  html += '</select>';
-  html += '</div></div>';
-
-  if(!hasReal){
-    html += '<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
-  }
-
-  // ── PODIUM RANKING TABLE
-  html += '<div class="res-section-title">🏆 Classement général</div>';
-  html += '<div class="res-ranking">';
-  rankings.forEach(function(r, i){
-    var rank = i+1;
-    var rankCls = rank===1?"rank-1":rank===2?"rank-2":rank===3?"rank-3":"rank-other";
-    var rankIcon = rank===1?"🥇":rank===2?"🥈":rank===3?"🥉":"#"+rank;
-    html += '<div class="res-rank-row'+(dataToUse===RESULTATS_EXAMPLES?" res-exemple":"")+'">';
-    html += '<span class="res-rank-badge '+rankCls+'">'+rankIcon+'</span>';
-    html += '<span class="res-rank-nom">'+r.nom+'</span>';
-    html += '<span class="res-medals">';
-    if(r.or)     html += '<span class="res-medal-pill pdm-or">🥇×'+r.or+'</span>';
-    if(r.argent) html += '<span class="res-medal-pill pdm-ag">🥈×'+r.argent+'</span>';
-    if(r.bronze) html += '<span class="res-medal-pill pdm-br">🥉×'+r.bronze+'</span>';
-    html += '</span>';
-    html += '</div>';
-  });
-  html += '</div>';
-
-  // ── DETAIL BY TYPE
+  html+='</div>';
   ["Bloc","Vitesse","Open"].forEach(function(typeName){
-    var typeData = dataToUse.filter(function(d){return d.type===typeName;});
+    var typeData=dataToUse.filter(function(d){return d.type===typeName;});
     if(typeData.length===0) return;
-    var typeRankings = computeRankings(typeData);
-    html += '<details class="compet-cat-details" open>';
-    html += '<summary class="compet-cat-summary">'+typeName+'<span class="compet-cat-count">'+typeData.length+' compét.</span></summary>';
-
-    // Mini ranking for this type
-    html += '<div class="res-type-ranking">';
+    var typeRankings=computeRankings(typeData);
+    html+='<details class="compet-cat-details" open>';
+    html+='<summary class="compet-cat-summary">'+typeName+'<span class="compet-cat-count">'+typeData.length+' compét.</span></summary>';
+    html+='<div class="res-type-ranking">';
     typeRankings.forEach(function(r,i){
-      var icon = i===0?"🥇":i===1?"🥈":i===2?"🥉":"·";
-      html += '<div class="res-type-row'+(dataToUse===RESULTATS_EXAMPLES?" res-exemple":"")+'">';
-      html += '<span style="width:20px;text-align:center;flex-shrink:0;">'+icon+'</span>';
-      html += '<span class="res-rank-nom">'+r.nom+'</span>';
-      html += '<span class="res-medals">';
-      if(r.or)     html += '<span class="res-medal-pill pdm-or">🥇×'+r.or+'</span>';
-      if(r.argent) html += '<span class="res-medal-pill pdm-ag">🥈×'+r.argent+'</span>';
-      if(r.bronze) html += '<span class="res-medal-pill pdm-br">🥉×'+r.bronze+'</span>';
-      html += '</span></div>';
+      var icon=i===0?"🥇":i===1?"🥈":i===2?"🥉":"·";
+      html+='<div class="res-type-row'+(dataToUse===RESULTATS_EXAMPLES?" res-exemple":"")+'">';
+      html+='<span style="width:20px;text-align:center;flex-shrink:0;">'+icon+'</span>';
+      html+='<span class="res-rank-nom">'+r.nom+'</span>';
+      html+='<span class="res-medals">';
+      if(r.or) html+='<span class="res-medal-pill pdm-or">🥇×'+r.or+'</span>';
+      if(r.argent) html+='<span class="res-medal-pill pdm-ag">🥈×'+r.argent+'</span>';
+      if(r.bronze) html+='<span class="res-medal-pill pdm-br">🥉×'+r.bronze+'</span>';
+      html+='</span></div>';
     });
-    html += '</div>';
-
-    // Competition detail cards
+    html+='</div>';
     typeData.forEach(function(comp){
-      html += '<div class="compet-entry'+(dataToUse===RESULTATS_EXAMPLES?" compet-entry-exemple":"")+'">';
-      if(dataToUse===RESULTATS_EXAMPLES) html += '<span class="exemple-badge">Exemple</span>';
-      html += '<div class="compet-entry-title">📍 '+comp.lieu+'</div>';
-      html += '<div class="compet-entry-meta">';
-      if(comp.date) html += '<span class="compet-entry-tag tag-date">📅 '+formatDate(comp.date)+'</span>';
-      html += '<span class="compet-entry-tag" style="background:rgba(249,115,22,0.2);color:#fed7aa;">'+comp.cat+'</span>';
-      html += '</div>';
+      html+='<div class="compet-entry'+(dataToUse===RESULTATS_EXAMPLES?" compet-entry-exemple":"")+'">';
+      if(dataToUse===RESULTATS_EXAMPLES) html+='<span class="exemple-badge">Exemple</span>';
+      html+='<div class="compet-entry-title">📍 '+comp.lieu+'</div>';
+      html+='<div class="compet-entry-meta">';
+      if(comp.date) html+='<span class="compet-entry-tag tag-date">📅 '+formatDate(comp.date)+'</span>';
+      html+='<span class="compet-entry-tag" style="background:rgba(249,115,22,0.2);color:#fed7aa;">'+comp.cat+'</span>';
+      html+='</div>';
       if(comp.podiums.length>0){
-        html += '<div class="podiums-row">';
+        html+='<div class="podiums-row">';
         comp.podiums.forEach(function(p){
-          var cls = p.medal==="or"?"pdm-or":p.medal==="argent"?"pdm-ag":"pdm-br";
-          var icon = p.medal==="or"?"🥇":p.medal==="argent"?"🥈":"🥉";
-          html += '<span class="pdm '+cls+'">'+icon+' '+p.nom+'</span>';
+          var cls=p.medal==="or"?"pdm-or":p.medal==="argent"?"pdm-ag":"pdm-br";
+          var icon=p.medal==="or"?"🥇":p.medal==="argent"?"🥈":"🥉";
+          html+='<span class="pdm '+cls+'">'+icon+' '+p.nom+'</span>';
         });
-        html += '</div>';
+        html+='</div>';
       }
-      html += '</div>';
+      html+='</div>';
     });
-    html += '</details>';
+    html+='</details>';
   });
-
-  container.innerHTML = html;
-
-  document.getElementById("user-select-resultats").addEventListener("change",function(){
-    currentUser = this.value;
-    localStorage.setItem("caf_user",currentUser);
-    renderAllCompets();
-    renderMat();
-  });
+  container.innerHTML=html;
 }
 
-
-// MATERIEL DATA
-var MAT_EDITORS = ["Fabien","Erwan"];
+// ── MATERIEL DATA ──
+var MAT_EDITORS_FB = []; // all logged-in users can edit mat
+function isMatEditor(){ return currentUser !== null; }
 
 var MAT_DEFAULT_CAF = [
   {cat:"Escalade", nom:"Casque", qte:16, prets:[]},
@@ -1835,15 +1853,38 @@ var MAT_DEFAULT_CD35 = [
   {cat:"Collectif", nom:"Réchaud MSR Super Fly", qte:4, prets:[]}
 ];
 
+
 function getMatKey(org){ return "caf_materiel_"+org; }
-function getMat(org){try{return JSON.parse(localStorage.getItem(getMatKey(org))||"null");}catch(e){return null;}}
-function saveMat(org,data){try{localStorage.setItem(getMatKey(org),JSON.stringify(data));}catch(e){}}
+
+// Firestore listeners for materiel
+var matListeners = {};
+function listenMat(org){
+  if(matListeners[org]) matListeners[org]();
+  matListeners[org] = db.collection('materiel').doc(org).collection('items')
+    .onSnapshot(function(snap){
+      if(snap.empty){
+        // Init with defaults if empty
+        var defaults = JSON.parse(JSON.stringify(getMatDefault(org)));
+        var batch = db.batch();
+        defaults.forEach(function(m, i){
+          var ref = db.collection('materiel').doc(org).collection('items').doc('item_'+i);
+          batch.set(ref, m);
+        });
+        batch.commit();
+        return;
+      }
+      var items = [];
+      snap.forEach(function(doc){ items.push(Object.assign({_id:doc.id}, doc.data())); });
+      // Sort by cat then nom
+      items.sort(function(a,b){ return a.cat.localeCompare(b.cat)||a.nom.localeCompare(b.nom); });
+      window['matData_'+org] = items;
+      renderMatOrg(org);
+    }, function(err){ console.log('Mat listen error:', err); });
+}
+
+function getMat(org){ return window['matData_'+org] || null; }
+function saveMat(org, data){ /* handled by Firestore directly */ }
 function getMatDefault(org){ return org==="cd35" ? MAT_DEFAULT_CD35 : MAT_DEFAULT_CAF; }
-
-function isMatEditor(){return MAT_EDITORS.includes(currentUser);}
-
-// Current active org
-var matCurrentOrg = "caf";
 
 function renderMatOrg(org){
   var matData = getMat(org) || JSON.parse(JSON.stringify(getMatDefault(org)));
@@ -1851,31 +1892,27 @@ function renderMatOrg(org){
   if(!container) return;
   var html = "";
 
-  // User selector (only in CAF tab to avoid duplication)
-  if(org === "caf"){
+  if(org==="caf"){
     html += '<div class="compet-toolbar" style="margin-bottom:14px;">';
     html += '<div class="compet-user-row">';
-    html += '<label class="compet-user-label">Connecté :</label>';
-    html += '<select id="mat-user-select" class="compet-user-select">';
-    html += '<option value="">— Lecteur —</option>';
-    ["Fabien","Pierre","Erwan","Corentin"].forEach(function(u){
-      html += '<option value="'+u+'"'+(currentUser===u?" selected":"")+'>'+u+'</option>';
-    });
-    html += '</select></div></div>';
+    html += '<span class="compet-user-label">'+(currentUser?currentUser.email:'Lecteur')+'</span>';
+    if(!currentUser){
+      html += '<button class="btn-add-compet" style="background:rgba(255,255,255,0.15);font-size:0.72rem;" onclick="openLoginModal()">🔑 Se connecter</button>';
+    } else {
+      html += '<button class="btn-add-compet" style="background:rgba(239,68,68,0.3);font-size:0.72rem;" onclick="doLogout()">Déconnexion</button>';
+    }
+    html += '</div></div>';
   }
 
-    // Add pret form — button always visible, form gated by editor check
   if(isMatEditor()){
     html += '<div class="mat-pret-form" id="mat-form-'+org+'" style="display:none;">';
     html += '<div class="mat-form-title">📋 Enregistrer un emprunt</div>';
     html += '<label class="mat-label">Matériel</label>';
     html += '<select id="mat-pret-item-'+org+'" class="mat-input">';
-    var catsForm = [...new Set(matData.map(function(m){return m.cat;}))];
+    var catsForm=[...new Set(matData.map(function(m){return m.cat;}))];
     catsForm.forEach(function(cat){
       html += '<optgroup label="'+cat+'">';
-      matData.forEach(function(m,i){
-        if(m.cat===cat) html += '<option value="'+i+'">'+m.nom+'</option>';
-      });
+      matData.forEach(function(m,i){ if(m.cat===cat) html+='<option value="'+i+'">'+m.nom+'</option>'; });
       html += '</optgroup>';
     });
     html += '</select>';
@@ -1885,10 +1922,8 @@ function renderMatOrg(org){
     html += '<input type="tel" id="mat-pret-tel-'+org+'" class="mat-input" placeholder="06 XX XX XX XX">';
     html += '<label class="mat-label">Email</label>';
     html += '<input type="email" id="mat-pret-mail-'+org+'" class="mat-input" placeholder="adresse@mail.fr">';
-    html += '<label class="mat-label">Période d\'emprunt</label>';
-    html += '<div class="mat-cal-wrap" id="mat-cal-'+org+'">';
-    html += renderMiniCal(org);
-    html += '</div>';
+    html += '<label class="mat-label">P\u00e9riode d\'emprunt</label>';
+    html += '<div class="mat-cal-wrap" id="mat-cal-'+org+'">'+renderMiniCal(org)+'</div>';
     html += '<label class="mat-label">Quantité</label>';
     html += '<input type="number" id="mat-pret-qte-'+org+'" class="mat-input mat-input-sm" value="1" min="1">';
     html += '<div style="display:flex;gap:8px;margin-top:10px;">';
@@ -1897,83 +1932,252 @@ function renderMatOrg(org){
     html += '</div></div>';
     html += "<button class=\"btn-add-compet\" style=\"background:#a78bfa;margin-bottom:14px;\" onclick=\"toggleMatForm('"+org+"')\">➕ Enregistrer un emprunt</button>";
   } else {
-    html += '<div class="locked-msg" style="margin-bottom:14px;">🔒 Connecte-toi en tant qu\'éditeur pour enregistrer un emprunt</div>';
+    html += '<div class="locked-msg" style="margin-bottom:14px;">🔒 <button onclick="openLoginModal()" style="background:none;border:none;color:#a78bfa;cursor:pointer;font-size:0.82rem;text-decoration:underline;">Connecte-toi</button> pour enregistrer un emprunt</div>';
   }
 
-  // Inventory by category
-  cats = [...new Set(matData.map(function(m){return m.cat;}))];
-  var catColors = {"Escalade":"#60a5fa","Alpinisme":"#a78bfa","Via Ferrata":"#34d399","Collectif":"#f97316"};
-
+  var catColors={"Escalade":"#60a5fa","Alpinisme":"#a78bfa","Via Ferrata":"#34d399","Hiver":"#93c5fd","Bloc":"#f97316","Collectif":"#fde68a"};
+  var cats=[...new Set(matData.map(function(m){return m.cat;}))];
   cats.forEach(function(cat){
-    var catColor = catColors[cat] || "#fff";
-    html += '<details class="mat-cat-details" open>';
-    html += '<summary class="mat-cat-summary" style="border-left-color:'+catColor+'">'+cat+'</summary>';
-    html += '<table class="mat-table"><thead><tr>';
-    html += '<th>Matériel</th><th>Stock</th><th>Prêté</th><th>Dispo</th>';
-    if(isMatEditor()) html += '<th></th>';
-    html += '</tr></thead><tbody>';
-
-    matData.forEach(function(m, idx){
+    var catColor=catColors[cat]||"#fff";
+    html+='<details class="mat-cat-details" open>';
+    html+='<summary class="mat-cat-summary" style="border-left-color:'+catColor+'">'+cat+'</summary>';
+    html+='<table class="mat-table"><thead><tr><th>Matériel</th><th>Stock</th><th>Prêté</th><th>Dispo</th>';
+    if(isMatEditor()) html+='<th></th>';
+    html+='</tr></thead><tbody>';
+    matData.forEach(function(m,idx){
       if(m.cat!==cat) return;
-      var pretActif = m.prets.filter(function(p){return !p.rendu;});
-      var totalPrete = pretActif.reduce(function(s,p){return s+(+p.qte||1);},0);
-      var dispo = m.qte - totalPrete;
-      var cls = dispo<=0?"qte-zero":dispo<=2?"qte-low":"qte-ok";
-
-      html += '<tr><td><strong>'+m.nom+'</strong>';
+      var prets=m.prets||[];
+      var pretActif=prets.filter(function(p){return !p.rendu;});
+      var totalPrete=pretActif.reduce(function(s,p){return s+(+p.qte||1);},0);
+      var dispo=m.qte-totalPrete;
+      var cls=dispo<=0?"qte-zero":dispo<=2?"qte-low":"qte-ok";
+      html+='<tr><td><strong>'+m.nom+'</strong>';
       if(pretActif.length>0){
-        html += '<div class="mat-prets-list">';
-        pretActif.forEach(function(p){
-          var pi = m.prets.indexOf(p);
-          html += '<div class="mat-pret-item-row">';
-          html += '<span class="pill pill-out">PRÊTÉ</span> ';
-          html += '<span class="mat-pret-who">'+p.emprunteur+'</span>';
+        html+='<div class="mat-prets-list">';
+        pretActif.forEach(function(p,pi){
+          html+='<div class="mat-pret-item-row">';
+          html+='<span class="pill pill-out">PRÊTÉ</span> ';
+          html+='<span class="mat-pret-who">'+p.emprunteur+'</span>';
           if(p.out||p.in){
-            html += '<span class="mat-pret-dates">';
-            if(p.out) html += '📅 '+formatDate(p.out);
-            if(p.out&&p.in) html += ' → ';
-            if(p.in) html += formatDate(p.in);
-            html += '</span>';
+            html+='<span class="mat-pret-dates">';
+            if(p.out) html+='📅 '+formatDate(p.out);
+            if(p.out&&p.in) html+=' → ';
+            if(p.in) html+=formatDate(p.in);
+            html+='</span>';
           }
           if(isMatEditor()){
-            html += ' <button onclick="rendreMateriel(\''+org+'\','+idx+','+pi+')" class="btn-rendu">✓ Rendu</button>';
+            html+=' <button onclick="rendreMateriel(\''+org+'\','+idx+','+pi+')" class="btn-rendu">✓ Rendu</button>';
           }
-          html += '</div>';
+          html+='</div>';
         });
+        html+='</div>';
+      }
+      html+='</td>';
+      html+='<td>'+m.qte+'</td><td>'+(totalPrete||'—')+'</td><td class="'+cls+'">'+dispo+'</td>';
+      if(isMatEditor()) html+='<td><button onclick="editQte(\''+org+'\','+idx+')" class="btn-edit-qte">✏️</button></td>';
+      html+='</tr>';
+    });
+    html+='</tbody></table></details>';
+  });
+
+  container.innerHTML=html;
+
+  var sel=document.getElementById("mat-user-select");
+  if(sel) sel.addEventListener("change",function(){});
+}
+
+function addPret(org){
+  if(!isMatEditor()){alert("Connecte-toi pour enregistrer un emprunt");return;}
+  var matData=getMat(org)||JSON.parse(JSON.stringify(getMatDefault(org)));
+  var idx=+document.getElementById("mat-pret-item-"+org).value;
+  var emp=document.getElementById("mat-pret-emp-"+org).value.trim();
+  var tel=document.getElementById("mat-pret-tel-"+org)?document.getElementById("mat-pret-tel-"+org).value.trim():'';
+  var mail=document.getElementById("mat-pret-mail-"+org)?document.getElementById("mat-pret-mail-"+org).value.trim():'';
+  var qte=+(document.getElementById("mat-pret-qte-"+org).value||1);
+  var st=window.matCalState&&window.matCalState[org]?window.matCalState[org]:{};
+  var out=st.start||"", inp=st.end||st.start||"";
+  if(!emp){alert("Merci d'indiquer le nom de l'emprunteur");return;}
+  if(!out){alert("Merci de sélectionner les dates d'emprunt");return;}
+  var item=matData[idx];
+  var pretActif=(item.prets||[]).filter(function(p){return !p.rendu;});
+  var totalPrete=pretActif.reduce(function(s,p){return s+(+p.qte||1);},0);
+  if(totalPrete+qte>item.qte){alert("Stock insuffisant");return;}
+  var newPret={emprunteur:emp,tel:tel,mail:mail,out:out,in:inp,qte:String(qte),rendu:false};
+  var updatedPrets=(item.prets||[]).concat([newPret]);
+  var docId=item._id;
+  db.collection('materiel').doc(org).collection('items').doc(docId)
+    .update({prets:updatedPrets})
+    .then(function(){
+      window.matCalState[org]={year:new Date().getFullYear(),month:new Date().getMonth(),start:null,end:null};
+      toggleMatForm(org);
+    }).catch(function(err){alert("Erreur: "+err.message);});
+}
+
+function rendreMateriel(org,itemIdx,pretIdx){
+  if(!isMatEditor()) return;
+  var matData=getMat(org)||[];
+  var item=matData[itemIdx];
+  if(!item) return;
+  var updatedPrets=(item.prets||[]).map(function(p,i){
+    return i===pretIdx?Object.assign({},p,{rendu:true}):p;
+  });
+  db.collection('materiel').doc(org).collection('items').doc(item._id)
+    .update({prets:updatedPrets});
+}
+
+function editQte(org,idx){
+  if(!isMatEditor()) return;
+  var matData=getMat(org)||[];
+  var item=matData[idx];
+  if(!item) return;
+  var newQte=prompt("Nouvelle quantité pour "+item.nom,item.qte);
+  if(newQte===null) return;
+  db.collection('materiel').doc(org).collection('items').doc(item._id)
+    .update({qte:parseInt(newQte)||item.qte});
+}
+
+function renderMat(){ renderMatOrg("caf"); }
+function renderAllMat(){ listenMat("caf"); listenMat("cd35"); }
+
+// ── RECAP MAT ──
+var RECAP_EXAMPLES = [
+  {org:'CAF Liffré', materiel:'Corde 60m',           cat:'Escalade',    emprunteur:'Thomas Bernard',  tel:'06 12 34 56 78', mail:'thomas.bernard@mail.fr',  qte:'1', out:'2026-05-20', in:'2026-05-24'},
+  {org:'CAF Liffré', materiel:'Baudrier adulte',      cat:'Escalade',    emprunteur:'Alice Martin',    tel:'06 23 45 67 89', mail:'alice.martin@mail.fr',     qte:'2', out:'2026-05-22', in:'2026-05-25'},
+  {org:'CAF Liffré', materiel:'Longe via ferrata',    cat:'Via Ferrata', emprunteur:'Romain Dupont',   tel:'07 34 56 78 90', mail:'romain.dupont@mail.fr',    qte:'3', out:'2026-05-23', in:'2026-05-26'},
+  {org:'CAF Liffré', materiel:'Casque',               cat:'Escalade',    emprunteur:'Emma Leroy',      tel:'06 45 67 89 01', mail:'emma.leroy@mail.fr',       qte:'2', out:'2026-05-18', in:'2026-05-20'},
+  {org:'CD35',       materiel:'Crampons',             cat:'Alpinisme',   emprunteur:'Lucas Girard',    tel:'06 56 78 90 12', mail:'lucas.girard@mail.fr',     qte:'1', out:'2026-05-21', in:'2026-05-28'},
+  {org:'CD35',       materiel:'Piolet',               cat:'Alpinisme',   emprunteur:'Sophie Morel',    tel:'07 67 89 01 23', mail:'sophie.morel@mail.fr',     qte:'2', out:'2026-05-19', in:'2026-05-22'},
+  {org:'CD35',       materiel:'Dégaines',             cat:'Escalade',    emprunteur:'Nathan Petit',    tel:'06 78 90 12 34', mail:'nathan.petit@mail.fr',     qte:'2', out:'2026-05-24', in:'2026-05-27'},
+];
+
+function renderMatRecap(){
+  var container = document.getElementById('mat-recap-content');
+  if(!container) return;
+  var html = '';
+
+  var allPrets = [];
+  ['caf','cd35'].forEach(function(org){
+    var matData = getMat(org) || JSON.parse(JSON.stringify(getMatDefault(org)));
+    matData.forEach(function(m){
+      m.prets.forEach(function(p){
+        if(!p.rendu){
+          allPrets.push({org:org==='caf'?'CAF Liffré':'CD35', materiel:m.nom, cat:m.cat,
+            emprunteur:p.emprunteur, tel:p.tel||'', mail:p.mail||'',
+            qte:p.qte, out:p.out, in:p.in});
+        }
+      });
+    });
+  });
+
+  var isExample = allPrets.length === 0;
+  var displayPrets = isExample ? RECAP_EXAMPLES : allPrets;
+  displayPrets.sort(function(a,b){ return (a.out||'').localeCompare(b.out||''); });
+
+  if(isExample) html += '<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
+
+  html += '<div class="recap-header"><span class="recap-count">'+displayPrets.length+' emprunt'+(displayPrets.length!==1?'s':'')+' en cours</span></div>';
+
+  ['CAF Liffré','CD35'].forEach(function(orgName){
+    var orgPrets = displayPrets.filter(function(p){return p.org===orgName;});
+    if(orgPrets.length===0) return;
+    html += '<div class="recap-org-title">'+orgName+'</div>';
+
+    orgPrets.forEach(function(p){
+      var isLate = p.in && new Date(p.in) < new Date();
+      var initials = p.emprunteur.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+      html += '<div class="recap-row'+(isLate?' recap-row-late':'')+(isExample?' compet-entry-exemple':'')+'">';
+
+      // LEFT: avatar + nom + contacts
+      html += '<div class="recap-left">';
+      html += '<div class="recap-avatar">'+initials+'</div>';
+      html += '<div class="recap-person">';
+      html += '<div class="recap-person-name">'+p.emprunteur+'</div>';
+      html += '<div class="recap-person-contacts">';
+      if(p.tel) html += '<a href="tel:'+p.tel.replace(/ /g,'')+'" class="recap-link-tel">📞 '+p.tel+'</a>';
+      if(p.mail) html += '<a href="mailto:'+p.mail+'" class="recap-link-mail">✉️ '+p.mail+'</a>';
+      html += '</div></div></div>';
+
+      // RIGHT: matériel + dates
+      html += '<div class="recap-right">';
+      html += '<div class="recap-mat-line">';
+      html += '<span class="recap-materiel">'+p.materiel+'</span>';
+      html += '<span class="recap-qte">×'+p.qte+'</span>';
+      html += '</div>';
+      html += '<span class="recap-cat-badge">'+p.cat+'</span>';
+      if(p.out||p.in){
+        html += '<div class="recap-dates-line">';
+        if(p.out) html += '<span class="recap-dpill">📤 '+formatDate(p.out)+'</span>';
+        if(p.out&&p.in) html += '<span class="recap-arrow">→</span>';
+        if(p.in) html += '<span class="recap-dpill'+(isLate?' recap-dpill-late':'')+'">📥 '+formatDate(p.in)+(isLate?' ⚠️':'')+'</span>';
+        if(p.out&&p.in){
+          var days=Math.round((new Date(p.in)-new Date(p.out))/(1000*60*60*24))+1;
+          html += '<span class="recap-dpill recap-dpill-dur">'+days+'j</span>';
+        }
         html += '</div>';
       }
-      html += '</td>';
-      html += '<td>'+m.qte+'</td>';
-      html += '<td>'+(totalPrete||'—')+'</td>';
-      html += '<td class="'+cls+'">'+dispo+'</td>';
-      if(isMatEditor()){
-        html += '<td><button onclick="editQte(\''+org+'\','+idx+')" class="btn-edit-qte">✏️</button></td>';
-      }
-      html += '</tr>';
+      html += '</div>';
+
+      html += '</div>';
     });
-    html += '</tbody></table></details>';
   });
 
   container.innerHTML = html;
-
-  // Bind user selector
-  var sel = document.getElementById("mat-user-select");
-  if(sel) sel.addEventListener("change",function(){
-    currentUser = this.value;
-    localStorage.setItem("caf_user",currentUser);
-    renderAllMat();
-    renderAllCompets();
-  });
-
-  // Init calendar state
-  if(!window.matCalState) window.matCalState = {};
-  if(!window.matCalState[org]) window.matCalState[org] = {
-    year: new Date().getFullYear(),
-    month: new Date().getMonth(),
-    start: null, end: null
-  };
 }
 
+
+// Récap uses Firestore data
+function renderMatRecap(){
+  var container=document.getElementById('mat-recap-content');
+  if(!container) return;
+  var allPrets=[];
+  ['caf','cd35'].forEach(function(org){
+    var matData=getMat(org)||[];
+    matData.forEach(function(m){
+      (m.prets||[]).forEach(function(p){
+        if(!p.rendu) allPrets.push({org:org==='caf'?'CAF Liffré':'CD35',materiel:m.nom,cat:m.cat,
+          emprunteur:p.emprunteur,tel:p.tel||'',mail:p.mail||'',qte:p.qte,out:p.out,in:p.in});
+      });
+    });
+  });
+  var isExample=allPrets.length===0;
+  var displayPrets=isExample?RECAP_EXAMPLES:allPrets;
+  displayPrets.sort(function(a,b){return(a.out||'').localeCompare(b.out||'');});
+  var html='';
+  if(isExample) html+='<div class="compet-example-notice">💡 Aperçu — exemples à titre indicatif</div>';
+  html+='<div class="recap-header"><span class="recap-count">'+displayPrets.length+' emprunt'+(displayPrets.length!==1?'s':'')+' en cours</span></div>';
+  ['CAF Liffré','CD35'].forEach(function(orgName){
+    var orgPrets=displayPrets.filter(function(p){return p.org===orgName;});
+    if(orgPrets.length===0) return;
+    html+='<div class="recap-org-title">'+orgName+'</div>';
+    orgPrets.forEach(function(p){
+      var isLate=p.in&&new Date(p.in)<new Date();
+      var initials=p.emprunteur.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+      html+='<div class="recap-row'+(isLate?' recap-row-late':'')+(isExample?' compet-entry-exemple':'')+'">';
+      html+='<div class="recap-left"><div class="recap-avatar">'+initials+'</div>';
+      html+='<div class="recap-person"><div class="recap-person-name">'+p.emprunteur+'</div>';
+      html+='<div class="recap-person-contacts">';
+      if(p.tel) html+='<a href="tel:'+p.tel.replace(/ /g,'')+'" class="recap-link-tel">📞 '+p.tel+'</a>';
+      if(p.mail) html+='<a href="mailto:'+p.mail+'" class="recap-link-mail">✉️ '+p.mail+'</a>';
+      html+='</div></div></div>';
+      html+='<div class="recap-right"><div class="recap-mat-line"><span class="recap-materiel">'+p.materiel+'</span><span class="recap-qte">×'+p.qte+'</span></div>';
+      html+='<span class="recap-cat-badge">'+p.cat+'</span>';
+      if(p.out||p.in){
+        html+='<div class="recap-dates-line">';
+        if(p.out) html+='<span class="recap-dpill">📤 '+formatDate(p.out)+'</span>';
+        if(p.out&&p.in) html+='<span class="recap-arrow">→</span>';
+        if(p.in) html+='<span class="recap-dpill'+(isLate?' recap-dpill-late':'')+'">📥 '+formatDate(p.in)+(isLate?' ⚠️':'')+'</span>';
+        if(p.out&&p.in){var days=Math.round((new Date(p.in)-new Date(p.out))/(1000*60*60*24))+1;html+='<span class="recap-dpill recap-dpill-dur">'+days+'j</span>';}
+        html+='</div>';
+      }
+      html+='</div></div>';
+    });
+  });
+  container.innerHTML=html;
+}
+
+
+
+// ── CALENDAR ──
 // ── MINI CALENDAR ──
 function renderMiniCal(org){
   var st = window.matCalState && window.matCalState[org] ? window.matCalState[org] : {
@@ -2180,7 +2384,7 @@ function renderMatRecap(){
       html += '<div class="recap-person">';
       html += '<div class="recap-person-name">'+p.emprunteur+'</div>';
       html += '<div class="recap-person-contacts">';
-      if(p.tel) html += '<a href="tel:'+p.tel.replace(/\s/g,'')+'" class="recap-link-tel">📞 '+p.tel+'</a>';
+      if(p.tel) html += '<a href="tel:'+p.tel.replace(/ /g,'')+'" class="recap-link-tel">📞 '+p.tel+'</a>';
       if(p.mail) html += '<a href="mailto:'+p.mail+'" class="recap-link-mail">✉️ '+p.mail+'</a>';
       html += '</div></div></div>';
 
@@ -2262,82 +2466,22 @@ function renderContactCard(c){
   return html;
 }
 
-// Init
+
+// ── INIT ──
 // Org tab switching for Matériel
 document.addEventListener('click', function(e){
-  var ot = e.target.closest('.mat-org-tab');
+  var ot=e.target.closest('.mat-org-tab');
   if(!ot) return;
-  var org = ot.dataset.org;
+  var org=ot.dataset.org;
   document.querySelectorAll('.mat-org-tab').forEach(function(t){t.classList.remove('on');});
   ot.classList.add('on');
   document.querySelectorAll('.mat-org-view').forEach(function(v){v.classList.remove('on');});
-  var view = document.getElementById('mat-'+org);
+  var view=document.getElementById('mat-'+org);
   if(view) view.classList.add('on');
   renderMatOrg(org);
 });
 
 renderAllCompets();
 renderAllMat();
-
-
-// INSTALL / ADD TO HOME SCREEN
-var deferredPrompt = null;
-
-window.addEventListener('beforeinstallprompt', function(e){
-  e.preventDefault();
-  deferredPrompt = e;
-  var btn = document.getElementById('hdr-install');
-  if(btn) btn.classList.add('visible');
-});
-
-window.addEventListener('appinstalled', function(){
-  deferredPrompt = null;
-  var btn = document.getElementById('hdr-install');
-  if(btn) btn.classList.remove('visible');
-});
-
-function openInstallModal(){
-  // If native prompt available (Android Chrome), use it
-  if(deferredPrompt){
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function(choice){
-      deferredPrompt = null;
-      var btn = document.getElementById('hdr-install');
-      if(btn) btn.classList.remove('visible');
-    });
-    return;
-  }
-  // Otherwise show manual instructions
-  var modal = document.getElementById('install-modal');
-  if(modal) modal.classList.add('open');
-  // Auto-detect OS
-  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  switchOS(isIOS ? 'ios' : 'android');
-  // Always show button (manual instructions always useful)
-  var btn = document.getElementById('hdr-install');
-  if(btn) btn.classList.add('visible');
-}
-
-function closeInstallModal(){
-  var modal = document.getElementById('install-modal');
-  if(modal) modal.classList.remove('open');
-}
-
-function switchOS(os){
-  document.querySelectorAll('.install-os').forEach(function(el){el.classList.remove('active');});
-  document.querySelectorAll('.install-os-tab').forEach(function(el){el.classList.remove('on');});
-  var panel = document.getElementById('install-'+os);
-  if(panel) panel.classList.add('active');
-  var tabs = document.querySelectorAll('.install-os-tab');
-  tabs.forEach(function(t){ if((os==='ios'&&t.textContent.includes('iPhone'))||(os==='android'&&t.textContent.includes('Android'))) t.classList.add('on'); });
-}
-
-// Always show install button (instructions always useful even if already installed)
-document.addEventListener('DOMContentLoaded', function(){
-  var btn = document.getElementById('hdr-install');
-  if(btn) btn.classList.add('visible');
-});
-
 </script>
 </body>
-</html>
