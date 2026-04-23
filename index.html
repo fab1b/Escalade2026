@@ -1310,13 +1310,12 @@ document.getElementById("nav").addEventListener("click",function(e){
   document.querySelectorAll(".sec-page").forEach(function(p){p.classList.remove("on");});
   btn.classList.add("on");
   document.getElementById("pg-"+tab).classList.add("on");
-  // Reset planning sub-tabs to "Planning" when switching pages
+  // Reset planning sub-tabs to "Planning" (direct ID targeting only)
   ["cours","loisirs"].forEach(function(plan){
-    document.querySelectorAll("#pg-"+plan+" .plan-view").forEach(function(v){
-      v.classList.remove("on"); v.style.display="none";
-    });
-    var pv=document.getElementById(plan+"-planning");
-    if(pv){pv.classList.add("on");pv.style.display="block";}
+    var planning = document.getElementById(plan+"-planning");
+    var contacts = document.getElementById(plan+"-contacts");
+    if(planning){planning.classList.add("on");planning.style.display="";}
+    if(contacts){contacts.classList.remove("on");contacts.style.display="none";}
     document.querySelectorAll(".plan-tab[data-plan='"+plan+"']").forEach(function(t){t.classList.remove("on");});
     var pt=document.querySelector(".plan-tab[data-plan='"+plan+"'][data-view='planning']");
     if(pt)pt.classList.add("on");
@@ -1328,12 +1327,15 @@ document.querySelectorAll(".plan-tab").forEach(function(tab){
   tab.addEventListener("click",function(){
     var plan=tab.dataset.plan;
     var view=tab.dataset.view;
+    // Update tab buttons
     document.querySelectorAll(".plan-tab[data-plan='"+plan+"']").forEach(function(t){t.classList.remove("on");});
     tab.classList.add("on");
-    document.querySelectorAll("#pg-"+plan+" .plan-view").forEach(function(v){
-      v.classList.remove("on");
-      v.style.display="none";
-    });
+    // Hide both views by ID (no broad selector)
+    var planning=document.getElementById(plan+"-planning");
+    var contacts=document.getElementById(plan+"-contacts");
+    if(planning){planning.classList.remove("on");planning.style.display="none";}
+    if(contacts){contacts.classList.remove("on");contacts.style.display="none";}
+    // Show only the selected view
     var target=document.getElementById(plan+"-"+view);
     if(target){target.classList.add("on");target.style.display="block";}
   });
