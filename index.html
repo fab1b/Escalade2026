@@ -10,8 +10,8 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;color:#fff;padding-bottom:72px;}
 button{cursor:pointer;-webkit-tap-highlight-color:transparent;}
-#hdr{display:flex;align-items:center;gap:12px;padding:14px 14px 10px;justify-content:space-between;}
-#hdr-install{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:20px;color:#fff;font-size:0.72rem;font-family:Arial,sans-serif;padding:6px 12px;cursor:pointer;display:none;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;}
+#hdr{display:flex;align-items:center;gap:10px;padding:12px 14px 10px;}
+#hdr-install{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:20px;color:#fff;font-size:0.68rem;font-family:Arial,sans-serif;padding:5px 10px;cursor:pointer;display:none;align-items:center;gap:4px;white-space:nowrap;flex-shrink:0;}
 #hdr-install svg{width:14px;height:14px;flex-shrink:0;}
 #hdr-install:active{opacity:0.7;}
 #hdr-install.visible{display:flex;}
@@ -401,10 +401,10 @@ details[open] .plan-month-summary::after{transform:rotate(-180deg);}
 
 <div id="hdr">
   <img src="photos/logo.jpg" alt="CAF Liffré">
-  <div><h1>CAF Liffré</h1><p>Club Alpin Français — Escalade 2026</p></div>
-  <button id="hdr-install" onclick="openInstallModal()">
+  <div style="flex:1;min-width:0;"><h1>CAF Liffré</h1><p>Club Alpin Français — Escalade 2026</p></div>
+  <button id="hdr-install" class="visible" onclick="openInstallModal()" style="margin-left:auto;">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v13M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-    Ajouter écran d'accueil
+    Créer Raccourci
   </button>
 </div>
 
