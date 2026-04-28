@@ -90,6 +90,19 @@ a{color:inherit;text-decoration:none;}
 .vc-meta{font-size:0.62rem;color:var(--muted);margin-top:1px;}
 .vc-grade{font-family:"Barlow Condensed",sans-serif;font-size:0.92rem;font-weight:900;flex-shrink:0;}
 
+/* VALIDATION VOIES */
+#m-val-stats{display:flex;gap:0;border-bottom:1px solid var(--border);background:rgba(0,33,71,0.5);}
+.vst{flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--border);}
+.vst:last-child{border-right:none;}
+.vst-n{font-family:"Barlow Condensed",sans-serif;font-size:1.5rem;font-weight:900;color:var(--sky);line-height:1;}
+.vst-l{font-size:0.55rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.vc.done{opacity:0.7;}
+.vc-bdg{position:absolute;top:6px;right:6px;padding:2px 6px;border-radius:4px;font-size:0.55rem;font-weight:700;color:#fff;}
+.vc-bts{display:flex;gap:3px;margin-top:7px;}
+.vb{flex:1;padding:7px 2px;border:none;border-radius:6px;font-size:0.58rem;font-weight:700;color:#fff;background:rgba(255,255,255,0.12);cursor:pointer;line-height:1.2;}
+.vb.on{box-shadow:0 0 0 2px rgba(255,255,255,0.5);}
+.vc{position:relative;}
+
 /* STATS BARS */
 .stats-wrap{padding:14px 12px;}
 .stats-hdr{font-family:"Barlow Condensed",sans-serif;font-size:0.68rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
@@ -218,7 +231,16 @@ a{color:inherit;text-decoration:none;}
     <button class="sub-tab on" onclick="switchSub(this,'tab-voies')">Voies</button>
     <button class="sub-tab" onclick="switchSub(this,'tab-stats')">Stats</button>
   </div>
-  <div class="sub-pane on" id="tab-voies"><div class="fil-bar" id="fil-voies"></div><div id="app-voies-m"></div></div>
+  <div class="sub-pane on" id="tab-voies">
+    <!-- Compteurs validation -->
+    <div id="m-val-stats">
+      <div class="vst"><div class="vst-n" id="m-tot">78</div><div class="vst-l">Total</div></div>
+      <div class="vst"><div class="vst-n" id="m-val" style="color:#22c55e;">0</div><div class="vst-l">Validees</div></div>
+      <div class="vst"><div class="vst-n" id="m-prg" style="color:#3b82f6;">0</div><div class="vst-l">En cours</div></div>
+    </div>
+    <div class="fil-bar" id="fil-voies"></div>
+    <div id="app-voies-m"></div>
+  </div>
   <div class="sub-pane" id="tab-stats"><div class="stats-wrap"><div class="stats-hdr">Repartition par niveau</div><div id="m-chart-n"></div><div class="stats-hdr" style="margin-top:16px;">Repartition par secteur</div><div id="m-chart-s"></div></div></div>
 </div>
 
@@ -494,40 +516,96 @@ function buildNextBanner(){
   el.style.display="block";
   el.innerHTML="<div class=\"nb-inner\"><span class=\"nb-icon\">&#127956;</span><div><div class=\"nb-lbl\">Prochaine sortie</div><div class=\"nb-title\">"+next.label+"</div><div class=\"nb-date\">"+dateStr+" &middot; "+next.lieu+"</div></div></div>";
 }
+/* ══ VALIDATION VOIES ══ */
+var SC=[
+  {k:"vue",    l:"A VUE",        b:"#22c55e"},
+  {k:"travail",l:"Apres TRAVAIL",b:"#f97316"},
+  {k:"encours",l:"EN COURS",     b:"#3b82f6"},
+  {k:"echec",  l:"ECHEC",        b:"#ef4444"}
+];
+var FL=[
+  {id:"all",t:"Toutes"},
+  {id:"5a-5c",t:"5a-5c"},
+  {id:"6a-6c",t:"6a-6c"},
+  {id:"7a-7c",t:"7a-7c"},
+  {id:"8a+",t:"8a+"},
+  {id:"ok",t:"Validees"},
+  {id:"no",t:"En attente"}
+];
+var V={}, CF="all";
+try{var sv=localStorage.getItem("caf2026");if(sv)V=JSON.parse(sv);}catch(e){}
+
+function updVal(){
+  var v=0,p=0;
+  for(var k in V){if(V[k]=="vue"||V[k]=="travail")v++;if(V[k]=="encours")p++;}
+  var ev=document.getElementById("m-val"), ep=document.getElementById("m-prg");
+  if(ev)ev.textContent=v; if(ep)ep.textContent=p;
+}
+
 var activeF="all";
 function buildVoies(){
-  var el=document.getElementById("app-voies-m");
   if(!document.getElementById("fil-voies").dataset.b){
-    var grades=["all","5a-5c","6a-6c","7a-7c","8a+"];
-    var labels={all:"Toutes","5a-5c":"5a-5c","6a-6c":"6a-6c","7a-7c":"7a-7c","8a+":"8a+"};
     var fil=document.getElementById("fil-voies");
-    grades.forEach(function(g){
+    FL.forEach(function(f){
       var btn=document.createElement("button");
-      btn.className="fb"+(g==="all"?" on":"");btn.textContent=labels[g];
-      btn.onclick=function(){activeF=g;fil.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});btn.classList.add("on");renderV();};
+      btn.className="fb"+(f.id==="all"?" on":"");
+      btn.textContent=f.t; btn.dataset.f=f.id;
+      btn.onclick=function(){
+        CF=btn.dataset.f;
+        fil.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+        btn.classList.add("on"); renderV();
+      };
       fil.appendChild(btn);
     });
     fil.dataset.b="1";
+    // Délégation click boutons validation
+    document.getElementById("app-voies-m").addEventListener("click",function(e){
+      var t=e.target;
+      if(t.classList.contains("vb")){
+        var i=+t.dataset.i, k=t.dataset.k;
+        if(V[i]===k) delete V[i]; else V[i]=k;
+        try{localStorage.setItem("caf2026",JSON.stringify(V));}catch(e){}
+        updVal(); renderV();
+      }
+    });
   }
-  renderV();
+  updVal(); renderV();
 }
+
 function renderV(){
-  var filtered=activeF==="all"?routes:routes.filter(function(r){
-    if(activeF==="5a-5c")return r.q.startsWith("5");
-    if(activeF==="6a-6c")return r.q.startsWith("6");
-    if(activeF==="7a-7c")return r.q.startsWith("7");
-    if(activeF==="8a+")return r.q.startsWith("8");
-    return true;
-  });
+  var fi=[];
+  for(var i=0;i<routes.length;i++){
+    var r=routes[i], s=V[i];
+    if(CF==="all") fi.push(i);
+    else if(CF==="ok" && (s==="vue"||s==="travail")) fi.push(i);
+    else if(CF==="no" && !s) fi.push(i);
+    else if(CF==="5a-5c" && r.q.startsWith("5")) fi.push(i);
+    else if(CF==="6a-6c" && r.q.startsWith("6")) fi.push(i);
+    else if(CF==="7a-7c" && r.q.startsWith("7")) fi.push(i);
+    else if(CF==="8a+" && r.q.startsWith("8")) fi.push(i);
+  }
   var sectors={};
-  filtered.forEach(function(r){var k="Secteur "+r.d;if(!sectors[k])sectors[k]=[];sectors[k].push(r);});
+  fi.forEach(function(i){ var k="Secteur "+routes[i].d; if(!sectors[k])sectors[k]=[]; sectors[k].push(i); });
   var html="";
   Object.keys(sectors).sort(function(a,b){return parseInt(a.split(" ")[1])-parseInt(b.split(" ")[1]);}).forEach(function(sec){
     html+="<div class=\"vsec-hdr\"><span class=\"vsec-t\">"+sec+"</span><span class=\"vsec-c\">"+sectors[sec].length+" voies</span></div><div class=\"vlist\">";
-    sectors[sec].forEach(function(r){
+    sectors[sec].forEach(function(idx){
+      var r=routes[idx], s=V[idx];
       var col=colorMap[r.c]||"#888";
       var gc=gradeColors[r.q.replace(/[+]/g,"")]||"#aaa";
-      html+="<div class=\"vc\" style=\"border-left-color:"+col+"\"><span class=\"vc-dot\" style=\"background:"+col+"\"></span><div class=\"vc-info\"><div class=\"vc-name\">"+r.n+"</div><div class=\"vc-meta\">"+r.c+(r.a?" &middot; "+r.a:"")+" &middot; "+r.o+"</div></div><span class=\"vc-grade\" style=\"color:"+gc+"\">"+r.q+"</span></div>";
+      var sc=SC.find(function(x){return x.k===s;});
+      html+="<div class=\"vc"+(s?" done":"")+"\" style=\"border-left-color:"+col+";\">";
+      if(sc) html+="<span class=\"vc-bdg\" style=\"background:"+sc.b+"\">"+sc.l+"</span>";
+      html+="<span class=\"vc-dot\" style=\"background:"+col+"\"></span>";
+      html+="<div class=\"vc-info\"><div class=\"vc-name\">"+r.n+"</div><div class=\"vc-meta\">"+r.q+" &middot; "+r.c+(r.a?" &middot; "+r.a:"")+" &middot; "+r.o+"</div></div>";
+      html+="<span class=\"vc-grade\" style=\"color:"+gc+"\">"+r.q+"</span>";
+      html+="</div>";
+      // Boutons validation
+      html+="<div class=\"vc-bts\">";
+      SC.forEach(function(cfg){
+        html+="<button class=\"vb"+(s===cfg.k?" on":"")+"\" style=\"background:"+(s===cfg.k?cfg.b:"rgba(255,255,255,0.12)")+";\" data-i=\""+idx+"\" data-k=\""+cfg.k+"\">"+cfg.l+"</button>";
+      });
+      html+="</div>";
     });
     html+="</div>";
   });
