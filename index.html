@@ -215,6 +215,142 @@ details.plan-month summary::-webkit-details-marker{display:none;}
 details.plan-month summary::after{content:"\25BE";font-size:12px;opacity:0.6;transition:transform 0.2s;}
 details.plan-month[open] summary::after{transform:rotate(-180deg);}
 
+
+/* ── Planning tabs (Planning / Contacts) ── */
+.plan-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 12px;}
+.plan-tab{font-family:"Barlow Condensed",sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:none;border:none;padding:10px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.plan-tab.on{color:var(--chalk);border-bottom-color:var(--accent);}
+.plan-view{display:none;}
+.plan-view.on{display:block;}
+/* Contacts grid */
+.resp-section-title{font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:18px 12px 10px;padding-bottom:5px;border-bottom:1px solid rgba(232,67,26,0.3);}
+.resp-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 12px 16px;}
+.resp-card{background:rgba(255,255,255,0.05);border-radius:8px;padding:9px 11px;font-size:0.75rem;}
+.resp-name{font-weight:700;margin-bottom:2px;}
+.resp-tel{color:#60a5fa;opacity:0.8;}
+
+/* ── Mois repliables ── */
+.plan-month-details{margin-bottom:8px;border-radius:8px;overflow:hidden;}
+.plan-month-summary{
+  list-style:none;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;
+  padding:11px 16px;font-size:0.78rem;font-weight:800;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(255,255,255,0.65);cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:background .15s,color .15s;
+  user-select:none;margin:0;
+}
+.plan-month-summary:hover{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);}
+details[open]>.plan-month-summary{
+  background:rgba(74,159,212,0.15);
+  border-color:rgba(74,159,212,0.35);
+  color:#4a9fd4;
+  border-radius:8px 8px 0 0;
+}
+.plan-month-summary::-webkit-details-marker{display:none;}
+.plan-month-summary::after{content:'▾';font-size:14px;transition:transform .25s ease;opacity:0.7;flex-shrink:0;}
+details[open]>.plan-month-summary::after{transform:rotate(-180deg);opacity:1;}
+.month-content{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-top:none;border-radius:0 0 8px 8px;padding:4px 0;}
+
+/* ══ MATÉRIEL ══ */
+.mat-main-tabs{display:flex;gap:6px;padding:10px 12px;flex-wrap:wrap;}
+.mat-main-tab{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);border-radius:20px;padding:6px 14px;cursor:pointer;}
+.mat-main-tab.on{background:var(--app-purple,#7c3aed);color:#fff;border-color:var(--app-purple,#7c3aed);}
+.mat-main-tab-demande{background:rgba(52,211,153,0.15)!important;color:#6ee7b7!important;border-color:rgba(52,211,153,0.35)!important;}
+.mat-main-view{display:none;padding:0 12px 16px;}
+.mat-main-view.on{display:block;}
+.mat-org-tabs{display:flex;gap:6px;margin-bottom:12px;padding-top:10px;}
+.mat-org-tab{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);border-radius:16px;padding:5px 12px;cursor:pointer;}
+.mat-org-tab.on{background:var(--app-purple,#7c3aed);color:#fff;border-color:var(--app-purple,#7c3aed);}
+.mat-org-view{display:none;}
+.mat-org-view.on{display:block;}
+.mat-list-section{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin:16px 0 0;padding:6px 10px;background:rgba(255,255,255,0.05);border-left:3px solid var(--app-purple,#7c3aed);border-radius:0 4px 4px 0;}
+.mat-list-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-bottom:4px;}
+.mat-list-table thead th{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:6px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.08);}
+.mat-list-table thead th:not(:first-child){text-align:center;width:70px;}
+.mat-list-table tbody tr{border-bottom:1px solid rgba(255,255,255,0.05);}
+.mat-list-table td{padding:9px 10px;}
+.mat-list-table td:not(:first-child){text-align:center;}
+.mat-dispo-ok{color:#6ee7b7!important;font-weight:700;}
+.mat-dispo-warn{color:#fde68a!important;font-weight:700;}
+.mat-dispo-none{color:#fca5a5!important;font-weight:700;}
+.dispo-filter-bar{background:rgba(74,159,212,0.07);border:1px solid rgba(74,159,212,0.2);border-radius:10px;padding:12px 14px;margin-bottom:14px;}
+.dispo-filter-label{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#4a9fd4;margin-bottom:10px;}
+.dispo-filter-inputs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.dispo-filter-field{display:flex;flex-direction:column;gap:3px;}
+.dispo-filter-sublabel{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.dispo-filter-input{background:rgba(255,255,255,0.07);border:1px solid rgba(74,159,212,0.3);border-radius:6px;color:#f5f2ee;padding:6px 10px;font-size:0.8rem;outline:none;cursor:pointer;color-scheme:dark;}
+.dispo-filter-sep{color:rgba(255,255,255,0.3);font-size:1rem;margin-top:14px;}
+.dispo-filter-reset{background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.4);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:0.75rem;margin-top:14px;}
+.dispo-filter-window{margin-top:8px;font-size:0.72rem;color:rgba(255,255,255,0.4);font-style:italic;}
+.dispo-filter-window strong{color:rgba(255,255,255,0.65);font-style:normal;}
+.recap-status-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 0 8px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:12px;}
+.recap-role{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.recap-login-btn{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(74,159,212,0.15);color:#4a9fd4;border:1px solid rgba(74,159,212,0.3);border-radius:8px;padding:5px 12px;cursor:pointer;}
+.recap-login-btn.connected{background:rgba(52,211,153,0.15);color:#6ee7b7;border-color:rgba(52,211,153,0.35);}
+.recap-org-title{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:6px 10px;background:rgba(255,255,255,0.04);border-left:3px solid rgba(74,159,212,0.5);border-radius:0 4px 4px 0;margin-bottom:8px;}
+.recap-emp-row{display:grid;grid-template-columns:1fr auto;align-items:start;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;margin-bottom:6px;font-size:0.8rem;}
+.recap-emp-mat{font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;font-weight:800;text-transform:uppercase;color:#f5f2ee;margin-bottom:3px;}
+.recap-emp-tag{display:inline-block;background:rgba(74,159,212,0.15);color:#4a9fd4;border-radius:10px;padding:1px 8px;font-size:0.68rem;font-weight:600;margin-right:4px;margin-bottom:4px;}
+.recap-emp-tag.warn{background:rgba(253,230,138,0.15);color:#fde68a;}
+.recap-emp-tag.over{background:rgba(239,68,68,0.2);color:#fca5a5;}
+.recap-emp-personne{font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:4px;}
+.recap-emp-personne a{color:#4a9fd4;text-decoration:none;}
+.recap-dem-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:10px 12px;background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.25);border-left:3px solid rgba(251,146,60,0.6);border-radius:8px;margin-bottom:6px;font-size:0.78rem;}
+.recap-dem-btns{display:flex;flex-direction:column;gap:5px;flex-shrink:0;}
+.recap-btn-valider{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(52,211,153,0.2);color:#6ee7b7;border:1px solid rgba(52,211,153,0.4);border-radius:6px;padding:4px 10px;cursor:pointer;white-space:nowrap;}
+.recap-btn-refuser{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.3);border-radius:6px;padding:4px 10px;cursor:pointer;white-space:nowrap;}
+.recap-btn-rendu{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(74,159,212,0.15);color:#4a9fd4;border:1px solid rgba(74,159,212,0.3);border-radius:6px;padding:4px 10px;cursor:pointer;white-space:nowrap;}
+.recap-dem-dispo{font-size:0.65rem;font-weight:600;margin-left:5px;padding:1px 6px;border-radius:10px;}
+.recap-dem-dispo.dispo-ok{background:rgba(52,211,153,0.15);color:#6ee7b7;}
+.recap-dem-dispo.dispo-ko{background:rgba(239,68,68,0.15);color:#fca5a5;}
+.mat-form-label{display:block;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,242,238,0.4);margin-bottom:3px;margin-top:10px;}
+.mat-form-input,.mat-form-select{width:100%;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:8px 11px;color:#f5f2ee;font-size:0.82rem;font-family:'Barlow',sans-serif;color-scheme:dark;box-sizing:border-box;}
+.mat-form-select option,.mat-form-select optgroup{background:#001e3c;color:#f5f2ee;}
+.mat-form-select optgroup{font-weight:700;color:#4a9fd4;}
+.mat-form-input:focus,.mat-form-select:focus{outline:none;border-color:#4a9fd4;}
+.mat-form-input::placeholder{color:rgba(255,255,255,0.25);}
+.mat-form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mat-btn-submit{margin-top:14px;width:100%;padding:11px;border:none;border-radius:10px;background:#e8431a;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:0.88rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;}
+
+/* ══ COMPÉTITIONS ══ */
+.compet-tabs{display:flex;gap:6px;padding:10px 12px;flex-wrap:wrap;}
+.compet-tab{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.55);border-radius:18px;padding:6px 13px;cursor:pointer;transition:all .15s;}
+.compet-tab.on{background:#f97316;color:#fff;border-color:#f97316;}
+.compet-tab-resultats{background:rgba(245,158,11,0.12)!important;color:#fde68a!important;border-color:rgba(245,158,11,0.3)!important;}
+.compet-tab-resultats.on{background:#f59e0b!important;color:#fff!important;border-color:#f59e0b!important;}
+.compet-view{display:none;padding:0 12px 16px;}
+.compet-view.on{display:block;}
+.compet-entry{background:rgba(255,255,255,0.06);border-radius:10px;padding:11px 13px;margin-bottom:9px;}
+.compet-entry-title{font-weight:700;font-size:0.86rem;margin-bottom:6px;}
+.compet-entry-meta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px;}
+.compet-entry-tag{padding:3px 9px;border-radius:10px;font-size:0.7rem;}
+.tag-lieu{background:rgba(52,211,153,0.2);color:#6ee7b7;}
+.tag-date{background:rgba(96,165,250,0.2);color:#93c5fd;}
+.tag-nb{background:rgba(251,191,36,0.2);color:#fde68a;}
+.compet-cat-details{margin-bottom:10px;border-radius:10px;overflow:hidden;}
+.compet-cat-summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:rgba(255,255,255,0.08);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.75);}
+.compet-cat-summary::-webkit-details-marker{display:none;}
+.compet-cat-summary::after{content:'▾';font-size:13px;transition:transform .2s;opacity:0.6;flex-shrink:0;}
+details[open] .compet-cat-summary::after{transform:rotate(-180deg);}
+.compet-cat-count{background:rgba(249,115,22,0.3);color:#fed7aa;font-size:0.68rem;padding:2px 7px;border-radius:10px;font-weight:700;margin-right:5px;}
+.compet-cat-body{padding:8px 0 2px;}
+.btn-reglement{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(251,191,36,0.15);color:#fde68a;border:1px solid rgba(251,191,36,0.35);border-radius:8px;padding:5px 11px;text-decoration:none;display:inline-block;}
+.res-section-title{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#f59e0b;margin:14px 0 10px;padding-bottom:5px;border-bottom:1px solid rgba(245,158,11,0.3);}
+.res-ranking{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.res-rank-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border-radius:10px;padding:9px 12px;}
+.res-rank-badge{font-size:1.2rem;flex-shrink:0;width:28px;text-align:center;}
+.rank-other{font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.35);}
+.res-rank-nom{flex:1;font-weight:700;font-size:0.85rem;}
+.res-medals{display:flex;gap:4px;flex-wrap:wrap;}
+.res-medal-pill{padding:3px 8px;border-radius:8px;font-size:0.7rem;font-weight:700;}
+.pdm-or{background:rgba(255,215,0,0.2);color:#ffd700;}
+.pdm-ag{background:rgba(192,192,192,0.2);color:#d0d0d0;}
+.pdm-br{background:rgba(205,127,50,0.2);color:#cd7f32;}
+.compet-form-box{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 14px;border:1px solid rgba(74,159,212,0.2);margin-bottom:16px;}
 </style>
 </head>
 <body>
@@ -278,6 +414,11 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <!-- COURS -->
 <div class="page" id="page-cours">
   <div class="ptitle">&#128197; Planning Cours</div>
+  <div class="plan-tabs">
+    <button class="plan-tab on" onclick="switchMPlanTab(this,'cours','m-planning')">Planning</button>
+    <button class="plan-tab" onclick="switchMPlanTab(this,'cours','m-contacts')">Contacts</button>
+  </div>
+  <div id="cours-m-planning" style="display:block;">
   <div class="hor-grid">
     <div class="hc"><div class="hc-j">Lundi</div><div class="hc-h">18h00&#8211;19h30</div><div class="hc-s">9/12 ans &#8212; Debutants</div></div>
     <div class="hc"><div class="hc-j">Mardi</div><div class="hc-h">18h00&#8211;22h00</div><div class="hc-s">9/12 Perf. + 13/17 Perf.</div></div>
@@ -290,120 +431,186 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
     <button class="ps on" onclick="switchPer(this,'c-mj')">Mai&#8211;Juil</button>
   </div>
   <div id="c-sd" class="plan-per">
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">Septembre</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S37 Lundi 7</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S37 Mardi 8</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S37 Jeudi 10</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Franck+Gerard</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S37 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S37 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Mikael+Fabien</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S38 Lundi 14</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S38 Mardi 15</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S38 Jeudi 17</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; J.P.+Dominique</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S38 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S38 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hugo+Francois</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S39 Lundi 21</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S39 Mardi 22</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S39 Jeudi 24</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikael+Franck</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S39 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S39 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine+Luc</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S40 Lundi 28</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S40 Mardi 29</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Octobre</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S41 Lundi 5</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S41 Mardi 6</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S41 Jeudi 8</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Hugo+Luc</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S41 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S41 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Marion+Fabien</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S42 Lundi 12</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S42 Mardi 13</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S42 Jeudi 15</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Dominique+Mikael</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep fe"><div class="pr-date">S43 Vacances Toussaint</div></div>
 <div class="pr sem-sep fe"><div class="pr-date">S44 Vacances Toussaint</div></div>
+</div>
+</details>
+
+<details class="plan-month-details">
+<summary class="plan-month-summary">Novembre</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S45 Lundi 3</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S45 Mardi 4</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S45 Jeudi 6</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S45 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S45 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S46 Lundi 10</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S46 Mardi 11</div><div class="pr-body"><div class="pr-cours" style="color:#fca5a5">Férié — Armistice</div></div></div>
 <div class="pr"><div class="pr-date">S46 Jeudi 13</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S46 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S46 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S47 Lundi 17</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S47 Mardi 18</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S47 Jeudi 20</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S47 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S47 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S48 Lundi 24</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S48 Mardi 25</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S48 Jeudi 27</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S48 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S48 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Décembre</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S49 Lundi 1</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S49 Mardi 2</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S49 Jeudi 4</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S49 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S49 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S50 Lundi 8</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S50 Mardi 9</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S50 Jeudi 11</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S50 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S50 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S51 Lundi 15</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S51 Mardi 16</div><div class="pr-body"><div class="pr-cours">9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S51 Jeudi 18</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Compet. 9/17 + Adultes déb. 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; —</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep fe"><div class="pr-date">S52 Vacances de Noël — Zone B : 20 déc → 5 jan</div></div>
+</div>
+</details>
   </div>
   <div id="c-ja" class="plan-per">
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">Janvier</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S02 Lundi 5</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S02 Mardi 6</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S02 Jeudi 8</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Franck + Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S02 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S02 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Mikael+Luc</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S03 Lundi 12</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S03 Mardi 13</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S03 Jeudi 15</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard + J.P.</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S03 Samedi 17</div><div class="pr-body"><div class="pr-cours" style="color:#fca5a5">Compet. Gym</div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Février</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S04 Lundi 19</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S04 Mardi 20</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S04 Jeudi 22</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; J.P. + Dominique</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S04 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S04 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine+Fabien</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S05 Lundi 26</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S05 Mardi 27</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S05 Jeudi 29</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Dominique + Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S05 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S05 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Marion+Francois</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S06 Lundi 2</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S06 Mardi 3</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S06 Jeudi 5</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël + Franck</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S06 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S06 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hugo+Luc</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S07 Lundi 9</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S07 Mardi 10</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S07 Jeudi 12</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Franck + Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S07 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S07 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Mikael+Francois</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep fe"><div class="pr-date">S08 Vacances scolaires</div></div>
 <div class="pr sem-sep fe"><div class="pr-date">S09 Vacances scolaires</div></div>
+</div>
+</details>
+
+<details class="plan-month-details">
+<summary class="plan-month-summary">Mars</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S10 Lundi 2</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S10 Mardi 3</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S10 Jeudi 5</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard + Dominique</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S10 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S10 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine+Marion</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S11 Lundi 9</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S11 Mardi 10</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S11 Jeudi 12</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Dominique + J.P.</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S11 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S11 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hugo+Fabien</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S12 Lundi 16</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S12 Mardi 17</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S12 Jeudi 19</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; J.P. + Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S12 Samedi 21</div><div class="pr-body"><div class="pr-cours" style="color:#fca5a5">Compet. Gym</div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Avril</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S13 Lundi 23</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S13 Mardi 24</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S13 Jeudi 26</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël + Franck</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S13 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S13 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Luc+Francois</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S14 Lundi 30</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S14 Mardi 31</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S14 Jeudi 2</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Franck + Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S14 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S14 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Fabien+Marion</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S15 Lundi 6</div><div class="pr-body"><div class="pr-cours" style="color:#fca5a5">FERIÉ</div></div></div>
 <div class="pr"><div class="pr-date">S15 Mardi 7</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S15 Jeudi 9</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard + J.P.</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S15 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S15 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Mikael+Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep fe"><div class="pr-date">S16 Vacances scolaires</div></div>
 <div class="pr sem-sep fe"><div class="pr-date">S17 Vacances scolaires</div></div>
 <div class="pr sem-sep"><div class="pr-date">S18 Lundi 27</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S18 Mardi 28</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S18 Jeudi 30</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; J.P. + Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
   </div>
   <div id="c-mj" class="plan-per on">
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">Mai</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S19 Lundi 4</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S19 Mardi 5</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S19 Jeudi 7</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Franck + Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S19 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S19 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Mikael+Luc</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr fe"><div class="pr-date">Vendredi 8</div><div class="pr-body"><div class="pr-cours" style="color:#fca5a5">Vendredi 8</div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S20 Lundi 11</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S20 Mardi 12</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
@@ -416,32 +623,72 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr sem-sep"><div class="pr-date">S22 Mardi 26</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S22 Jeudi 28</div><div class="pr-body"><div class="pr-cours">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; J.P. + Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S22 Samedi 30</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans + 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Juin</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S23 Lundi 1</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S23 Mardi 2</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S23 Jeudi 4</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël + Franck</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S23 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S23 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine+Luc</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S24 Lundi 8</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S24 Mardi 9</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S24 Jeudi 11</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Franck + Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S24 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S24 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Luc+Francois</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S25 Lundi 15</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S25 Mardi 16</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S25 Jeudi 18</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard + J.P.</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S25 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S25 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Marion+Francois</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S26 Lundi 22</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S26 Mardi 23</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S26 Jeudi 25</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; J.P. + Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S26 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S26 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hugo</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Juillet</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S27 Lundi 29</div><div class="pr-body"><div class="pr-cours">Cours 9/12 ans — Débutants 18h00 – 19h30</div><div class="pr-enc"><span class="enc-name">&#128100; Erwan</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S27 Mardi 30</div><div class="pr-body"><div class="pr-cours">Cours 9/12 Perf. + 13/17 Perf. 18h00 – 22h00</div><div class="pr-enc"><span class="enc-name">&#128100; Corentin</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S27 Jeudi 2</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours Compet. 9/17 + Adultes 18h15 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël + Franck</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
-<div class="pr"><div class="pr-date">S27 Samedi</div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans + 13/17 ans 10h00 – 17h15 ↳ 9/12 Débutants 10h00–11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date">S27 Samedi</div><div class="pr-body"><div class="pr-cours">Cours 13/17 ans 10h00 – 17h15</div><div class="pr-enc"><span class="enc-name">&#128100; Pierre</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
+<div class="pr"><div class="pr-date"></div><div class="pr-body"><div class="pr-cours" style="color:#FF69B4;font-weight:600;">Cours 9/12 ans Débutants 10h00 – 11h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine+Marion</span><button class="edit-btn" onclick="mEditEnc(this,'encadrant')">&#9999;&#65039;</button></div></div></div>
   <div class="pr sem-sep fe"><div class="pr-date">S28 Vacances été — 6 → 12 Juil</div><div class="pr-body"><div class="pr-cours" style="color:rgba(255,255,255,0.35)">Fin de saison</div></div></div>
+</div>
+</details>
+  </div>
+  </div>
+  <div id="cours-m-contacts" style="display:none;padding-top:8px;">
+    <div class="resp-section-title">Les Initiateurs</div>
+    <div class="resp-grid">
+      <div class="resp-card"><div class="resp-name">J.-P. Dessier</div><div class="resp-tel">06 37 28 30 91</div></div>
+      <div class="resp-card"><div class="resp-name">Nicolas Lefort</div><div class="resp-tel">06 16 15 54 06</div></div>
+      <div class="resp-card"><div class="resp-name">Dominique Vannier</div><div class="resp-tel">06 33 29 68 57</div></div>
+      <div class="resp-card"><div class="resp-name">Mickaël Lemasson</div><div class="resp-tel">06 37 47 68 35</div></div>
+      <div class="resp-card"><div class="resp-name">Xavier Elleouet</div><div class="resp-tel">07 84 06 72 14</div></div>
+      <div class="resp-card"><div class="resp-name">Hugo Chevalier</div><div class="resp-tel">06 21 39 57 05</div></div>
+      <div class="resp-card"><div class="resp-name">Gérard Blécon</div><div class="resp-tel">06 74 02 13 36</div></div>
+      <div class="resp-card"><div class="resp-name">Marion Bouteau</div><div class="resp-tel">06 85 02 91 86</div></div>
+      <div class="resp-card"><div class="resp-name">Luc Chantreuil</div><div class="resp-tel">02 99 68 66 65</div></div>
+      <div class="resp-card"><div class="resp-name">Fabien Baudrier</div><div class="resp-tel">06 49 72 58 30</div></div>
+      <div class="resp-card"><div class="resp-name">Franck Riem</div><div class="resp-tel">06 23 84 57 78</div></div>
+      <div class="resp-card"><div class="resp-name">Hervé Colinet</div><div class="resp-tel">06 49 15 00 50</div></div>
+    </div>
   </div>
 </div>
 
 <div class="page" id="page-loisirs">
   <div class="ptitle">&#127756; Planning Loisirs</div>
+  <div class="plan-tabs">
+    <button class="plan-tab on" onclick="switchLoisirTab(this,'loisirs-m-planning')">Planning</button>
+    <button class="plan-tab" onclick="switchLoisirTab(this,'loisirs-m-contacts')">Contacts</button>
+  </div>
+  <div id="loisirs-m-planning" style="display:block;">
   <div class="hor-grid">
     <div class="hc lo"><div class="hc-j">Lundi</div><div class="hc-h">20h00&#8211;22h15</div><div class="hc-s">Loisirs Adultes</div></div>
     <div class="hc lo"><div class="hc-j">Mercredi</div><div class="hc-h">18h30&#8211;22h30</div><div class="hc-s">Loisirs Adultes</div></div>
@@ -454,6 +701,9 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
     <button class="ps on" onclick="switchPer(this,'l-mj')">Mai&#8211;Juil</button>
   </div>
   <div id="l-sd" class="plan-per">
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">Septembre</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S37 Lundi 7</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S37 Mercredi 10 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S37 Mercredi 10 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Alex</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -470,6 +720,11 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr"><div class="pr-date">S39 Dimanche 28</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 10h30 – 12h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S40 Lundi 29</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; François</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S40 Mercredi 30 Sept / 1 Oct — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; David</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Octobre</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S41 Lundi 6</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Yan</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S41 Mercredi 8 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; David</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S41 Mercredi 8 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Julien</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -490,6 +745,11 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr"><div class="pr-date">S44 Mercredi 29 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Nicolas</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S44 Vendredi 31</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 21h00</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S44 Dimanche 2</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 10h30 – 12h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Novembre</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S45 Lundi 3</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S45 Mercredi 5 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S45 Mercredi 5 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hervé</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -508,6 +768,11 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr"><div class="pr-date">S48 Mercredi 26 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; David</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S48 Mercredi 26 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Julien</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S48 Vendredi 28</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 21h00</div><div class="pr-enc"><span class="enc-name">&#128100; Julie</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Décembre</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S49 Lundi 1</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Yan</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S49 Mercredi 3 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S49 Mercredi 3 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Alex</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -525,8 +790,13 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr sem-sep"><div class="pr-date">S52 Lundi 22</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; David</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S52 Mercredi 24 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S52 Mercredi 24 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hervé</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
   </div>
   <div id="l-ja" class="plan-per">
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">Janvier</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S02 Lundi 5</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S02 Mercredi 7 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S02 Mercredi 7 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Alex</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -537,6 +807,11 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr"><div class="pr-date">S03 Mercredi 14 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hervé</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S03 Vendredi 16</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 21h00</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S03 Dimanche 18</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 10h30 – 12h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hugo</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Février</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S04 Lundi 19</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Marion</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S04 Mercredi 21 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S04 Mercredi 21 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Nicolas</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -567,6 +842,11 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr"><div class="pr-date">S09 Mercredi 25 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Julien</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S09 Vendredi 27</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 21h00</div><div class="pr-enc"><span class="enc-name">&#128100; Julie</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S09 Dimanche 1</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 10h30 – 12h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hugo</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Mars</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S10 Lundi 2</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Marion</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S10 Mercredi 4 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S10 Mercredi 4 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Alex</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -582,6 +862,11 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr"><div class="pr-date">S12 Mercredi 18 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Nicolas</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S12 Vendredi 20</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 21h00</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S12 Dimanche 22</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 10h30 – 12h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Avril</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S13 Lundi 23</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Franck</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S13 Mercredi 25 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; David</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S13 Mercredi 25 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Julien</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -610,8 +895,13 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr sem-sep"><div class="pr-date">S18 Lundi 27</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; François</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S18 Mercredi 29 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S18 Mercredi 29 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Alex</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
   </div>
   <div id="l-mj" class="plan-per on">
+<details class="plan-month-details" open>
+<summary class="plan-month-summary">Mai</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S18 Dimanche 3</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 10h30 – 12h30</div><div class="pr-enc"><span class="enc-name">&#128100; Sébastien</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S19 Lundi 4</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Yan</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S19 Mercredi 6 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
@@ -632,16 +922,50 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 <div class="pr"><div class="pr-date">S22 Mercredi 27 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Alex</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S22 Vendredi 29</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 21h00</div><div class="pr-enc"><span class="enc-name">&#128100; Claudine</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S22 Dimanche 31</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 10h30 – 12h30</div><div class="pr-enc"><span class="enc-name">&#128100; Sébastien</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Juin</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S23 Lundi 1</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; David</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S24 Lundi 8</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Marion</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S25 Lundi 15</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; François</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S26 Lundi 22</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Yan</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+<details class="plan-month-details">
+<summary class="plan-month-summary">Juillet</summary>
+<div class="month-content">
 <div class="pr sem-sep"><div class="pr-date">S27 Lundi 29</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; Mikaël</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr sem-sep"><div class="pr-date">S28 Lundi 6</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h00 – 22h15</div><div class="pr-enc"><span class="enc-name">&#128100; David</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S28 Mercredi 8 — 18h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 20h30</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S28 Mercredi 8 — 20h30</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 20h30 – 22h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hervé</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S28 Vendredi 10</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 18h30 – 21h00</div><div class="pr-enc"><span class="enc-name">&#128100; Gérard</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
 <div class="pr"><div class="pr-date">S28 Dimanche 12</div><div class="pr-body"><div class="pr-cours">Loisirs Adultes 10h30 – 12h30</div><div class="pr-enc"><span class="enc-name">&#128100; Hugo</span><button class="edit-btn" onclick="mEditEnc(this,'ouvreur')">&#9999;&#65039;</button></div></div></div>
+</div>
+</details>
+  </div>
+  </div>
+  <div id="loisirs-m-contacts" style="display:none;padding-top:8px;">
+    <div class="resp-section-title">Responsables de salle</div>
+    <div class="resp-grid">
+      <div class="resp-card"><div class="resp-name">Julien Barrandon</div><div class="resp-tel">06 81 52 13 74</div></div>
+      <div class="resp-card"><div class="resp-name">Claudine Morin</div><div class="resp-tel">06 51 43 03 14</div></div>
+      <div class="resp-card"><div class="resp-name">Gérard Blécon</div><div class="resp-tel">06 74 02 13 36</div></div>
+      <div class="resp-card"><div class="resp-name">Mickaël Lemasson</div><div class="resp-tel">06 37 47 68 35</div></div>
+      <div class="resp-card"><div class="resp-name">Xavier Ellouet</div><div class="resp-tel">07 84 06 72 14</div></div>
+      <div class="resp-card"><div class="resp-name">Marion Bouteau</div><div class="resp-tel">06 85 02 91 86</div></div>
+      <div class="resp-card"><div class="resp-name">Sébastien Normant</div><div class="resp-tel">06 31 80 77 44</div></div>
+      <div class="resp-card"><div class="resp-name">Yan Verdavaine</div><div class="resp-tel">06 84 37 67 64</div></div>
+      <div class="resp-card"><div class="resp-name">Franck Riem</div><div class="resp-tel">06 23 84 57 78</div></div>
+      <div class="resp-card"><div class="resp-name">Nicolas Lefort</div><div class="resp-tel">06 16 15 54 06</div></div>
+      <div class="resp-card"><div class="resp-name">Hugo Chevalier</div><div class="resp-tel">06 21 39 57 05</div></div>
+      <div class="resp-card"><div class="resp-name">François Bossennec</div><div class="resp-tel">06 72 48 60 32</div></div>
+      <div class="resp-card"><div class="resp-name">Hervé Colinet</div><div class="resp-tel">06 49 15 00 50</div></div>
+      <div class="resp-card"><div class="resp-name">David Touret-Le Chêne</div><div class="resp-tel">07 62 61 37 36</div></div>
+      <div class="resp-card"><div class="resp-name">Alex Beck</div><div class="resp-tel">07 81 05 75 32</div></div>
+      <div class="resp-card"><div class="resp-name">Julie Miller</div><div class="resp-tel">06 70 20 42 35</div></div>
+    </div>
   </div>
 </div>
 
@@ -665,26 +989,289 @@ details.plan-month[open] summary::after{transform:rotate(-180deg);}
 
 <!-- MATERIEL -->
 <div class="page" id="page-materiel">
-  <div class="ptitle">&#127992; Materiel du club</div>
-  <div class="sec-lbl">Cordes</div>
-  <div class="mat-i"><span class="mat-ic">&#129330;</span><div class="mat-inf"><div class="mat-nm">Cordes 60m</div><div class="mat-dt">Usage courant SAE et falaise</div></div><span class="mat-q ok">13 nouvelles</span></div>
-  <div class="mat-i"><span class="mat-ic">&#129398;</span><div class="mat-inf"><div class="mat-nm">Cordes glacier 40m</div><div class="mat-dt">A commander</div></div><span class="mat-q lm">2 a venir</span></div>
-  <div class="sec-lbl">Protection &amp; Bloc</div>
-  <div class="mat-i"><span class="mat-ic">&#129307;</span><div class="mat-inf"><div class="mat-nm">Tapis de bloc</div><div class="mat-dt">40cm haut &#183; 2,50&#215;3,45m &#8212; en commande</div></div><span class="mat-q lm">Budget ~1 400 &#8364;</span></div>
-  <div class="mat-i"><span class="mat-ic">&#9937;&#65039;</span><div class="mat-inf"><div class="mat-nm">Baudriers club</div><div class="mat-dt">Pour debutants en creneaux encadres</div></div><span class="mat-q ok">Disponible</span></div>
-  <div class="sec-lbl">Protocole d'emprunt</div>
-  <div style="padding:10px 16px;font-size:0.75rem;color:rgba(245,242,238,0.6);line-height:1.6;">
-    Le protocole d'emprunt est disponible sur le site du club.<br>
-    <a href="https://www.clubalpinliffre.fr/protocole-demprunt-materiel/" target="_blank" style="color:var(--sky);font-weight:600;">Voir le protocole &#8594;</a>
+  <div class="ptitle">&#127992; Mat&#233;riel</div>
+  <div class="mat-main-tabs">
+    <button class="mat-main-tab on" id="mat-tab-pret" onclick="matTab(this,'mat-pret')">Pr&#234;t Mat&#233;riel</button>
+    <button class="mat-main-tab" id="mat-tab-recap" onclick="matTab(this,'mat-recap')">R&#233;capitulatif</button>
+    <button class="mat-main-tab mat-main-tab-demande" onclick="ouvrirDemandeM()">Faire une demande</button>
+  </div>
+
+  <!-- PRÊt -->
+  <div class="mat-main-view on" id="mat-pret">
+    <div class="mat-org-tabs">
+      <button class="mat-org-tab on" onclick="matOrg(this,'mat-caf')">CAF Liffr&#233;</button>
+      <button class="mat-org-tab" onclick="matOrg(this,'mat-cd35')">CD35</button>
+    </div>
+    <div class="dispo-filter-bar">
+      <div class="dispo-filter-label">&#128197; V&#233;rifier la disponibilit&#233;</div>
+      <div class="dispo-filter-inputs">
+        <div class="dispo-filter-field"><label class="dispo-filter-sublabel">D&#233;part</label><input id="m-filter-debut" class="dispo-filter-input" type="date" onchange="mUpdateDispo()"></div>
+        <div class="dispo-filter-sep">&#8594;</div>
+        <div class="dispo-filter-field"><label class="dispo-filter-sublabel">Retour</label><input id="m-filter-fin" class="dispo-filter-input" type="date" onchange="mUpdateDispo()"></div>
+        <button class="dispo-filter-reset" onclick="mResetDispo()">&#10005;</button>
+      </div>
+      <div id="m-dispo-window" class="dispo-filter-window" style="display:none;">Fen&#234;tre&#160;: <strong id="m-dispo-window-label"></strong></div>
+    </div>
+    <!-- CAF -->
+    <div class="mat-org-view on" id="mat-caf">
+      <div class="mat-list-section">ESCALADE</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Casque</td><td>16</td><td class="mat-dispo-ok" id="d-casque">16</td></tr>
+        <tr><td>D&#233;gaine</td><td>60</td><td class="mat-dispo-ok" id="d-degaine">60</td></tr>
+        <tr><td>Longe double</td><td>15</td><td class="mat-dispo-ok" id="d-longe-double">15</td></tr>
+        <tr><td>Coinceur</td><td>3</td><td class="mat-dispo-ok" id="d-coinceur-caf">3</td></tr>
+        <tr><td>Mousqueton &#224; vis</td><td>10</td><td class="mat-dispo-ok" id="d-mousqueton">10</td></tr>
+        <tr><td>Reverso</td><td>6</td><td class="mat-dispo-ok" id="d-reverso">6</td></tr>
+        <tr><td>Grigri</td><td>5</td><td class="mat-dispo-ok" id="d-grigri">5</td></tr>
+        <tr><td>Baudrier</td><td>10</td><td class="mat-dispo-ok" id="d-baudrier-caf">10</td></tr>
+        <tr><td>Poign&#233;e bloqueur</td><td>3</td><td class="mat-dispo-ok" id="d-poignee-bloqueur">3</td></tr>
+        <tr><td>Corde de rappel</td><td>4</td><td class="mat-dispo-ok" id="d-corde-rappel">4</td></tr>
+        <tr><td>Corde 80m</td><td>2</td><td class="mat-dispo-ok" id="d-corde-80m">2</td></tr>
+        <tr><td>Corde statique</td><td>1</td><td class="mat-dispo-ok" id="d-corde-statique">1</td></tr>
+        <tr><td>Corde glacier</td><td>1</td><td class="mat-dispo-ok" id="d-corde-glacier">1</td></tr>
+      </tbody></table>
+      <div class="mat-list-section">VIA FERRATA</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Longe via ferrata</td><td>6</td><td class="mat-dispo-ok" id="d-longe-ferrata-caf">6</td></tr>
+        <tr><td>Poulie via ferrata</td><td>6</td><td class="mat-dispo-ok" id="d-poulie-ferrata">6</td></tr>
+      </tbody></table>
+      <div class="mat-list-section">BLOC</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Crash Pad</td><td>3</td><td class="mat-dispo-ok" id="d-crashpad">3</td></tr>
+      </tbody></table>
+      <div class="mat-list-section">COLLECTIF</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Tente abri</td><td>2</td><td class="mat-dispo-ok" id="d-tente-abri">2</td></tr>
+      </tbody></table>
+    </div>
+    <!-- CD35 -->
+    <div class="mat-org-view" id="mat-cd35">
+      <div class="mat-list-section">ALPINISME</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Piolet canne Petzl</td><td>5</td><td class="mat-dispo-ok" id="d-cd35-piolet-petzl">5</td></tr>
+        <tr><td>Piolet canne Grivel</td><td>5</td><td class="mat-dispo-ok" id="d-cd35-piolet-grivel">5</td></tr>
+        <tr><td>Piolet canne Simon</td><td>2</td><td class="mat-dispo-ok" id="d-cd35-piolet-simon">2</td></tr>
+        <tr><td>Piolet Pyrana</td><td>4</td><td class="mat-dispo-ok" id="d-cd35-piolet-pyrana">4</td></tr>
+        <tr><td>Piolet traction Aztar</td><td>6</td><td class="mat-dispo-ok" id="d-cd35-piolet-aztar">6</td></tr>
+        <tr><td>Piolet Track</td><td>4</td><td class="mat-dispo-ok" id="d-cd35-piolet-track">4</td></tr>
+        <tr><td>Broche &#224; glace</td><td>9</td><td class="mat-dispo-ok" id="d-cd35-broche">9</td></tr>
+        <tr><td>Crampon Petzl semi-auto</td><td>5</td><td class="mat-dispo-ok" id="d-cd35-crampon-petzl">5</td></tr>
+        <tr><td>Crampon Camp auto</td><td>4</td><td class="mat-dispo-ok" id="d-cd35-crampon-camp-auto">4</td></tr>
+        <tr><td>Crampon Grivel</td><td>3</td><td class="mat-dispo-ok" id="d-cd35-crampon-grivel">3</td></tr>
+        <tr><td>Crampon Camp rouge</td><td>8</td><td class="mat-dispo-ok" id="d-cd35-crampon-camp-rouge">8</td></tr>
+      </tbody></table>
+      <div class="mat-list-section">ESCALADE</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Friends + mousqueton</td><td>27</td><td class="mat-dispo-ok" id="d-cd35-friends">27</td></tr>
+        <tr><td>Coinceurs (jeux)</td><td>3</td><td class="mat-dispo-ok" id="d-cd35-coinceurs">3</td></tr>
+        <tr><td>Poign&#233;e ascension gauche</td><td>2</td><td class="mat-dispo-ok" id="d-cd35-poignee-g">2</td></tr>
+        <tr><td>Poign&#233;e ascension droite</td><td>2</td><td class="mat-dispo-ok" id="d-cd35-poignee-d">2</td></tr>
+      </tbody></table>
+      <div class="mat-list-section">VIA FERRATA</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Longe via ferrata</td><td>10</td><td class="mat-dispo-ok" id="d-cd35-longe-ferrata">10</td></tr>
+      </tbody></table>
+      <div class="mat-list-section">HIVER</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Raquette TSL</td><td>7</td><td class="mat-dispo-ok" id="d-cd35-raquette-tsl">7</td></tr>
+        <tr><td>Raquette GV</td><td>2</td><td class="mat-dispo-ok" id="d-cd35-raquette-gv">2</td></tr>
+        <tr><td>Pelle avalanche</td><td>9</td><td class="mat-dispo-ok" id="d-cd35-pelle">9</td></tr>
+        <tr><td>Sonde avalanche</td><td>3</td><td class="mat-dispo-ok" id="d-cd35-sonde">3</td></tr>
+        <tr><td>ARVA</td><td>5</td><td class="mat-dispo-ok" id="d-cd35-arva">5</td></tr>
+      </tbody></table>
+      <div class="mat-list-section">COLLECTIF</div>
+      <table class="mat-list-table"><thead><tr><th>Mat&#233;riel</th><th>Stock</th><th>Dispo</th></tr></thead><tbody>
+        <tr><td>Toile XP 3 places</td><td>1</td><td class="mat-dispo-ok" id="d-cd35-toile-xp">1</td></tr>
+        <tr><td>Toile tunnel 2 places</td><td>2</td><td class="mat-dispo-ok" id="d-cd35-toile-tunnel">2</td></tr>
+        <tr><td>R&#233;chaud MSR Thermo</td><td>2</td><td class="mat-dispo-ok" id="d-cd35-rechaud-thermo">2</td></tr>
+        <tr><td>Adaptateur Markill MSR</td><td>4</td><td class="mat-dispo-ok" id="d-cd35-adaptateur">4</td></tr>
+        <tr><td>R&#233;chaud MSR Super Fly</td><td>4</td><td class="mat-dispo-ok" id="d-cd35-rechaud-superfly">4</td></tr>
+      </tbody></table>
+      <div style="margin-top:10px;background:rgba(74,159,212,0.07);border:1px solid rgba(74,159,212,0.2);border-radius:8px;padding:9px 11px;font-size:0.73rem;color:rgba(255,255,255,0.45);">&#128222; Contacter le CD35 avant toute demande.</div>
+    </div>
+  </div>
+
+  <!-- RÉCAPITULATIF -->
+  <div class="mat-main-view" id="mat-recap">
+    <div class="recap-status-bar">
+      <span id="m-recap-role" class="recap-role">Lecteur</span>
+      <button id="m-recap-login-btn" class="recap-login-btn" onclick="mMatLogin()">&#128273; Se connecter</button>
+    </div>
+    <div id="m-recap-count" style="font-size:0.73rem;color:rgba(255,255,255,0.3);margin-bottom:12px;"></div>
+    <div id="m-recap-demandes" style="display:none;margin-bottom:18px;">
+      <div class="recap-org-title" style="border-left-color:rgba(253,186,116,0.7);color:rgba(253,186,116,0.8);">&#8987; DEMANDES EN ATTENTE</div>
+      <div id="m-recap-list-dem"></div>
+    </div>
+    <div>
+      <div class="recap-org-title">CAF LIFFR&#201;</div>
+      <div id="m-recap-list-caf"></div>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="recap-org-title">CD35</div>
+      <div id="m-recap-list-cd35"></div>
+    </div>
+    <button id="m-recap-export" onclick="mExportCSV()" style="display:none;margin-top:14px;font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(52,211,153,0.2);color:#6ee7b7;border:1px solid rgba(52,211,153,0.35);border-radius:8px;padding:6px 12px;cursor:pointer;">&#11015; Exporter CSV</button>
+  </div>
+</div>
+
+<!-- MODALE DEMANDE MATERIEL -->
+<div id="m-demande-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:99998;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+  <div style="background:#001e3c;border:1.5px solid rgba(74,159,212,0.4);border-radius:16px;width:min(520px,95vw);max-height:90vh;overflow-y:auto;padding:20px 22px;box-shadow:0 20px 60px rgba(0,0,0,0.7);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#f5f2ee;">&#128236; Demande de mat&#233;riel</div>
+      <button onclick="fermerDemandeM()" style="background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.5);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.9rem;">&#10005;</button>
+    </div>
+    <label class="mat-form-label">Organisation</label>
+    <select id="m-dem-org" class="mat-form-select" onchange="mUpdateDemSelect()">
+      <option value="">Choisir&#8230;</option>
+      <option value="caf">CAF Liffr&#233;</option>
+      <option value="cd35">CD35</option>
+    </select>
+    <label class="mat-form-label" style="margin-top:10px;">Mat&#233;riels souhait&#233;s</label>
+    <div id="m-dem-lignes" style="display:flex;flex-direction:column;gap:7px;margin-bottom:4px;"></div>
+    <button type="button" onclick="mAjouterLigne()" style="margin-top:4px;background:rgba(74,159,212,0.12);border:1px solid rgba(74,159,212,0.3);color:#7ecfff;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:0.78rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">+ Ajouter</button>
+    <div class="mat-form-row" style="margin-top:10px;">
+      <div><label class="mat-form-label">Date emprunt</label><input id="m-dem-debut" class="mat-form-input" type="date"></div>
+      <div><label class="mat-form-label">Date retour</label><input id="m-dem-fin" class="mat-form-input" type="date"></div>
+    </div>
+    <div class="mat-form-row" style="margin-top:8px;">
+      <div><label class="mat-form-label">Pr&#233;nom / Nom</label><input id="m-dem-nom" class="mat-form-input" type="text" placeholder="Pr&#233;nom Nom"></div>
+      <div><label class="mat-form-label">T&#233;l&#233;phone</label><input id="m-dem-tel" class="mat-form-input" type="tel" placeholder="06 XX XX XX XX"></div>
+    </div>
+    <label class="mat-form-label" style="margin-top:8px;">Email</label>
+    <input id="m-dem-email" class="mat-form-input" type="email" placeholder="email@exemple.fr">
+    <button class="mat-btn-submit" onclick="mEnvoyerDemande()">&#128236; Envoyer la demande &#8594;</button>
+    <div id="m-dem-succes" style="display:none;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.35);border-radius:8px;padding:9px 12px;font-size:0.78rem;color:#6ee7b7;margin-top:10px;">&#9989; Demande envoy&#233;e&nbsp;!</div>
   </div>
 </div>
 
 <!-- COMPET -->
 <div class="page" id="page-compet">
-  <div class="ptitle">&#127942; Competitions</div>
-  <div class="cbanner"><div class="cbt">&#127881; Qualifications France 2026</div><div class="cbb"><strong>Malo et Mael</strong> sont qualifies pour les Championnats de France a <strong>Besancon</strong>.<br>Regional a Dompierre du Chemin les <strong>11 et 12 avril 2026</strong>.</div></div>
-  <div class="sec-lbl">Palmares</div>
-  <div id="m-compet-ranking"><div style="padding:20px;text-align:center;font-size:0.78rem;color:rgba(255,255,255,0.25);font-style:italic;">Aucun resultat enregistre pour l'instant.</div></div>
+  <div class="ptitle">&#127942; Comp&#233;titions</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px 4px;flex-wrap:wrap;gap:8px;">
+    <a href="https://www.ffme.fr/escalade/competition/textes-et-reglements-competitions-escalade/" target="_blank" class="btn-reglement">&#128196; R&#232;glement FFME</a>
+    <button id="m-compet-login-btn" class="recap-login-btn" onclick="mCompetLogin()">&#128273; Se connecter</button>
+  </div>
+  <div class="compet-tabs">
+    <button class="compet-tab on" onclick="mCompetTab(this,'mc-difficulte')">Difficult&#233;</button>
+    <button class="compet-tab" onclick="mCompetTab(this,'mc-bloc')">Bloc</button>
+    <button class="compet-tab" onclick="mCompetTab(this,'mc-vitesse')">Vitesse</button>
+    <button class="compet-tab" onclick="mCompetTab(this,'mc-open')">Open</button>
+    <button class="compet-tab compet-tab-resultats" onclick="mCompetTab(this,'mc-resultats')">&#127885; R&#233;sultats</button>
+  </div>
+
+  <!-- DIFFICULTÉ -->
+  <div class="compet-view on" id="mc-difficulte">
+    <details class="compet-cat-details" open>
+      <summary class="compet-cat-summary">JEUNES <span class="compet-cat-count">4</span></summary>
+      <div class="compet-cat-body">
+        <div class="compet-entry"><div class="compet-entry-title">Comp&#233;tition Gym Liffr&#233;</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Liffr&#233;</span><span class="compet-entry-tag tag-date">&#128197; 17-18 Jan 2026</span><span class="compet-entry-tag tag-nb">&#128101; Club</span></div></div>
+        <div class="compet-entry"><div class="compet-entry-title">Coupe D&#233;partementale CD35 &#8212; Manche 1</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; CD35</span><span class="compet-entry-tag tag-date">&#128197; F&#233;v 2026</span></div></div>
+        <div class="compet-entry"><div class="compet-entry-title">Coupe D&#233;partementale CD35 &#8212; Manche 2</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; CD35</span><span class="compet-entry-tag tag-date">&#128197; Mar 2026</span></div></div>
+        <div class="compet-entry"><div class="compet-entry-title">Championnat R&#233;gional Bretagne</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Bretagne</span><span class="compet-entry-tag tag-date">&#128197; Avr 2026</span></div></div>
+      </div>
+    </details>
+    <details class="compet-cat-details" open>
+      <summary class="compet-cat-summary">ADULTES <span class="compet-cat-count">2</span></summary>
+      <div class="compet-cat-body">
+        <div class="compet-entry"><div class="compet-entry-title">Coupe D&#233;partementale Adultes</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; CD35</span><span class="compet-entry-tag tag-date">&#128197; Mar 2026</span></div></div>
+        <div class="compet-entry"><div class="compet-entry-title">Championnat R&#233;gional Adultes</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Bretagne</span><span class="compet-entry-tag tag-date">&#128197; Mai 2026</span></div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- BLOC -->
+  <div class="compet-view" id="mc-bloc">
+    <details class="compet-cat-details" open>
+      <summary class="compet-cat-summary">JEUNES <span class="compet-cat-count">3</span></summary>
+      <div class="compet-cat-body">
+        <div class="compet-entry"><div class="compet-entry-title">Comp&#233;tition Gym Liffr&#233; &#8212; Bloc</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Liffr&#233;</span><span class="compet-entry-tag tag-date">&#128197; 17-18 Jan 2026</span><span class="compet-entry-tag tag-nb">&#128101; Club</span></div></div>
+        <div class="compet-entry"><div class="compet-entry-title">Coupe D&#233;partementale Bloc CD35</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; CD35</span><span class="compet-entry-tag tag-date">&#128197; F&#233;v 2026</span></div></div>
+        <div class="compet-entry"><div class="compet-entry-title">Championnat R&#233;gional Bloc Bretagne</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Bretagne</span><span class="compet-entry-tag tag-date">&#128197; Mar 2026</span></div></div>
+      </div>
+    </details>
+    <details class="compet-cat-details" open>
+      <summary class="compet-cat-summary">ADULTES <span class="compet-cat-count">2</span></summary>
+      <div class="compet-cat-body">
+        <div class="compet-entry"><div class="compet-entry-title">Open Bloc Rennes</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Rennes</span><span class="compet-entry-tag tag-date">&#128197; Avr 2026</span></div></div>
+        <div class="compet-entry"><div class="compet-entry-title">Championnat R&#233;gional Bloc Adultes</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Bretagne</span><span class="compet-entry-tag tag-date">&#128197; Mai 2026</span></div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- VITESSE -->
+  <div class="compet-view" id="mc-vitesse">
+    <div style="margin:16px 12px;background:rgba(74,159,212,0.07);border:1px solid rgba(74,159,212,0.2);border-radius:8px;padding:10px 12px;font-size:0.75rem;color:rgba(255,255,255,0.45);">&#9201;&#65039; Aucune comp&#233;tition Vitesse enregistr&#233;e pour la saison 2025&#8209;2026.</div>
+  </div>
+
+  <!-- OPEN -->
+  <div class="compet-view" id="mc-open">
+    <details class="compet-cat-details" open>
+      <summary class="compet-cat-summary">OPEN <span class="compet-cat-count">2</span></summary>
+      <div class="compet-cat-body">
+        <div class="compet-entry"><div class="compet-entry-title">Open Escalade Foug&#232;res</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Foug&#232;res</span><span class="compet-entry-tag tag-date">&#128197; Mai 2026</span></div></div>
+        <div class="compet-entry"><div class="compet-entry-title">InterCAF Liffr&#233;</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Liffr&#233;</span><span class="compet-entry-tag tag-date">&#128197; 1 F&#233;v 2026</span><span class="compet-entry-tag tag-nb">&#128101; Clubs CAF</span></div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- RÉSULTATS -->
+  <div class="compet-view" id="mc-resultats">
+    <div id="m-compet-form-gest" style="display:none;" class="compet-form-box">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#4a9fd4;margin-bottom:10px;">+ Ajouter un r&#233;sultat</div>
+      <div class="mat-form-row" style="margin-bottom:7px;">
+        <div><label class="mat-form-label">Pr&#233;nom / Nom</label><input id="m-res-nom" class="mat-form-input" type="text" placeholder="Pr&#233;nom Nom"></div>
+        <div><label class="mat-form-label">Comp&#233;tition</label>
+          <select id="m-res-compet" class="mat-form-select">
+            <option value="">Choisir&#8230;</option>
+            <optgroup label="Difficult&#233;">
+              <option>Comp&#233;tition Gym Liffr&#233;</option>
+              <option>Coupe D&#233;partementale CD35 &#8212; Manche 1</option>
+              <option>Coupe D&#233;partementale CD35 &#8212; Manche 2</option>
+              <option>Championnat R&#233;gional Bretagne</option>
+              <option>Coupe D&#233;partementale Adultes</option>
+              <option>Championnat R&#233;gional Adultes</option>
+            </optgroup>
+            <optgroup label="Bloc">
+              <option>Comp&#233;tition Gym Liffr&#233; &#8212; Bloc</option>
+              <option>Coupe D&#233;partementale Bloc CD35</option>
+              <option>Championnat R&#233;gional Bloc Bretagne</option>
+              <option>Open Bloc Rennes</option>
+              <option>Championnat R&#233;gional Bloc Adultes</option>
+            </optgroup>
+            <optgroup label="Open">
+              <option>Open Escalade Foug&#232;res</option>
+              <option>InterCAF Liffr&#233;</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="mat-form-row" style="margin-bottom:7px;">
+        <div><label class="mat-form-label">Cat&#233;gorie</label>
+          <select id="m-res-categorie" class="mat-form-select">
+            <option value="">Choisir&#8230;</option>
+            <optgroup label="Jeunes"><option>U11 (9-10 ans)</option><option>U13 (11-12 ans)</option><option>U15 (13-14 ans)</option><option>U17 (15-16 ans)</option><option>U19 (17-18 ans)</option></optgroup>
+            <optgroup label="Adultes"><option>Senior</option><option>V&#233;t&#233;ran 1 (40-49 ans)</option><option>V&#233;t&#233;ran 2 (50+)</option></optgroup>
+          </select>
+        </div>
+        <div><label class="mat-form-label">M&#233;daille</label>
+          <select id="m-res-medaille" class="mat-form-select">
+            <option value="or">&#129351; Or &#8212; 1&#232;re place</option>
+            <option value="argent">&#129352; Argent &#8212; 2&#232;me place</option>
+            <option value="bronze">&#129353; Bronze &#8212; 3&#232;me place</option>
+            <option value="autre">&#127885; Participation / Finaliste</option>
+          </select>
+        </div>
+      </div>
+      <div class="mat-form-row" style="margin-bottom:10px;">
+        <div><label class="mat-form-label">Lieu</label><input id="m-res-lieu" class="mat-form-input" type="text" placeholder="Ville"></div>
+        <div><label class="mat-form-label">Date</label><input id="m-res-date" class="mat-form-input" type="date"></div>
+      </div>
+      <button class="mat-btn-submit" style="padding:8px 18px;font-size:0.78rem;" onclick="mAjouterResultat()">&#9989; Enregistrer</button>
+    </div>
+    <div class="res-section-title" style="margin:0 12px 10px;">Classement Club &#8212; Saison 2025&#8209;26</div>
+    <div id="m-compet-ranking" style="padding:0 12px;"></div>
+  </div>
 </div>
 
 <!-- INFOS -->
@@ -751,6 +1338,22 @@ var colorMap={"Vert pale":"#90EE90","Bleu pale":"#ADD8E6","Rouge brique":"#CB415
 var gradeColors={"5a":"#60a5fa","5b":"#60a5fa","5c":"#34d399","6a":"#facc15","6b":"#fb923c","6c":"#f97316","7a":"#ef4444","7b":"#dc2626","7c":"#b91c1c","8a":"#7f1d1d"};
 var gradeOrder=["5a","5b","5c","6a","6b","6c","7a","7b","7c","8a"];
 
+
+
+function switchLoisirTab(btn, viewId) {
+  btn.closest('.plan-tabs').querySelectorAll('.plan-tab').forEach(function(t){t.classList.remove('on');});
+  btn.classList.add('on');
+  document.getElementById('loisirs-m-planning').style.display = 'none';
+  document.getElementById('loisirs-m-contacts').style.display = 'none';
+  document.getElementById(viewId).style.display = 'block';
+}
+function switchMPlanTab(btn, planId, viewId) {
+  btn.closest('.plan-tabs').querySelectorAll('.plan-tab').forEach(function(t){t.classList.remove('on');});
+  btn.classList.add('on');
+  document.getElementById('cours-m-planning').style.display = 'none';
+  document.getElementById('cours-m-contacts').style.display = 'none';
+  document.getElementById(planId+'-'+viewId).style.display = 'block';
+}
 function showPage(id){
   document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
   document.getElementById("page-"+id).classList.add("active");
@@ -983,7 +1586,20 @@ function mOpenNameEdit(){
 function mCheckPw(){
   var inp=document.getElementById('pw-modal-input'),err=document.getElementById('pw-modal-error'),modal=document.getElementById('pw-modal');
   if(inp.value!==M_ENC_PW){err.classList.add('visible');inp.value='';modal.classList.add('pw-shake');setTimeout(function(){modal.classList.remove('pw-shake');},400);inp.focus();return;}
-  document.getElementById('pw-modal-overlay').classList.remove('open');inp.value='';_mEncAuth=true;mOpenNameEdit();
+  document.getElementById('pw-modal-overlay').classList.remove('open');inp.value='';
+  if(_mPendingGest){
+    _mPendingGest=false;_mMatGest=true;
+    document.getElementById('m-recap-role').textContent='Gestionnaire';
+    var lb=document.getElementById('m-recap-login-btn');lb.textContent='🔓 Se déconnecter';lb.classList.add('connected');
+    mRenderRecap();
+  } else if(_mPendingCompet){
+    _mPendingCompet=false;_mCompetGest=true;
+    var cb=document.getElementById('m-compet-login-btn');cb.textContent='🔓 Se déconnecter';cb.classList.add('connected');
+    document.getElementById('m-compet-form-gest').style.display='block';
+    mRenderResultats();
+  } else {
+    _mEncAuth=true;mOpenNameEdit();
+  }
 }
 function mClosePw(){document.getElementById('pw-modal-overlay').classList.remove('open');_mPendingEdit=null;}
 document.addEventListener('DOMContentLoaded',function(){
@@ -992,6 +1608,227 @@ document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('pw-modal-input').addEventListener('keydown',function(e){if(e.key==='Enter')mCheckPw();if(e.key==='Escape')mClosePw();});
   document.getElementById('pw-modal-overlay').addEventListener('click',function(e){if(e.target===this)mClosePw();});
 });
+
+/* ══ MATÉRIEL ══ */
+var MAT_EMP_KEY='caf_mat_emprunts_v2',MAT_DEM_KEY='caf_mat_demandes_v1';
+var _mMatGest=false,_mPendingGest=false;
+
+var M_STOCK={
+  'casque':{nom:'Casque',stock:16,org:'caf'},'degaine':{nom:'Dégaine',stock:60,org:'caf'},
+  'longe-double':{nom:'Longe double',stock:15,org:'caf'},'coinceur-caf':{nom:'Coinceur',stock:3,org:'caf'},
+  'mousqueton':{nom:'Mousqueton à vis',stock:10,org:'caf'},'reverso':{nom:'Reverso',stock:6,org:'caf'},
+  'grigri':{nom:'Grigri',stock:5,org:'caf'},'baudrier-caf':{nom:'Baudrier',stock:10,org:'caf'},
+  'poignee-bloqueur':{nom:'Poignée bloqueur',stock:3,org:'caf'},'corde-rappel':{nom:'Corde de rappel',stock:4,org:'caf'},
+  'corde-80m':{nom:'Corde 80m',stock:2,org:'caf'},'corde-statique':{nom:'Corde statique',stock:1,org:'caf'},
+  'corde-glacier':{nom:'Corde glacier',stock:1,org:'caf'},'longe-ferrata-caf':{nom:'Longe via ferrata',stock:6,org:'caf'},
+  'poulie-ferrata':{nom:'Poulie via ferrata',stock:6,org:'caf'},'crashpad':{nom:'Crash Pad',stock:3,org:'caf'},
+  'tente-abri':{nom:'Tente abri',stock:2,org:'caf'}
+};
+var M_CD35={
+  'cd35-piolet-petzl':{stock:5},'cd35-piolet-grivel':{stock:5},'cd35-piolet-simon':{stock:2},
+  'cd35-piolet-pyrana':{stock:4},'cd35-piolet-aztar':{stock:6},'cd35-piolet-track':{stock:4},
+  'cd35-broche':{stock:9},'cd35-crampon-petzl':{stock:5},'cd35-crampon-camp-auto':{stock:4},
+  'cd35-crampon-grivel':{stock:3},'cd35-crampon-camp-rouge':{stock:8},'cd35-friends':{stock:27},
+  'cd35-coinceurs':{stock:3},'cd35-poignee-g':{stock:2},'cd35-poignee-d':{stock:2},
+  'cd35-longe-ferrata':{stock:10},'cd35-raquette-tsl':{stock:7},'cd35-raquette-gv':{stock:2},
+  'cd35-pelle':{stock:9},'cd35-sonde':{stock:3},'cd35-arva':{stock:5},
+  'cd35-toile-xp':{stock:1},'cd35-toile-tunnel':{stock:2},'cd35-rechaud-thermo':{stock:2},
+  'cd35-adaptateur':{stock:4},'cd35-rechaud-superfly':{stock:4}
+};
+var M_CAT={
+  caf:[
+    {g:'Escalade',items:[{id:'casque',n:'Casque'},{id:'degaine',n:'Dégaine'},{id:'longe-double',n:'Longe double'},{id:'coinceur-caf',n:'Coinceur'},{id:'mousqueton',n:'Mousqueton à vis'},{id:'reverso',n:'Reverso'},{id:'grigri',n:'Grigri'},{id:'baudrier-caf',n:'Baudrier'},{id:'poignee-bloqueur',n:'Poignée bloqueur'},{id:'corde-rappel',n:'Corde de rappel'},{id:'corde-80m',n:'Corde 80m'},{id:'corde-statique',n:'Corde statique'},{id:'corde-glacier',n:'Corde glacier'}]},
+    {g:'Via Ferrata',items:[{id:'longe-ferrata-caf',n:'Longe via ferrata'},{id:'poulie-ferrata',n:'Poulie via ferrata'}]},
+    {g:'Bloc',items:[{id:'crashpad',n:'Crash Pad'}]},
+    {g:'Collectif',items:[{id:'tente-abri',n:'Tente abri'}]}
+  ],
+  cd35:[
+    {g:'Alpinisme',items:[{id:'cd35-piolet-petzl',n:'Piolet canne Petzl'},{id:'cd35-piolet-grivel',n:'Piolet canne Grivel'},{id:'cd35-piolet-simon',n:'Piolet canne Simon'},{id:'cd35-piolet-pyrana',n:'Piolet Pyrana'},{id:'cd35-piolet-aztar',n:'Piolet traction Aztar'},{id:'cd35-piolet-track',n:'Piolet Track'},{id:'cd35-broche',n:'Broche à glace'},{id:'cd35-crampon-petzl',n:'Crampon Petzl'},{id:'cd35-crampon-camp-auto',n:'Crampon Camp auto'},{id:'cd35-crampon-grivel',n:'Crampon Grivel'},{id:'cd35-crampon-camp-rouge',n:'Crampon Camp rouge'}]},
+    {g:'Escalade',items:[{id:'cd35-friends',n:'Friends + mousqueton'},{id:'cd35-coinceurs',n:'Coinceurs (jeux)'},{id:'cd35-poignee-g',n:'Poignée gauche'},{id:'cd35-poignee-d',n:'Poignée droite'}]},
+    {g:'Via Ferrata',items:[{id:'cd35-longe-ferrata',n:'Longe via ferrata'}]},
+    {g:'Hiver',items:[{id:'cd35-raquette-tsl',n:'Raquette TSL'},{id:'cd35-raquette-gv',n:'Raquette GV'},{id:'cd35-pelle',n:'Pelle avalanche'},{id:'cd35-sonde',n:'Sonde avalanche'},{id:'cd35-arva',n:'ARVA'}]},
+    {g:'Collectif',items:[{id:'cd35-toile-xp',n:'Toile XP 3p'},{id:'cd35-toile-tunnel',n:'Toile tunnel 2p'},{id:'cd35-rechaud-thermo',n:'Réchaud MSR Thermo'},{id:'cd35-adaptateur',n:'Adaptateur Markill'},{id:'cd35-rechaud-superfly',n:'Réchaud MSR Super Fly'}]}
+  ]
+};
+function mGetEmp(){try{return JSON.parse(localStorage.getItem(MAT_EMP_KEY))||[];}catch(e){return[];}}
+function mSaveEmp(l){localStorage.setItem(MAT_EMP_KEY,JSON.stringify(l));}
+function mGetDem(){try{return JSON.parse(localStorage.getItem(MAT_DEM_KEY))||[];}catch(e){return[];}}
+function mSaveDem(l){localStorage.setItem(MAT_DEM_KEY,JSON.stringify(l));}
+function mCalcPrete(){var p={};mGetEmp().forEach(function(e){p[e.mid]=(p[e.mid]||0)+e.qte;});return p;}
+function mFmtDate(s){if(!s)return'—';var p=s.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+function mAddDays(iso,n){var d=new Date(iso);d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];}
+function mDateSt(iso){if(!iso)return'ok';var t=new Date();t.setHours(0,0,0,0);var diff=Math.ceil((new Date(iso)-t)/86400000);return diff<0?'late':diff<=3?'soon':'ok';}
+function mSyncDispo(prete,fenetreDebut,fenetreFin){
+  Object.keys(M_STOCK).forEach(function(mid){
+    var t=M_STOCK[mid].stock,nb=0;
+    if(fenetreDebut&&fenetreFin){mGetEmp().forEach(function(e){if(e.mid===mid&&e.debut<=fenetreFin&&e.retour>=fenetreDebut)nb+=e.qte;});}
+    else{nb=(prete&&prete[mid])||0;}
+    var d=t-nb,el=document.getElementById('d-'+mid);
+    if(!el)return;el.textContent=d;el.className=d<=0?'mat-dispo-none':d<=Math.ceil(t*0.25)?'mat-dispo-warn':'mat-dispo-ok';
+  });
+  Object.keys(M_CD35).forEach(function(mid){
+    var t=M_CD35[mid].stock,d=t,el=document.getElementById('d-'+mid);
+    if(!el)return;el.textContent=d;el.className='mat-dispo-ok';
+  });
+}
+function matTab(btn,id){
+  document.querySelectorAll('.mat-main-tab').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.querySelectorAll('.mat-main-view').forEach(function(v){v.classList.remove('on');});
+  document.getElementById(id).classList.add('on');
+  if(id==='mat-recap')mRenderRecap();
+}
+function matOrg(btn,id){
+  document.querySelectorAll('.mat-org-tab').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.querySelectorAll('.mat-org-view').forEach(function(v){v.classList.remove('on');});
+  document.getElementById(id).classList.add('on');
+}
+function mUpdateDispo(){
+  var debut=document.getElementById('m-filter-debut').value,fin=document.getElementById('m-filter-fin').value;
+  if(!debut||!fin){mResetDispo();return;}
+  var fd=mAddDays(debut,-3),ff=mAddDays(fin,3);
+  document.getElementById('m-dispo-window').style.display='';
+  document.getElementById('m-dispo-window-label').textContent=mFmtDate(fd)+' → '+mFmtDate(ff)+' (±3j)';
+  mSyncDispo(null,fd,ff);
+}
+function mResetDispo(){
+  document.getElementById('m-filter-debut').value='';document.getElementById('m-filter-fin').value='';
+  document.getElementById('m-dispo-window').style.display='none';
+  mSyncDispo(mCalcPrete());
+}
+function mRenderRecap(){
+  var emp=mGetEmp(),dem=mGetDem();
+  var cnt=document.getElementById('m-recap-count');
+  if(cnt){var pp=[];if(emp.length)pp.push(emp.length+' emprunt'+(emp.length>1?'s':'')+' en cours');if(dem.length)pp.push(dem.length+' demande'+(dem.length>1?'s':'')+' en attente');cnt.textContent=pp.length?pp.join(' · '):'Aucun emprunt en cours';}
+  var ds=document.getElementById('m-recap-demandes');
+  if(ds){
+    if(_mMatGest&&dem.length){
+      ds.style.display='';
+      document.getElementById('m-recap-list-dem').innerHTML=dem.map(function(d){
+        var info='';if(d.mid&&M_STOCK[d.mid]){var p=mCalcPrete(),dn=M_STOCK[d.mid].stock-(p[d.mid]||0),ok=dn>=d.qte;info='<span class="recap-dem-dispo '+(ok?'dispo-ok':'dispo-ko')+'">'+(ok?'✅ '+dn:'⚠️ '+dn)+'</span>';}
+        return '<div class="recap-dem-row"><div><div class="recap-emp-mat">'+d.matNom+' <span class="recap-emp-tag">×'+d.qte+'</span>'+info+'</div><span class="recap-emp-tag">📅 '+mFmtDate(d.debut)+' → '+mFmtDate(d.fin)+'</span><div class="recap-emp-personne">👤 '+d.nom+(d.tel?' · <a href="tel:'+d.tel.replace(/\s/g,'')+'">📞 '+d.tel+'</a>':'')+(d.email?' · <a href="mailto:'+d.email+'">✉️ '+d.email+'</a>':'')+'</div></div><div class="recap-dem-btns"><button class="recap-btn-valider" onclick="mValider('+d.id+')">✅ Valider</button><button class="recap-btn-refuser" onclick="mRefuser('+d.id+')">✗ Refuser</button></div></div>';
+      }).join('');
+    }else{ds.style.display='none';}
+  }
+  function buildList(list,cid){
+    var el=document.getElementById(cid);if(!el)return;
+    if(!list.length){el.innerHTML='<div style="font-size:0.75rem;color:rgba(255,255,255,0.2);padding:6px 0;font-style:italic;">Aucun emprunt.</div>';return;}
+    el.innerHTML=list.map(function(e){
+      var nm=e.matNom||(M_STOCK[e.mid]?M_STOCK[e.mid].nom:e.mid),st=mDateSt(e.retour),tc=st==='late'?'over':st==='soon'?'warn':'';
+      var br=_mMatGest?'<button class="recap-btn-rendu" onclick="mRendu('+e.id+')">✓ Rendu</button>':'';
+      return '<div class="recap-emp-row"><div><div class="recap-emp-mat">'+nm+' <span class="recap-emp-tag">×'+e.qte+'</span></div><span class="recap-emp-tag '+tc+'">📅 '+mFmtDate(e.debut)+' → '+mFmtDate(e.retour)+'</span><div class="recap-emp-personne">👤 '+e.nom+(e.tel?' · <a href="tel:'+e.tel.replace(/\s/g,'')+'">📞 '+e.tel+'</a>':'')+(e.email?' · <a href="mailto:'+e.email+'">✉️ '+e.email+'</a>':'')+'</div></div>'+br+'</div>';
+    }).join('');
+  }
+  buildList(emp.filter(function(e){return e.org==='caf';}),'m-recap-list-caf');
+  buildList(emp.filter(function(e){return e.org==='cd35';}),'m-recap-list-cd35');
+  var expBtn=document.getElementById('m-recap-export');if(expBtn)expBtn.style.display=(_mMatGest&&emp.length)?'':'none';
+  mSyncDispo(mCalcPrete());
+}
+function mValider(id){var dem=mGetDem(),d=null,rest=dem.filter(function(x){if(x.id===id){d=x;return false;}return true;});if(!d)return;var p=mCalcPrete();if(d.mid&&M_STOCK[d.mid]){var dispo=M_STOCK[d.mid].stock-(p[d.mid]||0);if(d.qte>dispo&&!confirm('⚠️ Seulement '+dispo+' dispo. Valider ?'))return;}var emp=mGetEmp();emp.push({id:Date.now(),nom:d.nom,tel:d.tel||'',email:d.email||'',mid:d.mid||'',matNom:d.matNom,qte:d.qte,debut:d.debut,retour:d.fin,org:d.org||'caf',date:new Date().toLocaleDateString('fr-FR')});mSaveEmp(emp);mSaveDem(rest);mRenderRecap();}
+function mRefuser(id){if(!confirm('Refuser cette demande ?'))return;mSaveDem(mGetDem().filter(function(d){return d.id!==id;}));mRenderRecap();}
+function mRendu(id){if(!confirm('Confirmer le retour ?'))return;mSaveEmp(mGetEmp().filter(function(e){return e.id!==id;}));mRenderRecap();}
+function mExportCSV(){var emp=mGetEmp();if(!emp.length){alert('Aucun emprunt.');return;}var h=['Date','Matériel','Qté','Org','Emprunteur','Tél','Email','Retour'];var rows=emp.map(function(e){return[e.debut,e.matNom||e.mid,e.qte,e.org,e.nom,e.tel||'',e.email||'',e.retour||''].map(function(v){return'"'+String(v).replace(/"/g,'""')+'"';}).join(';');});var csv='\uFEFF'+h.map(function(x){return'"'+x+'"';}).join(';')+'\n'+rows.join('\n');var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='emprunts-caf.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);}
+function mMatLogin(){
+  if(_mMatGest){_mMatGest=false;var lb=document.getElementById('m-recap-login-btn');lb.textContent='🔑 Se connecter';lb.classList.remove('connected');document.getElementById('m-recap-role').textContent='Lecteur';mRenderRecap();return;}
+  _mPendingGest=true;
+  document.getElementById('pw-modal-title').textContent='🔑 Accès Gestionnaire Matériel';
+  document.getElementById('pw-modal-sub').textContent='Mot de passe encadrant pour gérer les emprunts.';
+  document.getElementById('pw-modal-input').value='';
+  document.getElementById('pw-modal-error').classList.remove('visible');
+  document.getElementById('pw-modal-overlay').classList.add('open');
+  setTimeout(function(){document.getElementById('pw-modal-input').focus();},80);
+}
+function mBuildOpts(org){var h='<option value="">Choisir…</option>';if(!org||!M_CAT[org])return h;M_CAT[org].forEach(function(cat){h+='<optgroup label="'+cat.g+'">';cat.items.forEach(function(item){h+='<option value="'+item.id+'">'+item.n+'</option>';});h+='</optgroup>';});return h;}
+function mUpdateDemSelect(){var org=document.getElementById('m-dem-org').value;document.querySelectorAll('.m-dem-sel').forEach(function(s){var c=s.value;s.innerHTML=mBuildOpts(org);s.value=c;});if(!document.getElementById('m-dem-lignes').children.length)mAjouterLigne();}
+function mAjouterLigne(){var org=document.getElementById('m-dem-org').value,c=document.getElementById('m-dem-lignes'),d=document.createElement('div');d.style.cssText='display:flex;gap:7px;align-items:center;';d.innerHTML='<select class="mat-form-select m-dem-sel" style="flex:1;">'+mBuildOpts(org)+'</select><input type="number" class="mat-form-input m-dem-qte" min="1" value="1" style="width:60px;"><button type="button" onclick="this.parentNode.remove()" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.25);color:#fca5a5;border-radius:6px;width:28px;height:28px;cursor:pointer;flex-shrink:0;">✕</button>';c.appendChild(d);}
+function ouvrirDemandeM(){['m-dem-org','m-dem-debut','m-dem-fin','m-dem-nom','m-dem-tel','m-dem-email'].forEach(function(id){document.getElementById(id).value='';});document.getElementById('m-dem-succes').style.display='none';document.getElementById('m-dem-lignes').innerHTML='';mAjouterLigne();document.getElementById('m-demande-overlay').style.display='flex';}
+function fermerDemandeM(){document.getElementById('m-demande-overlay').style.display='none';}
+function mEnvoyerDemande(){
+  var org=document.getElementById('m-dem-org').value,debut=document.getElementById('m-dem-debut').value,fin=document.getElementById('m-dem-fin').value,nom=document.getElementById('m-dem-nom').value.trim(),tel=document.getElementById('m-dem-tel').value.trim(),email=document.getElementById('m-dem-email').value.trim();
+  if(!org){alert('Choisissez une organisation.');return;}if(!nom){alert('Indiquez votre nom.');return;}if(!email){alert('Indiquez votre email.');return;}
+  var rows=document.getElementById('m-dem-lignes').querySelectorAll('div'),mats=[],ok=true;
+  rows.forEach(function(row){var s=row.querySelector('.m-dem-sel'),q=row.querySelector('.m-dem-qte');if(!s||!s.value){ok=false;return;}var matNom='';(M_CAT[org]||[]).forEach(function(cat){cat.items.forEach(function(it){if(it.id===s.value)matNom=it.n;});});mats.push({mid:s.value,matNom:matNom,qte:parseInt(q?q.value:1)||1});});
+  if(!ok||!mats.length){alert('Choisissez au moins un matériel.');return;}
+  var orgL=org==='caf'?'CAF Liffré':'CD35',dem=mGetDem();
+  mats.forEach(function(m){dem.push({id:Date.now()+Math.random(),nom:nom,tel:tel,email:email,mid:m.mid,matNom:m.matNom,qte:m.qte,debut:debut,fin:fin,org:org,dateDemande:new Date().toLocaleDateString('fr-FR')});});
+  mSaveDem(dem);
+  var txt=mats.map(function(m){return '  - '+m.matNom+' × '+m.qte;}).join('\n');
+  window.location.href='mailto:bathugofr@yahoo.fr,pjdessier@hotmail.fr?subject='+encodeURIComponent('Demande matériel '+orgL)+
+    '&body='+encodeURIComponent('Organisation : '+orgL+'\nMatériels :\n'+txt+'\nEmprunt : '+(debut?mFmtDate(debut):'—')+' → '+(fin?mFmtDate(fin):'—')+'\n\nNom : '+nom+'\nTél : '+(tel||'—')+'\nEmail : '+email);
+  document.getElementById('m-dem-succes').style.display='block';
+  setTimeout(fermerDemandeM,4000);
+}
+
+
+/* ══ COMPÉTITIONS JS ══ */
+var _mCompetGest=false,_mPendingCompet=false;
+var COMPET_KEY='caf_compet_results_v1';
+function mGetResultats(){try{return JSON.parse(localStorage.getItem(COMPET_KEY))||[];}catch(e){return[];}}
+function mSaveResultats(l){localStorage.setItem(COMPET_KEY,JSON.stringify(l));}
+function mCompetTab(btn,id){
+  document.querySelectorAll('.compet-tab').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.querySelectorAll('.compet-view').forEach(function(v){v.classList.remove('on');});
+  document.getElementById(id).classList.add('on');
+  if(id==='mc-resultats')mRenderResultats();
+}
+function mCompetLogin(){
+  if(_mCompetGest){_mCompetGest=false;var cb=document.getElementById('m-compet-login-btn');cb.textContent='🔑 Se connecter';cb.classList.remove('connected');document.getElementById('m-compet-form-gest').style.display='none';mRenderResultats();return;}
+  _mPendingCompet=true;
+  document.getElementById('pw-modal-title').textContent='🔑 Accès Gestionnaire Compétitions';
+  document.getElementById('pw-modal-sub').textContent='Mot de passe encadrant pour gérer les résultats.';
+  document.getElementById('pw-modal-input').value='';
+  document.getElementById('pw-modal-error').classList.remove('visible');
+  document.getElementById('pw-modal-overlay').classList.add('open');
+  setTimeout(function(){document.getElementById('pw-modal-input').focus();},80);
+}
+function mRenderResultats(){
+  var results=mGetResultats(),el=document.getElementById('m-compet-ranking');
+  if(!el)return;
+  if(!results.length){el.innerHTML="<div style='font-size:0.75rem;color:rgba(255,255,255,0.25);padding:10px 0;font-style:italic;'>Aucun résultat enregistré pour l'instant.</div>";return;}
+  var byNom={};
+  results.forEach(function(r){if(!byNom[r.nom])byNom[r.nom]=[];byNom[r.nom].push(r);});
+  var score=function(l){return l.filter(function(r){return r.medaille==='or';}).length*10+l.filter(function(r){return r.medaille==='argent';}).length*3+l.filter(function(r){return r.medaille==='bronze';}).length;};
+  var noms=Object.keys(byNom).sort(function(a,b){return score(byNom[b])-score(byNom[a]);});
+  var medals={or:'🥇',argent:'🥈',bronze:'🥉',autre:'🏅'};
+  var pillCls={or:'pdm-or',argent:'pdm-ag',bronze:'pdm-br',autre:''};
+  var badges=['🥇','🥈','🥉'];
+  el.innerHTML='<div class="res-ranking">'+noms.map(function(nom,i){
+    var list=byNom[nom];
+    var badge=i<3?badges[i]:'<span class="rank-other">'+(i+1)+'e</span>';
+    var pills=['or','argent','bronze','autre'].map(function(m){
+      var matches=list.filter(function(r){return r.medaille===m;});
+      if(!matches.length)return'';
+      return matches.map(function(r){return'<span class="res-medal-pill '+pillCls[m]+'" title="'+(r.compet||'')+(r.categorie?' — '+r.categorie:'')+'">'+medals[m]+' '+(r.compet||'')+(r.categorie?' — '+r.categorie:'')+'</span>';}).join('');
+    }).join('');
+    var btnDel=_mCompetGest?'<button onclick="mSupprimerResultat(this)" data-nom="'+nom.replace(/"/g,'&quot;')+'" style="background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid rgba(239,68,68,0.25);border-radius:5px;padding:2px 7px;font-size:0.65rem;cursor:pointer;margin-left:6px;">✕</button>':'';
+    return'<div class="res-rank-row"><div class="res-rank-badge">'+badge+'</div><div class="res-rank-nom">'+nom+btnDel+'</div><div class="res-medals">'+pills+'</div></div>';
+  }).join('')+'</div>';
+}
+function mAjouterResultat(){
+  var nom=document.getElementById('m-res-nom').value.trim();
+  var compet=document.getElementById('m-res-compet').value;
+  var categorie=document.getElementById('m-res-categorie').value;
+  var medaille=document.getElementById('m-res-medaille').value;
+  var lieu=document.getElementById('m-res-lieu').value.trim();
+  var date=document.getElementById('m-res-date').value;
+  if(!nom||!compet){alert('Renseignez le compétiteur et la compétition.');return;}
+  var results=mGetResultats();
+  results.push({id:Date.now(),nom:nom,compet:compet,categorie:categorie,medaille:medaille,lieu:lieu,date:date});
+  mSaveResultats(results);
+  document.getElementById('m-res-nom').value='';document.getElementById('m-res-compet').value='';
+  document.getElementById('m-res-categorie').value='';document.getElementById('m-res-lieu').value='';document.getElementById('m-res-date').value='';
+  mRenderResultats();
+}
+function mSupprimerResultat(btn){
+  var nom=btn.getAttribute('data-nom');
+  if(!confirm('Supprimer tous les résultats de '+nom+' ?'))return;
+  mSaveResultats(mGetResultats().filter(function(r){return r.nom!==nom;}));
+  mRenderResultats();
+}
+
+document.addEventListener("DOMContentLoaded",function(){var ov=document.getElementById("m-demande-overlay");if(ov)ov.addEventListener("click",function(e){if(e.target===this)fermerDemandeM();});mSyncDispo(mCalcPrete());mRenderResultats();});
 
 </script>
 </body>
