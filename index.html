@@ -373,6 +373,52 @@ details[open] .compet-cat-summary::after{transform:rotate(-180deg);}
 .pdm-ag{background:rgba(192,192,192,0.2);color:#d0d0d0;}
 .pdm-br{background:rgba(205,127,50,0.2);color:#cd7f32;}
 .compet-form-box{background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 14px;border:1px solid rgba(74,159,212,0.2);margin-bottom:16px;}
+
+
+/* ── Compétitions v9 migré ── */
+.qualif-badge  { font-size:0.82rem; font-weight:800; border-radius:6px;
+                 padding:3px 10px; white-space:nowrap; display:inline-flex;
+                 align-items:center; gap:4px; line-height:1.4; }
+.qualif-champ  { color:#fff; background:rgba(29,78,216,0.85);
+                 border:1.5px solid #3b82f6; }
+.qualif-demi   { color:#fff; background:rgba(109,40,217,0.75);
+                 border:1.5px solid #8b5cf6; }
+.podium-wrap   { display:flex; flex-wrap:wrap; gap:8px; padding:4px 0 14px; }
+.podium-card   { background:rgba(255,255,255,0.05); border-radius:12px;
+                 padding:11px 12px; min-width:110px; flex:1; text-align:center;
+                 border:1px solid rgba(255,255,255,0.07); }
+.podium-rank-1 { border-color:rgba(251,191,36,0.45)!important;
+                 background:rgba(251,191,36,0.07)!important; }
+.podium-rank-2 { border-color:rgba(209,213,219,0.3)!important; }
+.podium-rank-3 { border-color:rgba(251,146,60,0.3)!important; }
+.podium-name   { font-family:'Barlow Condensed',sans-serif; font-size:0.82rem; font-weight:800;
+                 text-transform:uppercase; color:#f5f2ee; margin-bottom:7px;
+                 white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.podium-medals { display:flex; justify-content:center; gap:8px; margin-bottom:5px; }
+.podium-med-g  { display:flex; flex-direction:column; align-items:center; gap:0; }
+.podium-med-i  { font-size:1.1rem; line-height:1.2; }
+.podium-med-n  { font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:900; line-height:1; }
+.podium-total  { font-size:0.6rem; color:rgba(245,242,238,0.32);
+                 text-transform:uppercase; letter-spacing:0.1em; }
+.res-cat-sep   { font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; font-weight:800;
+                 letter-spacing:0.2em; text-transform:uppercase; color:rgba(74,159,212,0.8);
+                 padding:10px 4px 3px; }
+.res-medal-row { display:flex; align-items:center; gap:8px; border-radius:7px;
+                 padding:6px 10px; margin-bottom:4px; flex-wrap:wrap; }
+.res-medal-ico { font-size:1.1rem; flex-shrink:0; }
+.res-medal-name{ font-family:'Barlow Condensed',sans-serif; font-size:0.92rem; font-weight:700;
+                 text-transform:uppercase; letter-spacing:0.03em; flex:1; min-width:100px; }
+.res-medal-comp{ font-size:0.67rem; color:rgba(245,242,238,0.38); }
+.res-section-title{
+  font-size:0.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  color:#f59e0b;margin:14px 0 10px;padding-bottom:5px;
+  border-bottom:1px solid rgba(245,158,11,0.3);
+}
+.cg-cat-lbl { display:inline-flex; align-items:center; gap:4px; font-size:0.72rem;
+              font-weight:600; color:rgba(245,242,238,0.65); cursor:pointer;
+              background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+              border-radius:6px; padding:3px 8px; transition:all .15s; user-select:none; }
+
 </style>
 </head>
 <body>
@@ -1170,132 +1216,219 @@ details[open] .compet-cat-summary::after{transform:rotate(-180deg);}
 
 <!-- COMPET -->
 <div class="page" id="page-compet">
-  <div class="ptitle">&#127942; Comp&#233;titions</div>
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px 4px;flex-wrap:wrap;gap:8px;">
-    <a href="https://www.ffme.fr/escalade/competition/textes-et-reglements-competitions-escalade/" target="_blank" class="btn-reglement">&#128196; R&#232;glement FFME</a>
-    <button id="m-compet-login-btn" class="recap-login-btn" onclick="mCompetLogin()">&#128273; Se connecter</button>
-  </div>
-  <div class="compet-tabs">
-    <button class="compet-tab on" onclick="mCompetTab(this,'mc-difficulte')">Difficult&#233;</button>
-    <button class="compet-tab" onclick="mCompetTab(this,'mc-bloc')">Bloc</button>
-    <button class="compet-tab" onclick="mCompetTab(this,'mc-vitesse')">Vitesse</button>
-    <button class="compet-tab" onclick="mCompetTab(this,'mc-open')">Open</button>
-    <button class="compet-tab compet-tab-resultats" onclick="mCompetTab(this,'mc-resultats')">&#127885; R&#233;sultats</button>
-  </div>
+  <div class="app-wrap">
+    <div class="app-wrap-inner">
 
-  <!-- DIFFICULTÉ -->
-  <div class="compet-view on" id="mc-difficulte">
-    <details class="compet-cat-details" open>
-      <summary class="compet-cat-summary">JEUNES <span class="compet-cat-count">4</span></summary>
-      <div class="compet-cat-body">
-        <div class="compet-entry"><div class="compet-entry-title">Comp&#233;tition Gym Liffr&#233;</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Liffr&#233;</span><span class="compet-entry-tag tag-date">&#128197; 17-18 Jan 2026</span><span class="compet-entry-tag tag-nb">&#128101; Club</span></div></div>
-        <div class="compet-entry"><div class="compet-entry-title">Coupe D&#233;partementale CD35 &#8212; Manche 1</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; CD35</span><span class="compet-entry-tag tag-date">&#128197; F&#233;v 2026</span></div></div>
-        <div class="compet-entry"><div class="compet-entry-title">Coupe D&#233;partementale CD35 &#8212; Manche 2</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; CD35</span><span class="compet-entry-tag tag-date">&#128197; Mar 2026</span></div></div>
-        <div class="compet-entry"><div class="compet-entry-title">Championnat R&#233;gional Bretagne</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Bretagne</span><span class="compet-entry-tag tag-date">&#128197; Avr 2026</span></div></div>
-      </div>
-    </details>
-    <details class="compet-cat-details" open>
-      <summary class="compet-cat-summary">ADULTES <span class="compet-cat-count">2</span></summary>
-      <div class="compet-cat-body">
-        <div class="compet-entry"><div class="compet-entry-title">Coupe D&#233;partementale Adultes</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; CD35</span><span class="compet-entry-tag tag-date">&#128197; Mar 2026</span></div></div>
-        <div class="compet-entry"><div class="compet-entry-title">Championnat R&#233;gional Adultes</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Bretagne</span><span class="compet-entry-tag tag-date">&#128197; Mai 2026</span></div></div>
-      </div>
-    </details>
-  </div>
-
-  <!-- BLOC -->
-  <div class="compet-view" id="mc-bloc">
-    <details class="compet-cat-details" open>
-      <summary class="compet-cat-summary">JEUNES <span class="compet-cat-count">3</span></summary>
-      <div class="compet-cat-body">
-        <div class="compet-entry"><div class="compet-entry-title">Comp&#233;tition Gym Liffr&#233; &#8212; Bloc</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Liffr&#233;</span><span class="compet-entry-tag tag-date">&#128197; 17-18 Jan 2026</span><span class="compet-entry-tag tag-nb">&#128101; Club</span></div></div>
-        <div class="compet-entry"><div class="compet-entry-title">Coupe D&#233;partementale Bloc CD35</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; CD35</span><span class="compet-entry-tag tag-date">&#128197; F&#233;v 2026</span></div></div>
-        <div class="compet-entry"><div class="compet-entry-title">Championnat R&#233;gional Bloc Bretagne</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Bretagne</span><span class="compet-entry-tag tag-date">&#128197; Mar 2026</span></div></div>
-      </div>
-    </details>
-    <details class="compet-cat-details" open>
-      <summary class="compet-cat-summary">ADULTES <span class="compet-cat-count">2</span></summary>
-      <div class="compet-cat-body">
-        <div class="compet-entry"><div class="compet-entry-title">Open Bloc Rennes</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Rennes</span><span class="compet-entry-tag tag-date">&#128197; Avr 2026</span></div></div>
-        <div class="compet-entry"><div class="compet-entry-title">Championnat R&#233;gional Bloc Adultes</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Bretagne</span><span class="compet-entry-tag tag-date">&#128197; Mai 2026</span></div></div>
-      </div>
-    </details>
-  </div>
-
-  <!-- VITESSE -->
-  <div class="compet-view" id="mc-vitesse">
-    <div style="margin:16px 12px;background:rgba(74,159,212,0.07);border:1px solid rgba(74,159,212,0.2);border-radius:8px;padding:10px 12px;font-size:0.75rem;color:rgba(255,255,255,0.45);">&#9201;&#65039; Aucune comp&#233;tition Vitesse enregistr&#233;e pour la saison 2025&#8209;2026.</div>
-  </div>
-
-  <!-- OPEN -->
-  <div class="compet-view" id="mc-open">
-    <details class="compet-cat-details" open>
-      <summary class="compet-cat-summary">OPEN <span class="compet-cat-count">2</span></summary>
-      <div class="compet-cat-body">
-        <div class="compet-entry"><div class="compet-entry-title">Open Escalade Foug&#232;res</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Foug&#232;res</span><span class="compet-entry-tag tag-date">&#128197; Mai 2026</span></div></div>
-        <div class="compet-entry"><div class="compet-entry-title">InterCAF Liffr&#233;</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-lieu">&#128205; Liffr&#233;</span><span class="compet-entry-tag tag-date">&#128197; 1 F&#233;v 2026</span><span class="compet-entry-tag tag-nb">&#128101; Clubs CAF</span></div></div>
-      </div>
-    </details>
-  </div>
-
-  <!-- RÉSULTATS -->
-  <div class="compet-view" id="mc-resultats">
-    <div id="m-compet-form-gest" style="display:none;" class="compet-form-box">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#4a9fd4;margin-bottom:10px;">+ Ajouter un r&#233;sultat</div>
-      <div class="mat-form-row" style="margin-bottom:7px;">
-        <div><label class="mat-form-label">Pr&#233;nom / Nom</label><input id="m-res-nom" class="mat-form-input" type="text" placeholder="Pr&#233;nom Nom"></div>
-        <div><label class="mat-form-label">Comp&#233;tition</label>
-          <select id="m-res-compet" class="mat-form-select">
-            <option value="">Choisir&#8230;</option>
-            <optgroup label="Difficult&#233;">
-              <option>Comp&#233;tition Gym Liffr&#233;</option>
-              <option>Coupe D&#233;partementale CD35 &#8212; Manche 1</option>
-              <option>Coupe D&#233;partementale CD35 &#8212; Manche 2</option>
-              <option>Championnat R&#233;gional Bretagne</option>
-              <option>Coupe D&#233;partementale Adultes</option>
-              <option>Championnat R&#233;gional Adultes</option>
-            </optgroup>
-            <optgroup label="Bloc">
-              <option>Comp&#233;tition Gym Liffr&#233; &#8212; Bloc</option>
-              <option>Coupe D&#233;partementale Bloc CD35</option>
-              <option>Championnat R&#233;gional Bloc Bretagne</option>
-              <option>Open Bloc Rennes</option>
-              <option>Championnat R&#233;gional Bloc Adultes</option>
-            </optgroup>
-            <optgroup label="Open">
-              <option>Open Escalade Foug&#232;res</option>
-              <option>InterCAF Liffr&#233;</option>
-            </optgroup>
-          </select>
+      <!-- Titre + boutons -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <div class="ptitle" style="border-bottom:none;margin-bottom:0;padding-bottom:0;">🏆 Compétitions</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <a href="https://www.ffme.fr/escalade/competition/textes-et-reglements-competitions-escalade/" target="_blank" class="btn-reglement">📄 Règlement</a>
+          <button id="m-compet-login-btn" class="recap-login-btn" onclick="mCompetLogin()">🔑 Se connecter</button>
         </div>
       </div>
-      <div class="mat-form-row" style="margin-bottom:7px;">
-        <div><label class="mat-form-label">Cat&#233;gorie</label>
-          <select id="m-res-categorie" class="mat-form-select">
-            <option value="">Choisir&#8230;</option>
-            <optgroup label="Jeunes"><option>U11 (9-10 ans)</option><option>U13 (11-12 ans)</option><option>U15 (13-14 ans)</option><option>U17 (15-16 ans)</option><option>U19 (17-18 ans)</option></optgroup>
-            <optgroup label="Adultes"><option>Senior</option><option>V&#233;t&#233;ran 1 (40-49 ans)</option><option>V&#233;t&#233;ran 2 (50+)</option></optgroup>
-          </select>
-        </div>
-        <div><label class="mat-form-label">M&#233;daille</label>
-          <select id="m-res-medaille" class="mat-form-select">
-            <option value="or">&#129351; Or &#8212; 1&#232;re place</option>
-            <option value="argent">&#129352; Argent &#8212; 2&#232;me place</option>
-            <option value="bronze">&#129353; Bronze &#8212; 3&#232;me place</option>
-            <option value="autre">&#127885; Participation / Finaliste</option>
-          </select>
-        </div>
+      <div style="height:1px;background:rgba(255,255,255,0.1);margin:12px 0 16px;"></div>
+
+      <div class="compet-tabs">
+        <button class="compet-tab on"                  onclick="mCompetTab(this,'mc-difficulte')">Difficulté</button>
+        <button class="compet-tab"                     onclick="mCompetTab(this,'mc-blocs')">Bloc</button>
+        <button class="compet-tab"                     onclick="mCompetTab(this,'mc-vitesse')">Vitesse</button>
+        <button class="compet-tab"                     onclick="mCompetTab(this,'mc-combine')">Combiné</button>
+        <button class="compet-tab"                     onclick="mCompetTab(this,'mc-open')">Open / Contest</button>
+        <button class="compet-tab compet-tab-resultats" onclick="mCompetTab(this,'mc-resultats')">🏅 Résultats</button>
       </div>
-      <div class="mat-form-row" style="margin-bottom:10px;">
-        <div><label class="mat-form-label">Lieu</label><input id="m-res-lieu" class="mat-form-input" type="text" placeholder="Ville"></div>
-        <div><label class="mat-form-label">Date</label><input id="m-res-date" class="mat-form-input" type="date"></div>
+
+      <!-- ── DIFFICULTÉ ── -->
+      <div class="compet-view on" id="mc-difficulte">
+        <details class="compet-cat-details" open>
+          <summary class="compet-cat-summary">SAISON 2025-2026 <span class="compet-cat-count">5</span></summary>
+          <div class="compet-entry"><div class="compet-entry-title">Open Promo Difficulté</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 26/10/2025</span><span class="compet-entry-tag tag-lieu">📍 Séné (56)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. Départ. 29 Difficulté</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 24/01/2026</span><span class="compet-entry-tag tag-lieu">📍 Douarnenez (29)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. Départ. 35 Difficulté</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 08/03/2026</span><span class="compet-entry-tag tag-lieu">📍 Noyal-sur-Vilaine (35)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. Régional Difficulté BZH</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 11/04/2026</span><span class="compet-entry-tag tag-lieu">📍 Dompierre (56)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. France Diff. ½ Finale Nord</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 02/05/2026</span><span class="compet-entry-tag tag-lieu">📍 Cholet (49)</span></div></div>
+        </details>
       </div>
-      <button class="mat-btn-submit" style="padding:8px 18px;font-size:0.78rem;" onclick="mAjouterResultat()">&#9989; Enregistrer</button>
+
+      <!-- ── BLOC ── -->
+      <div class="compet-view" id="mc-blocs">
+        <details class="compet-cat-details" open>
+          <summary class="compet-cat-summary">SAISON 2025-2026 <span class="compet-cat-count">5</span></summary>
+          <div class="compet-entry"><div class="compet-entry-title">Coupe Promo de Bloc</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 11/10/2025</span><span class="compet-entry-tag tag-lieu">📍 Châteaugiron (35)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. Départ. Bloc CD35</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 12/10/2025</span><span class="compet-entry-tag tag-lieu">📍 Châteaugiron (35)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. Départ. Bloc Loire-Atl. 44</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 29/11/2025</span><span class="compet-entry-tag tag-lieu">📍 Nozay (44)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. Régional Bloc BZH</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 13/12/2025</span><span class="compet-entry-tag tag-lieu">📍 Plougoumelen (56)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. ½ France Nord Bloc</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 25/01/2026</span><span class="compet-entry-tag tag-lieu">📍 Chaumont (52)</span></div></div>
+        </details>
+      </div>
+
+      <!-- ── VITESSE ── -->
+      <div class="compet-view" id="mc-vitesse">
+        <details class="compet-cat-details" open>
+          <summary class="compet-cat-summary">SAISON 2025-2026 <span class="compet-cat-count">1</span></summary>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. Départ. 35 Vitesse</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 08/03/2026</span><span class="compet-entry-tag tag-lieu">📍 Noyal-sur-Vilaine (35)</span></div></div>
+        </details>
+      </div>
+
+      <!-- ── COMBINÉ ── -->
+      <div class="compet-view" id="mc-combine">
+      </div>
+
+      <!-- ── OPEN / CONTEST ── -->
+      <div class="compet-view" id="mc-open">
+        <details class="compet-cat-details" open>
+          <summary class="compet-cat-summary">SAISON 2025-2026 <span class="compet-cat-count">8</span></summary>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. Régional Combiné U11-U13</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 10/01/2026</span><span class="compet-entry-tag tag-lieu">📍 Loudéac (22)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Champ. de France U13 Combiné</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 07/06/2026</span><span class="compet-entry-tag tag-lieu">📍 Besançon (25)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Contest Grimpe en Rose</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 25/10/2025</span><span class="compet-entry-tag tag-lieu">📍 Séné (56)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Top Ptits Grimpeurs</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 23/11/2025</span><span class="compet-entry-tag tag-lieu">📍 Saint-Malo (35)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Top Ptits Grimpeurs</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 25/01/2026</span><span class="compet-entry-tag tag-lieu">📍 Cesson-Sévigné (35)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Open Bloc 35</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 08/03/2026</span><span class="compet-entry-tag tag-lieu">📍 Noyal-sur-Vilaine (35)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Contest de Saint-Méen-le-Grand</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 22/03/2026</span><span class="compet-entry-tag tag-lieu">📍 Saint-Méen-le-Grand (35)</span></div></div>
+          <div class="compet-entry"><div class="compet-entry-title">Contest Ty-Krapat 56</div><div class="compet-entry-meta"><span class="compet-entry-tag tag-date">📅 25/04/2026</span><span class="compet-entry-tag tag-lieu">📍 Morbihan (56)</span></div></div>
+        </details>
+      </div>
+
+            <!-- ── RÉSULTATS ── -->
+      <div class="compet-view" id="mc-resultats">
+
+        <!-- Formulaire ajout résultat (gestionnaire uniquement) -->
+        <div <div id="m-compet-form-gest" style="display:none;margin-bottom:22px;">
+
+          <!-- ── Titre section ── -->
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--sky);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);">⚙️ Gestion des compétitions</div>
+
+          <!-- ╔══════════════════════════════╗ -->
+          <!-- ║  TABLEAU 1 — Compétition     ║ -->
+          <!-- ╚══════════════════════════════╝ -->
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:14px 16px;border:1px solid rgba(74,159,212,0.2);margin-bottom:14px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:rgba(74,159,212,0.7);margin-bottom:12px;">① Ajouter une compétition</div>
+            <div class="form-row" style="margin-bottom:8px;">
+              <div>
+                <label class="form-label">Nom de la compétition</label>
+                <input id="mcg-nom" class="form-input" type="text" placeholder="Ex: Champ. Régional Bloc BZH">
+              </div>
+              <div>
+                <label class="form-label">Date</label>
+                <input id="mcg-date" class="form-input" type="date">
+              </div>
+            </div>
+            <div class="form-row" style="margin-bottom:8px;">
+              <div>
+                <label class="form-label">Lieu</label>
+                <input id="mcg-lieu" class="form-input" type="text" placeholder="Ville (département)">
+              </div>
+              <div>
+                <label class="form-label">Discipline</label>
+                <select id="mcg-discipline" class="form-select">
+                  <option value="difficulte">Difficulté</option>
+                  <option value="blocs">Bloc</option>
+                  <option value="vitesse">Vitesse</option>
+                  <option value="combine">Combiné</option>
+                  <option value="open">Open / Contest</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-bottom:12px;">
+              <label class="form-label">Catégories ouvertes</label>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;" id="mcg-cats-wrap">
+                <label class="cg-cat-lbl"><input type="checkbox" value="U11H"> U11H</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U11F"> U11F</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U13H"> U13H</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U13F"> U13F</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U15H"> U15H</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U15F"> U15F</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U17H"> U17H</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U17F"> U17F</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U19H"> U19H</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="U19F"> U19F</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="Senior"> Senior</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="VETH"> VétH</label>
+                <label class="cg-cat-lbl"><input type="checkbox" value="VETF"> VétF</label>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="btn-submit" style="padding:7px 18px;font-size:0.78rem;margin-top:0;" onclick="mCgAjouterComp()">✅ Enregistrer la compétition</button>
+              <span id="mcg-comp-ok" style="font-size:0.72rem;color:#34d399;display:none;">✓ Compétition ajoutée !</span>
+            </div>
+          </div>
+
+          <!-- ╔══════════════════════════════╗ -->
+          <!-- ║  TABLEAU 2 — Résultat        ║ -->
+          <!-- ╚══════════════════════════════╝ -->
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:14px 16px;border:1px solid rgba(167,139,250,0.2);">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:rgba(167,139,250,0.7);margin-bottom:12px;">② Ajouter un résultat</div>
+            <div class="form-row" style="margin-bottom:8px;">
+              <div>
+                <label class="form-label">Prénom</label>
+                <input id="mres-prenom" class="form-input" type="text" placeholder="Prénom">
+              </div>
+              <div>
+                <label class="form-label">Nom</label>
+                <input id="mres-nom2" class="form-input" type="text" placeholder="NOM">
+              </div>
+            </div>
+            <div class="form-row" style="margin-bottom:8px;">
+              <div>
+                <label class="form-label">Catégorie</label>
+                <select id="mres-categorie2" class="form-select">
+                  <option value="">Choisir…</option>
+                  <option>U11H</option><option>U11F</option>
+                  <option>U13H</option><option>U13F</option>
+                  <option>U15H</option><option>U15F</option>
+                  <option>U17H</option><option>U17F</option>
+                  <option>U19H</option><option>U19F</option>
+                  <option>Senior</option><option>VETH</option><option>VETF</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Médaille</label>
+                <select id="mres-medaille2" class="form-select">
+                  <option value="or">🥇 Or — 1ère place</option>
+                  <option value="argent">🥈 Argent — 2ème place</option>
+                  <option value="bronze">🥉 Bronze — 3ème place</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row" style="margin-bottom:12px;">
+              <div>
+                <label class="form-label">Compétition</label>
+                <select id="mres-compet2" class="form-select">
+                  <option value="">— Choisir —</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Qualification France</label>
+                <select id="mres-qualif2" class="form-select">
+                  <option value="">Aucune</option>
+                  <option value="champ_fr">🇫🇷 Champ. de France</option>
+                  <option value="demi_fr">🇫🇷 ½ Finale France</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="btn-submit" style="padding:7px 18px;font-size:0.78rem;margin-top:0;background:rgba(167,139,250,0.8);" onclick="mCgAjouterResultat()">✅ Enregistrer le résultat</button>
+              <span id="mcg-res-ok" style="font-size:0.72rem;color:#34d399;display:none;">✓ Résultat ajouté !</span>
+            </div>
+          </div>
+
+          <!-- Liste des compétitions enregistrées (admin) -->
+          <div id="mcg-comp-list" style="margin-top:14px;"></div>
+
+        </div>
+
+        <!-- Podium médailles -->
+        <div id="m-medals-chart-wrap"></div>
+
+        <div id="m-medals-by-cat"></div>
+
+
+      </div>
+
     </div>
-    <div class="res-section-title" style="margin:0 12px 10px;">Classement Club &#8212; Saison 2025&#8209;26</div>
-    <div id="m-compet-ranking" style="padding:0 12px;"></div>
   </div>
 </div>
+
 
 <!-- INFOS -->
 <div class="page" id="page-infos">
@@ -1850,7 +1983,7 @@ function mCompetTab(btn,id){
   btn.classList.add('on');
   document.querySelectorAll('.compet-view').forEach(function(v){v.classList.remove('on');});
   document.getElementById(id).classList.add('on');
-  if(id==='mc-resultats')mRenderResultats();
+  if(id==='mc-resultats'){mCgRenderResults();}
 }
 function mCompetLogin(){
   if(_mCompetGest){_mCompetGest=false;var cb=document.getElementById('m-compet-login-btn');cb.textContent='🔑 Se connecter';cb.classList.remove('connected');document.getElementById('m-compet-form-gest').style.display='none';mRenderResultats();return;}
@@ -1997,6 +2130,379 @@ document.addEventListener('DOMContentLoaded',function(){
   var ov=document.getElementById('msm-overlay');
   if(ov)ov.addEventListener('click',function(e){if(e.target===this)msmClose();});
 });
+</script>
+
+<script>
+
+/* ══════════════════════════════════════════════
+   GESTION COMPÉTITIONS & RÉSULTATS — Admin
+══════════════════════════════════════════════ */
+var CG_COMP_KEY    = 'caf_compet_comps_v1';
+var CG_RESULTS_KEY = 'caf_compet_results_v2';
+
+/* ── Données fixes (saison en cours) ─────────── */
+var CG_COMPS_FIXES = [
+  {id:'f1', nom:'Open Promo Difficulté',             date:'26/10/2025', lieu:'Séné (56)',             discipline:'difficulte', cats:['U13H']},
+  {id:'f2', nom:'Champ. Départ. 29 Difficulté',      date:'24/01/2026', lieu:'Douarnenez (29)',        discipline:'difficulte', cats:['U17F']},
+  {id:'f3', nom:'Champ. Départ. 35 Difficulté',      date:'08/03/2026', lieu:'Noyal-sur-Vilaine (35)', discipline:'difficulte', cats:['U13H','U15H','U17F','U19H','Senior']},
+  {id:'f4', nom:'Champ. Régional Difficulté BZH',    date:'11/04/2026', lieu:'Dompierre (56)',          discipline:'difficulte', cats:['U15H','U17F','U19H','Senior']},
+  {id:'f5', nom:'Champ. France Diff. ½ Finale Nord', date:'02/05/2026', lieu:'Cholet (49)',             discipline:'difficulte', cats:['U15H','U17F','U19H']},
+  {id:'f6', nom:'Coupe Promo de Bloc',               date:'11/10/2025', lieu:'Châteaugiron (35)',       discipline:'blocs',      cats:['U13H']},
+  {id:'f7', nom:'Champ. Départ. Bloc CD35',          date:'12/10/2025', lieu:'Châteaugiron (35)',       discipline:'blocs',      cats:['U15H','U17F','U19H','Senior']},
+  {id:'f8', nom:'Champ. Départ. Bloc Loire-Atl. 44', date:'29/11/2025', lieu:'Nozay (44)',              discipline:'blocs',      cats:['U13H']},
+  {id:'f9', nom:'Champ. Régional Bloc BZH',          date:'13/12/2025', lieu:'Plougoumelen (56)',       discipline:'blocs',      cats:['U15H','U17F','U19H','Senior']},
+  {id:'f10',nom:'Champ. ½ France Nord Bloc',         date:'25/01/2026', lieu:'Chaumont (52)',           discipline:'blocs',      cats:['U19H']},
+  {id:'f11',nom:'Champ. Départ. 35 Vitesse',         date:'08/03/2026', lieu:'Noyal-sur-Vilaine (35)', discipline:'vitesse',    cats:['U13H','U17F','U19H']},
+  {id:'f12',nom:'Champ. Régional Combiné U11-U13',   date:'10/01/2026', lieu:'Loudéac (22)',            discipline:'combine',    cats:['U13H']},
+  {id:'f13',nom:'Champ. de France U13 Combiné',      date:'07/06/2026', lieu:'Besançon (25)',           discipline:'combine',    cats:['U13H']},
+  {id:'f14',nom:'Contest Grimpe en Rose',            date:'25/10/2025', lieu:'Séné (56)',              discipline:'open',       cats:['U17F','Senior','VETH']},
+  {id:'f15',nom:'Top Ptits Grimpeurs',               date:'23/11/2025', lieu:'Saint-Malo (35)',        discipline:'open',       cats:['U13H','U15H']},
+  {id:'f16',nom:'Top Ptits Grimpeurs',               date:'25/01/2026', lieu:'Cesson-Sévigné (35)',   discipline:'open',       cats:['U11H','U13H','U15H']},
+  {id:'f17',nom:'Open Bloc 35',                      date:'08/03/2026', lieu:'Noyal-sur-Vilaine (35)', discipline:'open',       cats:['U13H','U15H','U17F']},
+  {id:'f18',nom:'Contest de Saint-Méen-le-Grand',   date:'22/03/2026', lieu:'Saint-Méen-le-Grand (35)',discipline:'open',      cats:['U13H','U15F','U15H','U17F','U19H','Senior','VETH']},
+  {id:'f19',nom:'Contest Ty-Krapat 56',              date:'25/04/2026', lieu:'Morbihan (56)',           discipline:'open',       cats:['U13H','U17F']},
+];
+
+/* ── Résultats fixes (saison en cours) ────────── */
+var CG_RESULTS_FIXES = [
+  {id:'r1', prenom:'Hugo',     nom:'JACQ',       cat:'U13H',   medal:'bronze', compId:'f6',  qualif:''},
+  {id:'r2', prenom:'Mael',     nom:'PEPIN',      cat:'U13H',   medal:'argent', compId:'f6',  qualif:''},
+  {id:'r3', prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f6',  qualif:''},
+  {id:'r4', prenom:'Corentin', nom:'PRAT',       cat:'U19H',   medal:'or',     compId:'f7',  qualif:''},
+  {id:'r5', prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f1',  qualif:''},
+  {id:'r6', prenom:'Louis',    nom:'JAROUSSE',   cat:'U15H',   medal:'or',     compId:'f15', qualif:''},
+  {id:'r7', prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f15', qualif:''},
+  {id:'r8', prenom:'Mael',     nom:'PEPIN',      cat:'U13H',   medal:'or',     compId:'f8',  qualif:''},
+  {id:'r9', prenom:'Corentin', nom:'PRAT',       cat:'U19H',   medal:'argent', compId:'f9',  qualif:'demi_fr'},
+  {id:'r10',prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f12', qualif:'champ_fr'},
+  {id:'r11',prenom:'Mael',     nom:'PEPIN',      cat:'U13H',   medal:'or',     compId:'f12', qualif:'champ_fr'},
+  {id:'r12',prenom:'Oceane',   nom:'COLINET',    cat:'U17F',   medal:'or',     compId:'f2',  qualif:''},
+  {id:'r13',prenom:'Louis',    nom:'JAROUSSE',   cat:'U15H',   medal:'or',     compId:'f16', qualif:''},
+  {id:'r14',prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f16', qualif:''},
+  {id:'r15',prenom:'Eloïse',   nom:'BACLE',      cat:'U17F',   medal:'argent', compId:'f11', qualif:''},
+  {id:'r16',prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f11', qualif:''},
+  {id:'r17',prenom:'Mael',     nom:'PEPIN',      cat:'U13H',   medal:'bronze', compId:'f11', qualif:''},
+  {id:'r18',prenom:'Nathael',  nom:'BACLE',      cat:'U19H',   medal:'argent', compId:'f11', qualif:''},
+  {id:'r19',prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f3',  qualif:''},
+  {id:'r20',prenom:'Mael',     nom:'PEPIN',      cat:'U13H',   medal:'bronze', compId:'f3',  qualif:''},
+  {id:'r21',prenom:'Louis',    nom:'JAROUSSE',   cat:'U15H',   medal:'argent', compId:'f3',  qualif:''},
+  {id:'r22',prenom:'Oceane',   nom:'COLINET',    cat:'U17F',   medal:'bronze', compId:'f3',  qualif:''},
+  {id:'r23',prenom:'Corentin', nom:'PRAT',       cat:'U19H',   medal:'or',     compId:'f3',  qualif:''},
+  {id:'r24',prenom:'Arthur',   nom:'LEFORT',     cat:'Senior', medal:'argent', compId:'f3',  qualif:''},
+  {id:'r25',prenom:'Louis',    nom:'JAROUSSE',   cat:'U15H',   medal:'argent', compId:'f17', qualif:''},
+  {id:'r26',prenom:'Oceane',   nom:'COLINET',    cat:'U17F',   medal:'bronze', compId:'f17', qualif:''},
+  {id:'r27',prenom:'Mael',     nom:'PEPIN',      cat:'U13H',   medal:'bronze', compId:'f17', qualif:''},
+  {id:'r28',prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f17', qualif:''},
+  {id:'r29',prenom:'Malo',     nom:'COLINET',    cat:'U13H',   medal:'or',     compId:'f18', qualif:''},
+  {id:'r30',prenom:'Louis',    nom:'JAROUSSE',   cat:'U15H',   medal:'or',     compId:'f18', qualif:''},
+  {id:'r31',prenom:'Oceane',   nom:'COLINET',    cat:'U17F',   medal:'or',     compId:'f18', qualif:''},
+  {id:'r32',prenom:'Timéo',    nom:'RIEM',       cat:'U19H',   medal:'argent', compId:'f18', qualif:''},
+  {id:'r33',prenom:'Evan',     nom:'VERDAVAINE', cat:'U19H',   medal:'bronze', compId:'f18', qualif:''},
+  {id:'r34',prenom:'Arthur',   nom:'LEFORT',     cat:'Senior', medal:'bronze', compId:'f18', qualif:''},
+  {id:'r35',prenom:'Hervé',    nom:'COLINET',    cat:'VETH',   medal:'or',     compId:'f14', qualif:''},
+  {id:'r36',prenom:'Oceane',   nom:'COLINET',    cat:'U17F',   medal:'or',     compId:'f19', qualif:''},
+  /* Qualifs sans médaille */
+  {id:'r37',prenom:'Louis',    nom:'JAROUSSE',   cat:'U15H',   medal:'',       compId:'f4',  qualif:'demi_fr'},
+  {id:'r38',prenom:'Oceane',   nom:'COLINET',    cat:'U17F',   medal:'',       compId:'f4',  qualif:'demi_fr'},
+  {id:'r39',prenom:'Corentin', nom:'PRAT',       cat:'U19H',   medal:'',       compId:'f4',  qualif:'demi_fr'},
+];
+
+/* ── Getters / Setters ─────────────────────────── */
+function mCgGetComps() {
+  try { return JSON.parse(localStorage.getItem(CG_COMP_KEY)) || []; } catch(e){ return []; }
+}
+function mCgSaveComps(list) { localStorage.setItem(CG_COMP_KEY, JSON.stringify(list)); }
+
+function mCgGetResults() {
+  try { return JSON.parse(localStorage.getItem(CG_RESULTS_KEY)) || []; } catch(e){ return []; }
+}
+function mCgSaveResults(list) { localStorage.setItem(CG_RESULTS_KEY, JSON.stringify(list)); }
+
+function mCgAllComps()   { return CG_COMPS_FIXES.concat(mCgGetComps()); }
+function mCgAllResults() { return CG_RESULTS_FIXES.concat(mCgGetResults()); }
+
+/* ── Formatage date ISO → affichage ───────────── */
+function mCgFmtDate(iso) {
+  if (!iso) return '';
+  var p = iso.split('-');
+  if (p.length === 3) return p[2]+'/'+p[1]+'/'+p[0];
+  return iso;
+}
+
+/* ── Peuple le select compétition du form ② ───── */
+function mCgPopulateCompSelect() {
+  var sel = document.getElementById('mres-compet2');
+  if (!sel) return;
+  var comps = mCgAllComps();
+  var lastId = comps.length ? comps[comps.length-1].id : null;
+  sel.innerHTML = '<option value="">— Choisir —</option>';
+  var groups = {difficulte:'Difficulté', blocs:'Bloc', vitesse:'Vitesse', combine:'Combiné', open:'Open / Contest'};
+  Object.keys(groups).forEach(function(disc) {
+    var list = comps.filter(function(c){ return c.discipline === disc; });
+    if (!list.length) return;
+    var og = document.createElement('optgroup');
+    og.label = groups[disc];
+    list.forEach(function(c) {
+      var opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.nom + (c.date ? ' — ' + (c.date.length === 10 && c.date.includes('-') ? mCgFmtDate(c.date) : c.date) : '');
+      if (c.id === lastId) opt.selected = true;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
+  });
+}
+
+/* ── Rend les onglets compétitions dynamiquement ─ */
+function mCgRenderTabs() {
+  var comps = mCgAllComps();
+  var discs = {difficulte:'mc-difficulte', blocs:'mc-blocs', vitesse:'mc-vitesse', combine:'mc-combine', open:'mc-open'};
+  Object.keys(discs).forEach(function(disc) {
+    var el = document.getElementById(discs[disc]);
+    if (!el) return;
+    var list = comps.filter(function(c){ return c.discipline === disc; });
+    if (!list.length) {
+      el.innerHTML = '<div class="info-box">Aucune compétition enregistrée.</div>';
+      return;
+    }
+    var html = '<details class="compet-cat-details" open>'
+      + '<summary class="compet-cat-summary">SAISON 2025-2026 <span class="compet-cat-count">' + list.length + '</span></summary>';
+    list.forEach(function(c) {
+      var dateAff = c.date ? (c.date.includes('-') ? mCgFmtDate(c.date) : c.date) : '';
+      var catPills = (c.cats||[]).map(function(cat){
+        return '<span class="compet-cat-pill">'+cat+'</span>';
+      }).join('');
+      html += '<div class="compet-entry">'
+        + '<div class="compet-entry-title">' + c.nom + '</div>'
+        + '<div class="compet-entry-meta">'
+        + (dateAff ? '<span class="compet-entry-tag tag-date">📅 ' + dateAff + '</span>' : '')
+        + (c.lieu  ? '<span class="compet-entry-tag tag-lieu">📍 ' + c.lieu  + '</span>' : '')
+        + '</div>'
+        + (catPills ? '<div class="compet-cats-row">' + catPills + '</div>' : '')
+        + '</div>';
+    });
+    html += '</details>';
+    el.innerHTML = html;
+  });
+}
+
+/* ── Rend la section résultats dynamiquement ───── */
+var CAT_ORD = ['U11H','U11F','U13H','U13F','U15H','U15F','U17H','U17F','U19H','U19F','Senior','VETH','VETF'];
+var MED_ICO = {or:'🥇', argent:'🥈', bronze:'🥉'};
+var MED_CLR = {or:'#fde68a', argent:'#d1d5db', bronze:'#f4a12b'};
+var MED_BG  = {or:'rgba(251,191,36,0.13)', argent:'rgba(209,213,219,0.09)', bronze:'rgba(251,146,60,0.11)'};
+
+function mCgRenderResults() {
+  var el = document.getElementById('m-medals-by-cat');
+  if (!el) return;
+  var results = mCgAllResults();
+  var comps   = mCgAllComps();
+  var compMap = {};
+  comps.forEach(function(c){ compMap[c.id] = c; });
+
+  /* Grouper par catégorie */
+  var byCat = {};
+  results.forEach(function(r) {
+    if (!r.medal && !r.qualif) return;
+    var cat = r.cat || '';
+    if (!byCat[cat]) byCat[cat] = [];
+    byCat[cat].push(r);
+  });
+  var cats = Object.keys(byCat).sort(function(a,b){
+    return (CAT_ORD.indexOf(a)+99||99) - (CAT_ORD.indexOf(b)+99||99);
+  });
+
+  var html = '';
+  cats.forEach(function(cat) {
+    var rows = byCat[cat].slice().sort(function(a,b){
+      var mo = {or:0, argent:1, bronze:2};
+      return (mo[a.medal]||3) - (mo[b.medal]||3) || (a.nom||'').localeCompare(b.nom||'');
+    });
+    html += '<div class="res-cat-sep">' + cat + '</div>';
+    rows.forEach(function(r) {
+      var comp = compMap[r.compId] || {};
+      var dateAff = comp.date ? (comp.date.includes('-') ? mCgFmtDate(comp.date) : comp.date) : '';
+      var compInfo = (comp.nom||'?') + (dateAff ? ' — ' + dateAff : '');
+      var bg   = MED_BG[r.medal]  || 'rgba(96,165,250,0.08)';
+      var ico  = MED_ICO[r.medal] || '🏅';
+      var clr  = MED_CLR[r.medal] || '#93c5fd';
+      var qbadge = '';
+      if (r.qualif === 'champ_fr') qbadge = '<span class="qualif-badge qualif-champ"><span style="font-size:1rem;">🇫🇷</span> Champ. France</span>';
+      if (r.qualif === 'demi_fr')  qbadge = '<span class="qualif-badge qualif-demi"><span style="font-size:1rem;">🇫🇷</span> ½ Finale France</span>';
+      html += '<div class="res-medal-row" style="background:' + bg + ';">'
+        + '<span class="res-medal-ico">' + ico + '</span>'
+        + '<span class="res-medal-name" style="color:' + clr + ';">' + (r.prenom||'') + ' ' + (r.nom||'') + '</span>'
+        + '<span class="res-medal-comp">' + compInfo + '</span>'
+        + qbadge + '</div>';
+    });
+  });
+  el.innerHTML = html || '<div class="compet-no-result">Aucun résultat.</div>';
+
+  /* Podium */
+  mCgRenderPodium(results, compMap);
+}
+
+function mCgRenderPodium(results, compMap) {
+  var el = document.getElementById('m-medals-chart-wrap');
+  if (!el) return;
+  var byName = {};
+  results.forEach(function(r) {
+    if (!r.medal) return;
+    var key = (r.prenom||'') + ' ' + (r.nom||'');
+    if (!byName[key]) byName[key] = {or:0, argent:0, bronze:0};
+    byName[key][r.medal] = (byName[key][r.medal]||0) + 1;
+  });
+  var sorted = Object.keys(byName).sort(function(a,b){
+    var s = function(o){ return o.or*4+o.argent*2+o.bronze; };
+    return s(byName[b]) - s(byName[a]);
+  });
+  var h = '<div class="res-section-title" style="margin-bottom:10px;">Tableau des médailles — Saison 2025-2026</div><div class="podium-wrap">';
+  sorted.forEach(function(n, i) {
+    var v = byName[n];
+    var tot = v.or+v.argent+v.bronze;
+    var rk = i===0?' podium-rank-1':i===1?' podium-rank-2':i===2?' podium-rank-3':'';
+    h += '<div class="podium-card'+rk+'"><div class="podium-name" title="'+n+'">'+n+'</div>'
+      + '<div class="podium-medals">';
+    if (v.or)     h += '<div class="podium-med-g"><span class="podium-med-i">🥇</span><span class="podium-med-n" style="color:#fbbf24;">'+v.or+'</span></div>';
+    if (v.argent) h += '<div class="podium-med-g"><span class="podium-med-i">🥈</span><span class="podium-med-n" style="color:#9ca3af;">'+v.argent+'</span></div>';
+    if (v.bronze) h += '<div class="podium-med-g"><span class="podium-med-i">🥉</span><span class="podium-med-n" style="color:#f97316;">'+v.bronze+'</span></div>';
+    h += '</div><div class="podium-total">'+tot+' médaille'+(tot>1?'s':'')+'</div></div>';
+  });
+  h += '</div>';
+  el.innerHTML = h;
+}
+
+/* ── Afficher la liste des compétitions ajoutées (admin) ── */
+function mCgRenderCompList() {
+  var el = document.getElementById('mcg-comp-list');
+  if (!el) return;
+  var allComps = mCgAllComps();
+  var customIds = mCgGetComps().map(function(c){ return c.id; });
+  var discLabels = {difficulte:'Difficult\u00e9', blocs:'Bloc', vitesse:'Vitesse', combine:'Combin\u00e9', open:'Open \/ Contest'};
+  var titleStyle = 'font-family:\'Barlow Condensed\',sans-serif;font-size:0.65rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,242,238,0.4);margin-bottom:8px;';
+  var h = '<div style="' + titleStyle + '">Modifier la discipline</div>';
+  allComps.forEach(function(c) {
+    var isCustom = customIds.indexOf(c.id) >= 0;
+    var dateAff  = c.date ? (c.date.indexOf('-') >= 0 ? mCgFmtDate(c.date) : c.date) : '';
+    var discOpts = '';
+    Object.keys(discLabels).forEach(function(d){
+      discOpts += '<option value="'+d+'"'+(c.discipline===d?' selected':'')+'>'+discLabels[d]+'</option>';
+    });
+    var delBtn = isCustom
+      ? '<button onclick="mCgSuppComp(\''+c.id+'\')" style="background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.25);border-radius:4px;padding:1px 6px;font-size:0.65rem;cursor:pointer;flex-shrink:0;">\u2715</button>'
+      : '<span style="width:22px;flex-shrink:0;"></span>';
+    h += '<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:rgba(255,255,255,0.04);border-radius:6px;margin-bottom:4px;">'
+      + '<span style="flex:1;font-size:0.75rem;color:#f5f2ee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+c.nom+'">'+c.nom+'</span>'
+      + '<select onchange="mCgChangerDisc(\''+c.id+'\',this.value)" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:5px;color:#f5f2ee;font-size:0.65rem;padding:2px 4px;cursor:pointer;flex-shrink:0;">'
+      + discOpts + '</select>'
+      + '<span style="color:rgba(245,242,238,0.4);font-size:0.68rem;flex-shrink:0;min-width:70px;text-align:right;">'+dateAff+'</span>'
+      + delBtn + '</div>';
+  });
+  el.innerHTML = h;
+}
+
+/* ── Changer la discipline d'une compétition ── */
+function mCgChangerDisc(id, newDisc) {
+  /* Compétitions fixes : créer une surcharge dans le storage */
+  var overrides = JSON.parse(localStorage.getItem('caf_compet_overrides_v1') || '{}');
+  overrides[id] = overrides[id] || {};
+  overrides[id].discipline = newDisc;
+  localStorage.setItem('caf_compet_overrides_v1', JSON.stringify(overrides));
+  mCgRenderTabs();
+  mCgPopulateCompSelect();
+  mCgRenderCompList();
+}
+
+function mCgGetOverrides() {
+  try { return JSON.parse(localStorage.getItem('caf_compet_overrides_v1') || '{}'); } catch(e){ return {}; }
+}
+
+/* Remplacer mCgAllComps pour appliquer les surcharges */
+var _mCgAllCompsOrig = mCgAllComps;
+mCgAllComps = function() {
+  var comps = CG_COMPS_FIXES.concat(mCgGetComps());
+  var overrides = mCgGetOverrides();
+  return comps.map(function(c) {
+    if (overrides[c.id]) {
+      var merged = {};
+      Object.keys(c).forEach(function(k){ merged[k] = c[k]; });
+      Object.keys(overrides[c.id]).forEach(function(k){ merged[k] = overrides[c.id][k]; });
+      return merged;
+    }
+    return c;
+  });
+};
+
+/* ── Ajouter une compétition ─────────────────── */
+function mCgAjouterComp() {
+  var nom  = (document.getElementById('mcg-nom')||{}).value || '';
+  var date = (document.getElementById('mcg-date')||{}).value || '';
+  var lieu = (document.getElementById('mcg-lieu')||{}).value || '';
+  var disc = (document.getElementById('mcg-discipline')||{}).value || '';
+  var cats = [];
+  document.querySelectorAll('#mcg-cats-wrap input[type=checkbox]:checked').forEach(function(cb){ cats.push(cb.value); });
+  if (!nom.trim()) { alert('Merci de saisir le nom de la compétition.'); return; }
+  var comps = mCgGetComps();
+  var id    = 'u' + Date.now();
+  comps.push({id:id, nom:nom.trim(), date:date, lieu:lieu.trim(), discipline:disc, cats:cats});
+  mCgSaveComps(comps);
+  /* Reset form */
+  document.getElementById('mcg-nom').value = '';
+  document.getElementById('mcg-date').value = '';
+  document.getElementById('mcg-lieu').value = '';
+  document.querySelectorAll('#mcg-cats-wrap input[type=checkbox]').forEach(function(cb){ cb.checked=false; });
+  /* Feedback */
+  var ok = document.getElementById('mcg-comp-ok');
+  if (ok) { ok.style.display='inline'; setTimeout(function(){ ok.style.display='none'; }, 2500); }
+  mCgRenderTabs();
+  mCgPopulateCompSelect();
+  mCgRenderCompList();
+}
+
+/* ── Supprimer une compétition custom ────────── */
+function mCgSuppComp(id) {
+  var comps = mCgGetComps().filter(function(c){ return c.id !== id; });
+  mCgSaveComps(comps);
+  /* Supprimer aussi les résultats liés */
+  var results = mCgGetResults().filter(function(r){ return r.compId !== id; });
+  mCgSaveResults(results);
+  mCgRenderTabs(); mCgPopulateCompSelect(); mCgRenderCompList(); mCgRenderResults();
+}
+
+/* ── Ajouter un résultat ─────────────────────── */
+function mCgAjouterResultat() {
+  var prenom = (document.getElementById('mres-prenom')||{}).value || '';
+  var nom    = (document.getElementById('mres-nom2')||{}).value || '';
+  var cat    = (document.getElementById('mres-categorie2')||{}).value || '';
+  var medal  = (document.getElementById('mres-medaille2')||{}).value || '';
+  var compId = (document.getElementById('mres-compet2')||{}).value || '';
+  var qualif = (document.getElementById('mres-qualif2')||{}).value || '';
+  if (!nom.trim() || !prenom.trim() || !compId) {
+    alert('Merci de renseigner le grimpeur et la compétition.');
+    return;
+  }
+  var results = mCgGetResults();
+  results.push({id:'r'+Date.now(), prenom:prenom.trim(), nom:nom.trim(), cat:cat, medal:medal, compId:compId, qualif:qualif});
+  mCgSaveResults(results);
+  /* Reset */
+  document.getElementById('mres-prenom').value = '';
+  document.getElementById('mres-nom2').value = '';
+  document.getElementById('mres-categorie2').value = '';
+  document.getElementById('mres-qualif2').value = '';
+  /* Feedback */
+  var ok = document.getElementById('mcg-res-ok');
+  if (ok) { ok.style.display='inline'; setTimeout(function(){ ok.style.display='none'; }, 2500); }
+  mCgRenderResults();
+}
+
+/* ── Init au chargement ──────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  mCgRenderTabs();
+  mCgRenderResults();
+  mCgPopulateCompSelect();
+  mCgRenderCompList();
+});
+
 </script>
 </body>
 </html>
