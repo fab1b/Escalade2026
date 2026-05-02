@@ -419,6 +419,14 @@ details[open] .compet-cat-summary::after{transform:rotate(-180deg);}
               background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
               border-radius:6px; padding:3px 8px; transition:all .15s; user-select:none; }
 
+
+/* ── Sortie contact ── */
+.sortie-contact       { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:7px; padding-top:7px; border-top:1px solid rgba(255,255,255,0.08); }
+.sortie-contact-name  { font-size:0.74rem; font-weight:700; color:rgba(245,242,238,0.75); font-family:'Barlow Condensed',sans-serif; }
+.sortie-contact-tel   { font-size:0.74rem; font-weight:600; color:#4a9fd4; text-decoration:none; }
+.sortie-contact-tel:hover { text-decoration:underline; }
+.sortie-contact-mail  { font-size:0.72rem; color:rgba(74,159,212,0.75); text-decoration:none; word-break:break-all; }
+.sortie-contact-mail:hover { text-decoration:underline; color:#4a9fd4; }
 </style>
 </head>
 <body>
@@ -478,7 +486,7 @@ details[open] .compet-cat-summary::after{transform:rotate(-180deg);}
 </div>
 
 <!-- SORTIES -->
-<div class="page" id="page-sorties"><div class="ptitle">&#127956; Sorties 2026</div><button class="sortie-admin-btn-m" onclick="mSortieAdminOpen()">⚙️ Gérer les sorties</button><div id="sorties-m"></div></div>
+<div class="page" id="page-sorties"><div class="ptitle">&#127956; Sorties 2026<span style="font-size:0.78rem;font-style:italic;font-weight:400;color:rgba(245,242,238,0.45);margin-left:10px;">Réservées aux membres du CAF Liffré</span></div><button class="sortie-admin-btn-m" onclick="mSortieAdminOpen()">⚙️ Gérer les sorties</button><div id="sorties-m"></div></div>
 
 <!-- COURS -->
 <div class="page" id="page-cours">
@@ -1573,15 +1581,16 @@ function switchPer(btn,pane){
 function msmGetSorties(){
   var KEY='caf_sorties_v1';
   var DEF=[
-    {id:1,date:'2026-04-26',nom:'Sortie Erquy',lieu:"Erquy, Cotes-d'Armor",duree:'Journée'},
-    {id:2,date:'2026-05-08',nom:'Fosse Arthour / Mortain',lieu:'Normandie',duree:'3 jours'},
-    {id:3,date:'2026-05-14',nom:'La Jonte',lieu:'Gorges de la Jonte',duree:'4 jours'},
-    {id:4,date:'2026-05-23',nom:'Le Caroux',lieu:'Herault',duree:'8 jours'},
-    {id:5,date:'2026-05-30',nom:'Orpierre',lieu:'Hautes-Alpes',duree:'8 jours'},
-    {id:6,date:'2026-06-13',nom:'Ile aux Pies',lieu:'Loire-Atlantique',duree:'Week-end'},
-    {id:7,date:'2026-06-20',nom:'Pen-Hir',lieu:'Finistere',duree:'Week-end'},
-    {id:8,date:'2026-09-12',nom:'Fontainebleau',lieu:'Seine-et-Marne',duree:'Week-end'},
-    {id:9,date:'2026-09-19',nom:'Pen-Hir',lieu:'Finistere',duree:'Week-end'}
+    {id:1, date:'2026-04-26',nom:'Sortie Erquy',             lieu:"Erquy, Côtes-d'Armor",          duree:'Journée',  contact:'J.-P. Dessier',     tel:'06 37 28 30 91', mail:'pjdessier@hotmail.fr'},
+    {id:2, date:'2026-05-08',nom:'Fosse Arthour / Mortain',  lieu:'Fosse Arthour, Normandie',       duree:'3 jours',   contact:'Gérard Blécon',    tel:'06 74 02 13 36', mail:'gerard.blecon@orange.fr'},
+    {id:3, date:'2026-05-14',nom:'La Jonte',                 lieu:'Gorges de la Jonte, Aveyron',    duree:'4 jours',   contact:'Gérard Blécon',    tel:'06 74 02 13 36', mail:'gerard.blecon@orange.fr'},
+    {id:4, date:'2026-05-23',nom:'Le Caroux',                lieu:'Le Caroux, Hérault',        duree:'8 jours',   contact:'Dominique Vannier', tel:'06 33 29 68 57', mail:'vannierd@wanadoo.fr'},
+    {id:5, date:'2026-05-30',nom:'Orpierre',                 lieu:'Orpierre, Hautes-Alpes',         duree:'8 jours',   contact:'Gérard Blécon',    tel:'06 74 02 13 36', mail:'gerard.blecon@orange.fr'},
+    {id:6, date:'2026-06-13',nom:'Île aux Pies',            lieu:'Île aux Pies',                  duree:'Week-end',  contact:'J.-P. Dessier',     tel:'06 37 28 30 91', mail:'pjdessier@hotmail.fr'},
+    {id:7, date:'2026-06-20',nom:'Pen-Hir',                  lieu:"Pen-Hir, Presqu'île de Crozon", duree:'Week-end',  contact:'Gérard Blécon',    tel:'06 74 02 13 36', mail:'gerard.blecon@orange.fr'},
+    {id:8, date:'2026-06-25',nom:'🍽️ Repas Encadrants',      lieu:"L'Otentik",                       duree:'Journée',  contact:'Luc Chantreuil',    tel:'06 88 18 39 52', mail:'luc.chantreuil@wanadoo.fr'},
+    {id:9, date:'2026-09-12',nom:'Fontainebleau',            lieu:'Fontainebleau, Seine-et-Marne',  duree:'Week-end',  contact:'Gaëlle Segouin',   tel:'06 79 25 49 88', mail:'gaelle.segouin@gmail.com'},
+    {id:10,date:'2026-09-19',nom:'Pen-Hir',                  lieu:"Pen-Hir, Presqu'île de Crozon", duree:'Week-end',  contact:'Gérard Blécon',    tel:'06 74 02 13 36', mail:'gerard.blecon@orange.fr'}
   ];
   try{var s=localStorage.getItem(KEY);return s?JSON.parse(s):DEF.slice();}catch(e){return DEF.slice();}
 }
@@ -1603,7 +1612,7 @@ function buildSorties(){
     html+='<div class="si'+(isPast?' past':'')+'"><div class="sdb"><div class="sdb-d">'+day+'</div><div class="sdb-m">'+mon+'</div></div><div><div class="si-title">'+s.nom+'</div><div class="si-meta">'+s.lieu+' &middot; '+s.duree+'</div>';
     if(isNext)html+='<span class="si-badge nx">&#9654; Prochaine</span>';
     if(isPast)html+='<span class="si-badge dn">&#10003; Passee</span>';
-    html+='</div></div>';
+    if(s.contact||s.tel||s.mail){html+='<div class="sortie-contact">';if(s.contact)html+='<span class="sortie-contact-name">👤 '+s.contact+'</span>';if(s.tel)html+='<a class="sortie-contact-tel" href="tel:'+s.tel.replace(/\s/g,'')+'">📞 '+s.tel+'</a>';if(s.mail)html+='<a class="sortie-contact-mail" href="mailto:'+s.mail+'">✉️ '+s.mail+'</a>';html+='</div>';}html+='</div></div>';
   });
   if(!html)html='<div style="color:rgba(245,242,238,0.4);font-style:italic;padding:16px;">Aucune sortie planifiée.</div>';
   el.innerHTML=html;
